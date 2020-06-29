@@ -1,0 +1,32 @@
+.navigation {
+  padding-bottom: 20px;
+  width: 200px;
+  height: 100vh;
+  border-right: solid lightgrey;
+  justify-content: space-evenly;
+  /* position: sticky; */
+}
+.logo {
+  width: 180px;
+  list-style: none;
+}
+
+.navItem {
+  list-style: none;
+  padding-left: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+li :hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.pageLinks {
+  text-decoration: none;
+  color: #3f71a6;
+}
+
+ul {
+  padding-inline-start: 0px !important;
+}

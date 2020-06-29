@@ -4,6 +4,8 @@ import { Nav, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
 function NavBar() {
+  const logo = require("./LookUp.png");
+
   const navlinks = [
     {
       title: "Products",
@@ -33,9 +35,12 @@ function NavBar() {
   return (
     <div className={styles.navigation}>
       <Nav vertical>
+        <img className={styles.logo} src={logo} alt="LookUp" />
         {navlinks.map((item) => (
           <NavItem className={styles.navItem}>
-            <Link to={`${item.to}`}>{item.title}</Link>
+            <Link className={styles.pageLinks} to={`${item.to}`}>
+              {item.title}
+            </Link>
           </NavItem>
         ))}
       </Nav>
