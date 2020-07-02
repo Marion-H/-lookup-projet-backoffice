@@ -8,6 +8,7 @@ import Services from "../Services.jsx";
 import Conferences from "../Conferences";
 import RelationPresse from "../RelationPresse";
 import Partenaires from "../Partenaires";
+import LookUp from "../LookUp";
 import styles from "./Router.module.css";
 
 export default function Router() {
@@ -23,6 +24,7 @@ export default function Router() {
           <Route exact path="/conferences" component={Conferences} />
           <Route exact path="/relationpresse" component={RelationPresse} />
           <Route exact path="/partenaires" component={Partenaires} />
+          <Route exact path="/info" component={LookUp} />
         </Switch>
       </BrowserRouter>
     </div>
