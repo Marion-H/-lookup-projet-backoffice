@@ -1,5 +1,6 @@
-import React from "react";
-import { Col, Row, Container } from "reactstrap";
+import React, { useState } from "react";
+import EditModal from "./EditModal";
+import styles from "./Card.module.css";
 
 const BaseCardText = ({ item, value, dataArray }) => {
   const checkImage = ({ dataArray }) => {
@@ -8,7 +9,7 @@ const BaseCardText = ({ item, value, dataArray }) => {
         return value;
       }
       if (item === "image") {
-        return <img src={value} alt="product" />;
+        return <img className={styles.tableImg} src={value} alt="product" />;
       }
       if (item !== "image" && item !== "id") {
         return value;
@@ -16,13 +17,29 @@ const BaseCardText = ({ item, value, dataArray }) => {
     }
   };
 
+  const [hover, setHover] = useState(false);
+
+  const hoverModal = () => {
+    setHover(!hover);
+  };
+
   return (
-    <Container>
-      <Row>
-        <Col lg="6">{item}</Col>
-        <Col lg="6">{checkImage({ dataArray })}</Col>
-      </Row>
-    </Container>
+    <>
+      <tr className={styles.tableLook}>
+        <td lg="6">{item}</td>
+        <td
+          onMouseEnter={hoverModal}
+          onMouseLeave={hoverModal}
+          className={hover ? styles.edit : ""}
+          lg="6"
+        >
+          {checkImage({ dataArray })}
+        </td>
+        <td>
+          <EditModal />
+        </td>
+      </tr>
+    </>
   );
 };
 
