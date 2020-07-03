@@ -10,6 +10,7 @@ import RelationPresse from "../RelationPresse";
 import Partenaires from "../Partenaires";
 import LookUp from "../LookUp";
 import styles from "./Router.module.css";
+// import EditModal from "../builders/EditModal";
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
           <Route exact path="/relationpresse" component={RelationPresse} />
           <Route exact path="/partenaires" component={Partenaires} />
           <Route exact path="/info" component={LookUp} />
+          {/* <Route path="/edit_modal" component={EditModal} /> */}
         </Switch>
       </BrowserRouter>
     </div>

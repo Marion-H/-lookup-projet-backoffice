@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Container,
+} from "reactstrap";
 
 const EditModal = (props) => {
   const { buttonLabel, className } = props;
@@ -9,10 +16,11 @@ const EditModal = (props) => {
   const toggle = () => setModal(!modal);
 
   return (
-    <div>
+    <Container>
       <Button color="danger" onClick={toggle}>
-        {buttonLabel}
+        Hello {buttonLabel}
       </Button>
+
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
@@ -33,7 +41,7 @@ const EditModal = (props) => {
           </Button>
         </ModalFooter>
       </Modal>
-    </div>
+    </Container>
   );
 };
 
