@@ -1,0 +1,4 @@
+.navRow {
+  display: flex;
+  flex-direction: row;
+}

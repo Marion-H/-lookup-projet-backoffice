@@ -1,0 +1,22 @@
+.tableLook {
+  box-shadow: 10px, 10px, rgb(0, 0, 0);
+  border-spacing: 10px;
+}
+
+.tableLook td {
+  border: 1px solid #3965a1;
+  border-radius: 3px;
+  margin: 20px;
+  padding: 1rem;
+}
+
+.tableImg {
+  width: 80%;
+}
+
+.edit {
+  opacity: 0.8;
+  color: white;
+  background-color: #3965a1;
+  cursor: pointer;
+}
