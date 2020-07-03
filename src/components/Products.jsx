@@ -14,17 +14,17 @@ const Products = () => {
     },
   ];
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(productInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(productInfo[0])[i]}
-  //                 value={productInfo[0][i]}
-  //                 dataArray={productInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  //   const ItemLoop = () => {
+  //       for (let i = 0; i < Object.keys(productInfo[0]).length; i++) {
+  //           return (
+  //               <BaseCardText
+  //                   item={Object.keys(productInfo[0])[i]}
+  //                   value={productInfo[0][i]}
+  //                   dataArray={productInfo}
+  //               />
+  //           );
+  //       }
+  //   };
 
   return (
     <Container>
