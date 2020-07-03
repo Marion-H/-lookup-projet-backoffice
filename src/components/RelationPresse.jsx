@@ -11,18 +11,18 @@ const RelationPresse = () => {
         "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
     },
   ];
+  let Items = [];
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(relationPresseInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(relationPresseInfo[0])[i]}
-  //                 value={relationPresseInfo[0][i]}
-  //                 dataArray={relationPresseInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  const ItemLoop = (table) => {
+    for (let i = 0; i < Object.keys(table[0]).length; i++) {
+      let ItemValue = {
+        item: Object.keys(table[0])[i],
+        value: Object.values(table[0])[i],
+      };
+      Items.push(ItemValue);
+    }
+  };
+  ItemLoop(relationPresseInfo);
 
   return (
     <Container>
@@ -31,30 +31,17 @@ const RelationPresse = () => {
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[0]}
-            value={relationPresseInfo[0].id}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[1]}
-            value={relationPresseInfo[0].titre}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[2]}
-            value={relationPresseInfo[0].descriptif}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[3]}
-            value={relationPresseInfo[0].image}
-            dataArray={relationPresseInfo}
-          />
+          {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={relationPresseInfo}
+            />
+          ))}
         </Table>
       </Row>
     </Container>
   );
 };
-
 export default RelationPresse;

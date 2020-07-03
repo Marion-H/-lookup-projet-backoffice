@@ -12,45 +12,34 @@ const Partenaires = () => {
     },
   ];
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(partenairesInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(partenairesInfo[0])[i]}
-  //                 value={partenairesInfo[0][i]}
-  //                 dataArray={partenairesInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  let Items = [];
+
+  const ItemLoop = (table) => {
+    for (let i = 0; i < Object.keys(table[0]).length; i++) {
+      let ItemValue = {
+        item: Object.keys(table[0])[i],
+        value: Object.values(table[0])[i],
+      };
+      Items.push(ItemValue);
+    }
+  };
+  ItemLoop(partenairesInfo);
 
   return (
     <Container>
       <Row>
-        <h1>Relation Presse</h1>
+        <h1>Partenaires</h1>
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[0]}
-            value={partenairesInfo[0].id}
-            dataArray={partenairesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[1]}
-            value={partenairesInfo[0].titre}
-            dataArray={partenairesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[2]}
-            value={partenairesInfo[0].descriptif}
-            dataArray={partenairesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[3]}
-            value={partenairesInfo[0].image}
-            dataArray={partenairesInfo}
-          />
+          {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={partenairesInfo}
+            />
+          ))}
         </Table>
       </Row>
     </Container>

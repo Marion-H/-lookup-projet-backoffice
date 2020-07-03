@@ -2,7 +2,7 @@ import React from "react";
 import BaseCardText from "./builders/BaseCardText";
 import { Row, Table, Container } from "reactstrap";
 const Conferences = () => {
-  const servicesInfo = [
+  const conferencesInfo = [
     {
       id: 1,
       titre: "Some title",
@@ -13,17 +13,18 @@ const Conferences = () => {
     },
   ];
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(productInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(productInfo[0])[i]}
-  //                 value={productInfo[0][i]}
-  //                 dataArray={productInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  let Items = [];
+
+  const ItemLoop = (table) => {
+    for (let i = 0; i < Object.keys(table[0]).length; i++) {
+      let ItemValue = {
+        item: Object.keys(table[0])[i],
+        value: Object.values(table[0])[i],
+      };
+      Items.push(ItemValue);
+    }
+  };
+  ItemLoop(conferencesInfo);
 
   return (
     <Container>
@@ -32,31 +33,14 @@ const Conferences = () => {
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[0]}
-            value={servicesInfo[0].id}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[1]}
-            value={servicesInfo[0].titre}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[2]}
-            value={servicesInfo[0].sujet}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[3]}
-            value={servicesInfo[0].date}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[4]}
-            value={servicesInfo[0].image}
-            dataArray={servicesInfo}
-          />
+          {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={conferencesInfo}
+            />
+          ))}
         </Table>
       </Row>
     </Container>

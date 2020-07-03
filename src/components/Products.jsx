@@ -13,18 +13,18 @@ const Products = () => {
         "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
     },
   ];
+  let Items = [];
 
-  //   const ItemLoop = () => {
-  //       for (let i = 0; i < Object.keys(productInfo[0]).length; i++) {
-  //           return (
-  //               <BaseCardText
-  //                   item={Object.keys(productInfo[0])[i]}
-  //                   value={productInfo[0][i]}
-  //                   dataArray={productInfo}
-  //               />
-  //           );
-  //       }
-  //   };
+  const ItemLoop = (table) => {
+    for (let i = 0; i < Object.keys(table[0]).length; i++) {
+      let ItemValue = {
+        item: Object.keys(table[0])[i],
+        value: Object.values(table[0])[i],
+      };
+      Items.push(ItemValue);
+    }
+  };
+  ItemLoop(productInfo);
 
   return (
     <Container>
@@ -33,31 +33,14 @@ const Products = () => {
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(productInfo[0])[0]}
-            value={productInfo[0].id}
-            dataArray={productInfo}
-          />
-          <BaseCardText
-            item={Object.keys(productInfo[0])[1]}
-            value={productInfo[0].nom}
-            dataArray={productInfo}
-          />
-          <BaseCardText
-            item={Object.keys(productInfo[0])[2]}
-            value={productInfo[0].prix}
-            dataArray={productInfo}
-          />
-          <BaseCardText
-            item={Object.keys(productInfo[0])[3]}
-            value={productInfo[0].descriptif}
-            dataArray={productInfo}
-          />
-          <BaseCardText
-            item={Object.keys(productInfo[0])[4]}
-            value={productInfo[0].image}
-            dataArray={productInfo}
-          />
+          {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={productInfo}
+            />
+          ))}
         </Table>
       </Row>
     </Container>
