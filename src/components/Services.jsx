@@ -1,33 +1,18 @@
 import React, { useEffect, useState } from "react";
-import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container, Spinner } from "reactstrap";
+import BaseCardImage from "./builders/BaseCardImage";
+import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 const Services = () => {
   const [serviceDatas, setServiceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
-  const servicesInfo = [
-    {
-      id: 1,
-      titre: "LookUp",
-      descriptif:
-        "this is a fancy product with some nice text talking about it. If we add some more text it should wrap",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
-
-  useEffect(() => {
-    getService();
-  }, []);
 
   const getService = async () => {
     try {
-      const res = Axios.get(
+      const res = await Axios.get(
         "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
       );
-      setServiceDatas(res);
-      console.log(serviceDatas);
+      setServiceDatas(res.data);
+      console.log("coucou toi", serviceDatas);
     } catch (err) {
       console.log(err);
     } finally {
@@ -35,23 +20,26 @@ const Services = () => {
     }
   };
 
-  let Items = [];
+  useEffect(() => {
+    getService();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // let Items = [];
 
-  const ItemLoop = (table) => {
-    for (let i = 0; i < Object.keys(table[0]).length; i++) {
-      let ItemValue = {
-        item: Object.keys(table[0])[i],
-        value: Object.values(table[0])[i],
-      };
-      Items.push(ItemValue);
-    }
-  };
-  ItemLoop(servicesInfo);
+  // const ItemLoop = (table) => {
+  //   for (let i = 0; i < Object.keys(table[0]).length; i++) {
+  //     let ItemValue = {
+  //       item: Object.keys(table[0])[i],
+  //       value: Object.values(table[0])[i],
+  //     };
+  //     Items.push(ItemValue);
+  //   }
+  // };
+  // ItemLoop(servicesInfo);
 
   if (isLoading) {
     return <Spinner color="primary" />;
   }
-
 
   return (
     <Container>
@@ -59,7 +47,14 @@ const Services = () => {
         <h1>Services</h1>
       </Row>
       <Row>
-        <Table>
+        {serviceDatas.map((it) => (
+          <BaseCardImage
+            titre={it.title}
+            description={it.description}
+            logo={it.logo}
+          />
+        ))}
+        {/* <Table>
           {Items.map((item, key) => (
             <BaseCardText
               key={key}
@@ -68,7 +63,7 @@ const Services = () => {
               dataArray={servicesInfo}
             />
           ))}
-        </Table>
+        </Table> */}
       </Row>
     </Container>
   );

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container, Spinner } from "reactstrap";
-import Axios from "axios";
+import { Row, Table, Container } from "reactstrap";
 const Products = () => {
   const productInfo = [
     {
@@ -15,28 +14,30 @@ const Products = () => {
     },
   ];
 
-  const [productDatas, setProductDatas] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  // const [productDatas, setProductDatas] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-   getProduct()
-  }, [])
+  // useEffect(() => {
+  //   getProduct();
+  // }, []);
 
-  const getProduct= async () =>{
-    try{
-      const res = Axios.get("https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products")
-      setProductDatas(res)
-      console.log(productDatas)
-    }catch(err){
-      console.log(err)
-    }finally{
-      setIsLoading(false)
-    }
-  }
+  // const getProduct = async () => {
+  //   try {
+  //     const res = Axios.get(
+  //       "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
+  //     );
+  //     setProductDatas(res);
+  //     console.log(productDatas);
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  if (isLoading){
-    return <Spinner color="primary"/>;
-  }
+  // if (isLoading) {
+  //   return <Spinner color="primary" />;
+  // }
   let Items = [];
 
   const ItemLoop = (table) => {

@@ -1,62 +1,60 @@
 import React, { useState, useEffect } from "react";
 import BaseCardText from "./builders/BaseCardText";
 import { Container, Row, Table, Spinner } from "reactstrap";
-import axios from 'axios';
+import axios from "axios";
 
 const Carousel = () => {
-  const [carouselDatas, setCarouselDatas] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [carouselDatas, setCarouselDatas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-   getCarousel()
-  }, [])
+    const getCarousel = async () => {
+      try {
+        const res = await axios.get(
+          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/"
+        );
+        setCarouselDatas(res.data[0]);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getCarousel();
+  }, []);
 
-  const getCarousel= async () =>{
-    try{
-      const res = axios.get("https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels")
-      setCarouselDatas(res)
-      console.log(carouselDatas)
-    }catch(err){
-      console.log(err)
-    }finally{
-      setIsLoading(false)
-    }
-  }
- 
   let Items = [];
   const ItemLoop = (table) => {
-    for (let i = 0; i < Object.keys(table[0]).length; i++) {
+    for (let i = 0; i < Object.keys(table).length; i++) {
       let ItemValue = {
         item: Object.keys(table[0])[i],
         value: Object.values(table[0])[i],
       };
+      console.log(Object.keys(table).length);
+      console.log(table);
+      console.log(Object.keys(table));
       Items.push(ItemValue);
     }
   };
-  
-  const carouselInfo = [
-    {
-      id: 1,
-      titre: "Some title",
-      sujet: "an interesting subject",
-      date: "26/06/2020",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
-  
-  if(carouselDatas){
-    ItemLoop(carouselDatas);
-  }else{
-    ItemLoop(carouselInfo)
-  }
+  ItemLoop(carouselDatas);
+  // console.log("coucou", Items);
 
-  if (isLoading){
-    return <Spinner color="primary"/>;
+  // const carouselInfo = [
+  //   {
+  //     id: 1,
+  //     titre: "Some title",
+  //     sujet: "an interesting subject",
+  //     date: "26/06/2020",
+  //     image:
+  //       "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
+  //   },
+  // ];
+
+  if (isLoading) {
+    return <Spinner color="primary" />;
   }
 
   return (
-    
     <Container>
       <Row>
         <h1>Carousel</h1>
@@ -68,16 +66,14 @@ const Carousel = () => {
               key={key}
               item={item.item}
               value={item.value}
-              dataArray={carouselDatas ? carouselDatas : carouselInfo}
+              dataArray={carouselDatas}
               onClick={() => alert("coucou")}
             />
           ))}
         </Table>
       </Row>
     </Container>
-          
-    );
-  
+  );
 };
 
 export default Carousel;

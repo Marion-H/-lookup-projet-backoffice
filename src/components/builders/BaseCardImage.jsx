@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import EditModal from "./EditModal";
-import styles from "./Card.module.css";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+} from "reactstrap";
 
 const BaseCardImage = ({
-  id,
   nom,
   prix,
   descriptif,
@@ -11,41 +17,24 @@ const BaseCardImage = ({
   titre,
   sujet,
   date,
+  logo,
 }) => {
-  const [hover, setHover] = useState(false);
-
-  const hoverModal = () => {
-    setHover(!hover);
-  };
-  const key = [
-    "id",
-    "nom",
-    "prix",
-    "descriptif",
-    "image",
-    "titre",
-    "sujet",
-    "date",
-  ];
-  const value =
-    id || nom || prix || descriptif || image || titre || sujet || date;
   return (
-    <>
-      <tr className={styles.tableLook}>
-        <td lg="6">{key}</td>
-        <td
-          onMouseEnter={hoverModal}
-          onMouseLeave={hoverModal}
-          className={hover ? styles.edit : ""}
-          lg="6"
-        >
-          {value}
-        </td>
-        <td>
+    <div>
+      <Card>
+        <CardImg top width="100%" src={image} alt={image} />
+        <CardImg top width="100%" src={logo} alt={logo} />
+        <CardBody>
+          <CardTitle>{titre}</CardTitle>
+          <CardTitle>{nom}</CardTitle>
+          <CardSubtitle>{prix}</CardSubtitle>
+          <CardSubtitle>{date}</CardSubtitle>
+          <CardSubtitle>{sujet}</CardSubtitle>
+          <CardText>{descriptif}</CardText>
           <EditModal />
-        </td>
-      </tr>
-    </>
+        </CardBody>
+      </Card>
+    </div>
   );
 };
 
