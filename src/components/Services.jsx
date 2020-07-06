@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container, Spinner  } from "reactstrap";
+import { Row, Table, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 const Services = () => {
+  const [serviceDatas, setServiceDatas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
   const servicesInfo = [
     {
       id: 1,
@@ -14,9 +17,6 @@ const Services = () => {
     },
   ];
 
-  const [partenaireDatas, setPartenaireDatas] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     getService();
   }, []);
@@ -26,8 +26,8 @@ const Services = () => {
       const res = Axios.get(
         "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
       );
-      setPartenaireDatas(res);
-      console.log(partenaireDatas);
+      setServiceDatas(res);
+      console.log(serviceDatas);
     } catch (err) {
       console.log(err);
     } finally {
@@ -49,8 +49,9 @@ const Services = () => {
   ItemLoop(servicesInfo);
 
   if (isLoading) {
-    return <Spinner color="primary"/>;
+    return <Spinner color="primary" />;
   }
+
 
   return (
     <Container>
