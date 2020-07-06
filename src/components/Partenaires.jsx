@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+import { Row, Table, Container, Spinner } from "reactstrap";
+import axios from 'axios';
 const Partenaires = () => {
+  const [partenaireData, setPartenaireData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getPartenaire()
+  }, [])
+
+  const getPartenaire = async () => {
+    try{
+      const res = axios.get("https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires");
+      setPartenaireData(res)
+        console.log(partenaireData)
+    }catch(err){
+      console.log(err)
+    }finally{
+      setIsLoading(false)
+    }
+  }
   const partenairesInfo = [
     {
       id: 1,
@@ -24,6 +43,10 @@ const Partenaires = () => {
     }
   };
   ItemLoop(partenairesInfo);
+
+  if(isLoading){
+    return <Spinner color="primary"/>;
+  }
 
   return (
     <Container>

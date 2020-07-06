@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+import { Row, Table, Container, Spinner } from "reactstrap";
+import Axios from "axios";
 const Products = () => {
   const productInfo = [
     {
@@ -13,6 +14,29 @@ const Products = () => {
         "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
     },
   ];
+
+  const [productDatas, setProductDatas] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+   getProduct()
+  }, [])
+
+  const getProduct= async () =>{
+    try{
+      const res = Axios.get("https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products")
+      setProductDatas(res)
+      console.log(productDatas)
+    }catch(err){
+      console.log(err)
+    }finally{
+      setIsLoading(false)
+    }
+  }
+
+  if (isLoading){
+    return <Spinner color="primary"/>;
+  }
   let Items = [];
 
   const ItemLoop = (table) => {

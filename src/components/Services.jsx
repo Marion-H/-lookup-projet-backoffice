@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+import { Row, Table, Container, Spinner  } from "reactstrap";
+import Axios from "axios";
 const Services = () => {
   const servicesInfo = [
     {
@@ -12,6 +13,28 @@ const Services = () => {
         "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
     },
   ];
+
+  const [partenaireDatas, setPartenaireDatas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getService();
+  }, []);
+
+  const getService = async () => {
+    try {
+      const res = Axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
+      );
+      setPartenaireDatas(res);
+      console.log(partenaireDatas);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   let Items = [];
 
   const ItemLoop = (table) => {
@@ -24,6 +47,10 @@ const Services = () => {
     }
   };
   ItemLoop(servicesInfo);
+
+  if (isLoading) {
+    return <Spinner color="primary"/>;
+  }
 
   return (
     <Container>

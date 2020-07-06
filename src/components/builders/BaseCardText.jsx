@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EditModal from "./EditModal";
 import styles from "./Card.module.css";
 
-const BaseCardText = ({ item, value, dataArray }) => {
+const BaseCardText = ({ item, value, dataArray, onClick }) => {
   const checkImage = ({ dataArray }) => {
     for (let i = 0; i < Object.keys(dataArray[0]).length; i++) {
       if (item === "id") {
@@ -36,7 +36,7 @@ const BaseCardText = ({ item, value, dataArray }) => {
           {checkImage({ dataArray })}
         </td>
         <td>
-          <EditModal />
+          <EditModal onClick={onClick}/>
         </td>
       </tr>
     </>
