@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import BaseCardText from "./builders/BaseCardText";
 import { Row, Table, Container } from "reactstrap";
 import Axios from "axios";
 const RelationPresse = () => {
@@ -58,14 +57,14 @@ const RelationPresse = () => {
       </Row>
       <Row>
         <Table>
-          {Items.map((item, key) => (
+          {/* {Items.map((item, key) => (
             <BaseCardText
               key={key}
               item={item.item}
               value={item.value}
               dataArray={relationPresseInfo}
             />
-          ))}
+          ))} */}
         </Table>
       </Row>
     </Container>

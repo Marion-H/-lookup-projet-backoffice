@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BaseCardImage from "./builders/BaseCardImage";
+// import BaseCardImage from "./builders/BaseCardCarousel";
 import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 const Services = () => {
@@ -46,25 +46,7 @@ const Services = () => {
       <Row>
         <h1>Services</h1>
       </Row>
-      <Row>
-        {serviceDatas.map((it) => (
-          <BaseCardImage
-            titre={it.title}
-            description={it.description}
-            logo={it.logo}
-          />
-        ))}
-        {/* <Table>
-          {Items.map((item, key) => (
-            <BaseCardText
-              key={key}
-              item={item.item}
-              value={item.value}
-              dataArray={servicesInfo}
-            />
-          ))}
-        </Table> */}
-      </Row>
+      <Row></Row>{" "}
     </Container>
   );
 };
