@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Row, Table, Container, Spinner } from "reactstrap";
+import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 const RelationPresse = () => {
@@ -33,16 +33,14 @@ const RelationPresse = () => {
         <h1>Relation Presse</h1>
       </Row>
       <Row>
-        <Table>
-          {relationPressDatas.map((it, key) => (
-            <BaseCardRelationPresse
-              key={key}
-              titre={it.title}
-              descriptif={it.description}
-              picture={it.picture}
-            />
-          ))}
-        </Table>
+        {relationPressDatas.map((it, key) => (
+          <BaseCardRelationPresse
+            key={key}
+            titre={it.title}
+            descriptif={it.description}
+            picture={it.picture}
+          />
+        ))}
       </Row>
     </Container>
   );
