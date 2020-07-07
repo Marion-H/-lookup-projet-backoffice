@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Row, Table, Container, Spinner } from "reactstrap";
 import axios from "axios";
+import BaseCardPartenaires from "./builders/BaseCardPartenaires";
 const Partenaires = () => {
   const [partenaireData, setPartenaireData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getPartenaire();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPartenaire = async () => {
@@ -22,28 +24,6 @@ const Partenaires = () => {
       setIsLoading(false);
     }
   };
-  const partenairesInfo = [
-    {
-      id: 1,
-      titre: "pyrenees atlantiques",
-      descriptif: "an important partner",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
-
-  let Items = [];
-
-  const ItemLoop = (table) => {
-    for (let i = 0; i < Object.keys(table[0]).length; i++) {
-      let ItemValue = {
-        item: Object.keys(table[0])[i],
-        value: Object.values(table[0])[i],
-      };
-      Items.push(ItemValue);
-    }
-  };
-  ItemLoop(partenairesInfo);
 
   if (isLoading) {
     return <Spinner color="primary" />;
@@ -56,14 +36,14 @@ const Partenaires = () => {
       </Row>
       <Row>
         <Table>
-          {/* {Items.map((item, key) => (
-            <BaseCardText
+          {partenaireData.map((it, key) => (
+            <BaseCardPartenaires
               key={key}
-              item={item.item}
-              value={item.value}
-              dataArray={Items}
+              titre={it.title}
+              descriptif={it.description}
+              logo={it.logo}
             />
-          ))} */}
+          ))}
         </Table>
       </Row>
     </Container>
