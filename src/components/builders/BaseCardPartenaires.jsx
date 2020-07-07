@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  Button,
-} from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import ModalPartenaires from "./ModalPartenaires";
 
-const BaseCardPartenaires = ({ descriptif, logo, titre }) => {
+const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
   return (
     <div>
       <Card>
@@ -16,7 +10,12 @@ const BaseCardPartenaires = ({ descriptif, logo, titre }) => {
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
-          <Button> Go! </Button>
+          <ModalPartenaires
+            uuid={uuid}
+            title={titre}
+            description={descriptif}
+            logo={logo}
+          />
         </CardBody>
       </Card>
     </div>
