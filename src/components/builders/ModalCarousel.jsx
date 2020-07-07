@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
 import {
     Form,
     Button,
@@ -9,10 +12,10 @@ import {
     Container,
     Row,
     Col,
-    Spinner,
 } from "reactstrap";
 import Axios from "axios";
 
+toast.configure();
 const ModalCarousel = ({
     onClick,
     title,
@@ -21,45 +24,61 @@ const ModalCarousel = ({
     picture,
     uuid,
 }) => {
+    const notifySuccess = () => {
+        toast.success("Carousel bien modifié !", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
+    const notifyError = () => {
+        toast.error("Erreur Notification !", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    };
     const [modal, setModal] = useState(false);
 
-    const [titleChange, setTitleChange] = useState(title);
-    const [descriptionChange, setDescriptionChange] = useState(description);
-    const [linkChange, setLinkChange] = useState(link);
-    const [pictureChange, setPictureChange] = useState(picture);
-    const [carousel, setcarousel] = useState({
+    const [carousel, setCarousel] = useState({
         title,
         description,
         link,
         picture,
     });
-
-    const [isLoading, setIsLoading] = useState(false);
+    const { handleSubmit, register, errors } = useForm();
+    // const onSubmit = (values) => console.log(values);
 
     const toggle = () => setModal(!modal);
 
+    const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMjcxMzQsImV4cCI6MTU5NDEzMDczNH0.mgJ0fcy2e3MKPpB_SThS28vrVsyfiQT7Te5cCp2PH3Q";
+
     const putCarousel = async () => {
         try {
-            if (titleChange === "") {
-            }
             await Axios.put(
                 `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
+                carousel,
                 {
-                    titleChange,
-                    descriptionChange,
-                    linkChange,
-                    pictureChange,
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
             );
-            setIsLoading(false);
+            notifySuccess();
         } catch (err) {
+            notifyError();
             console.log(err);
         }
     };
-
-    if (isLoading) {
-        return <Spinner color="primary" />;
-    }
 
     return (
         <Container>
@@ -69,7 +88,7 @@ const ModalCarousel = ({
 
             <Modal isOpen={modal} toggle={toggle} size="lg">
                 <ModalHeader toggle={toggle}>Carousel</ModalHeader>
-                <Form>
+                <Form onSubmit={handleSubmit(putCarousel)}>
                     <ModalBody>
                         <Row>
                             <Col lg="12">
@@ -80,10 +99,14 @@ const ModalCarousel = ({
                             <Col lg="6">{title}</Col>
                             <Col lg="6">
                                 <input
+                                    ref={register({ required: true })}
                                     type="text"
+                                    name="title"
                                     onChange={(e) =>
-                                        // setTitleChange(e.target.value)
-                                        setcarousel({ title: e.target.value })
+                                        setCarousel({
+                                            ...carousel,
+                                            title: e.target.value,
+                                        })
                                     }
                                 />
                             </Col>
@@ -97,9 +120,14 @@ const ModalCarousel = ({
                             <Col lg="6">{description}</Col>
                             <Col lg="6">
                                 <input
+                                    ref={register({ required: true })}
+                                    name="description"
                                     type="text"
                                     onChange={(e) =>
-                                        setDescriptionChange(e.target.value)
+                                        setCarousel({
+                                            ...carousel,
+                                            description: e.target.value,
+                                        })
                                     }
                                 />
                             </Col>
@@ -113,9 +141,14 @@ const ModalCarousel = ({
                             <Col lg="6">{link}</Col>
                             <Col lg="6">
                                 <input
+                                    ref={register({ required: true })}
                                     type="text"
+                                    name="lien"
                                     onChange={(e) =>
-                                        setLinkChange(e.target.value)
+                                        setCarousel({
+                                            ...carousel,
+                                            link: e.target.value,
+                                        })
                                     }
                                 />
                             </Col>
@@ -129,16 +162,21 @@ const ModalCarousel = ({
                             <Col lg="6">{picture}</Col>
                             <Col lg="6">
                                 <input
+                                    ref={register({ required: true })}
                                     type="text"
+                                    name="image"
                                     onChange={(e) =>
-                                        setPictureChange(e.target.value)
+                                        setCarousel({
+                                            ...carousel,
+                                            picture: e.target.value,
+                                        })
                                     }
                                 />
                             </Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={onClick}>
+                        <Button color="primary" onClick={toggle}>
                             Valider
                         </Button>{" "}
                         <Button color="secondary" onClick={toggle}>
@@ -147,6 +185,17 @@ const ModalCarousel = ({
                     </ModalFooter>
                 </Form>
             </Modal>
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </Container>
     );
 };

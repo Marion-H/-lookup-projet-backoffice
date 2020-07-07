@@ -34,8 +34,9 @@ const Carousel = () => {
             </Row>
             <Row>
                 <Table>
-                    {carouselDatas.map((it, key) => (
+                    {carouselDatas.map((it) => (
                         <BaseCardCarousel
+                            key={it.uuid}
                             uuid={it.uuid}
                             titre={it.title}
                             link={it.link}
