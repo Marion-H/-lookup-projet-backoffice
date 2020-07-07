@@ -47,4 +47,5 @@ const RelationPresse = () => {
     </Container>
   );
 };
+
 export default RelationPresse;

@@ -34,14 +34,14 @@ const Carousel = () => {
       </Row>
       <Row>
         <Table>
-          {carouselDatas.map((it, key) => (
+          {carouselDatas.map((it) => (
             <BaseCardCarousel
-              id={key}
+              key={it.uuid}
+              uuid={it.uuid}
               titre={it.title}
               link={it.link}
               picture={it.picture}
               descriptif={it.description}
-              onClick={() => alert("coucou")}
             />
           ))}
         </Table>
