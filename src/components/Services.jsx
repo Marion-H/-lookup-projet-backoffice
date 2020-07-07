@@ -1,29 +1,32 @@
-import React from "react";
-import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+import React, { useEffect, useState } from "react";
+// import BaseCardImage from "./builders/BaseCardCarousel";
+import { Row, Container, Spinner, Table } from "reactstrap";
+import Axios from "axios";
+import BaseCardServices from "./builders/BaseCardServices";
 const Services = () => {
-  const servicesInfo = [
-    {
-      id: 1,
-      titre: "LookUp",
-      descriptif:
-        "this is a fancy product with some nice text talking about it. If we add some more text it should wrap",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
+  const [serviceDatas, setServiceDatas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(servicesInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(servicesInfo[0])[i]}
-  //                 value={servicesInfo[0][i]}
-  //                 dataArray={servicesInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  useEffect(() => {
+    const getService = async () => {
+      try {
+        const res = await Axios.get(
+          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
+        );
+        setServiceDatas(res.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getService();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (isLoading) {
+    return <Spinner color="primary" />;
+  }
 
   return (
     <Container>
@@ -32,30 +35,17 @@ const Services = () => {
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[0]}
-            value={servicesInfo[0].id}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[1]}
-            value={servicesInfo[0].titre}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[2]}
-            value={servicesInfo[0].descriptif}
-            dataArray={servicesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(servicesInfo[0])[3]}
-            value={servicesInfo[0].image}
-            dataArray={servicesInfo}
-          />
+          {serviceDatas.map((it, key) => (
+            <BaseCardServices
+              key={key}
+              titre={it.title}
+              descriptif={it.description}
+              logo={it.logo}
+            />
+          ))}
         </Table>
-      </Row>
+      </Row>{" "}
     </Container>
   );
 };
-
 export default Services;

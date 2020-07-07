@@ -8,8 +8,7 @@ import {
   Container,
 } from "reactstrap";
 
-const EditModal = ({onClick}) => {
-
+const EditModal = ({ onClick }) => {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -17,14 +16,15 @@ const EditModal = ({onClick}) => {
   return (
     <Container>
       <Button color="danger" onClick={toggle}>
-        Modifier 
+        Modifier
       </Button>
 
-      <Modal isOpen={modal} toggle={toggle}  size="lg">
+      <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
           <input />
         </ModalBody>
+
         <ModalFooter>
           <Button color="primary" onClick={onClick}>
             Valider

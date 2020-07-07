@@ -1,28 +1,31 @@
-import React from "react";
-import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { Row, Table, Container, Spinner } from "reactstrap";
+import Axios from "axios";
+import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 const RelationPresse = () => {
-  const relationPresseInfo = [
-    {
-      id: 1,
-      titre: "pyrenees atlantiques",
-      descriptif: "an important media article etc",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
+  const [relationPressDatas, setRelationPressDatas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(relationPresseInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(relationPresseInfo[0])[i]}
-  //                 value={relationPresseInfo[0][i]}
-  //                 dataArray={relationPresseInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  useEffect(() => {
+    const getPress = async () => {
+      try {
+        const res = await Axios.get(
+          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press"
+        );
+        setRelationPressDatas(res.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getPress();
+  }, []);
+
+  if (isLoading) {
+    return <Spinner color="info" />;
+  }
 
   return (
     <Container>
@@ -31,30 +34,17 @@ const RelationPresse = () => {
       </Row>
       <Row>
         <Table>
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[0]}
-            value={relationPresseInfo[0].id}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[1]}
-            value={relationPresseInfo[0].titre}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[2]}
-            value={relationPresseInfo[0].descriptif}
-            dataArray={relationPresseInfo}
-          />
-          <BaseCardText
-            item={Object.keys(relationPresseInfo[0])[3]}
-            value={relationPresseInfo[0].image}
-            dataArray={relationPresseInfo}
-          />
+          {relationPressDatas.map((it, key) => (
+            <BaseCardRelationPresse
+              key={key}
+              titre={it.title}
+              descriptif={it.description}
+              picture={it.picture}
+            />
+          ))}
         </Table>
       </Row>
     </Container>
   );
 };
-
 export default RelationPresse;
