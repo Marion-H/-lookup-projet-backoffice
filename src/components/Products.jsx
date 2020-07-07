@@ -1,5 +1,4 @@
 import React from "react";
-import BaseCardText from "./builders/BaseCardCarousel";
 import { Row, Table, Container } from "reactstrap";
 const Products = () => {
     const productInfo = [
@@ -58,14 +57,14 @@ const Products = () => {
             </Row>
             <Row>
                 <Table>
-                    {Items.map((item, key) => (
-                        <BaseCardText
-                            key={key}
-                            item={item.item}
-                            value={item.value}
-                            dataArray={productInfo}
-                        />
-                    ))}
+                    {/* {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={productInfo}
+            />
+          ))} */}
                 </Table>
             </Row>
         </Container>

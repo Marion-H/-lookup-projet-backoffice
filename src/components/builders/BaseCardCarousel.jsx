@@ -1,52 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import {
+    Card,
+    CardImg,
+    CardText,
+    CardBody,
+    CardTitle,
+    CardSubtitle,
+} from "reactstrap";
 import ModalCarousel from "./ModalCarousel";
-import styles from "./Card.module.css";
 
-const BaseCardText = ({ item, value, dataArray, onClick }) => {
-    const checkImage = ({ dataArray }) => {
-        for (let i = 0; i < Object.keys(dataArray[0]).length; i++) {
-            if (item === "id") {
-                return value;
-            }
-            if (item === "image") {
-                return (
-                    <img
-                        className={styles.tableImg}
-                        src={value}
-                        alt="product"
-                    />
-                );
-            }
-            if (item !== "image" && item !== "id") {
-                return value;
-            }
-        }
-    };
-
-    const [hover, setHover] = useState(false);
-
-    const hoverModal = () => {
-        setHover(!hover);
-    };
-
+const BaseCardCarousel = ({ descriptif, picture, titre, link, uuid }) => {
     return (
-        <>
-            <tr className={styles.tableLook}>
-                <td lg="6">{item}</td>
-                <td
-                    onMouseEnter={hoverModal}
-                    onMouseLeave={hoverModal}
-                    className={hover ? styles.edit : ""}
-                    lg="6"
-                >
-                    {checkImage({ dataArray })}
-                </td>
-                <td>
-                    <ModalCarousel onClick={onClick} />
-                </td>
-            </tr>
-        </>
+        <div>
+            <Card>
+                <CardImg top width="100%" src={picture} alt={descriptif} />
+                <CardBody>
+                    <CardTitle>{titre}</CardTitle>
+                    <CardSubtitle>Lien: {link}</CardSubtitle>
+                    <CardText>descriptif: {descriptif}</CardText>
+                    <ModalCarousel
+                        uuid={uuid}
+                        title={titre}
+                        description={descriptif}
+                        link={link}
+                        picture={picture}
+                    />
+                </CardBody>
+            </Card>
+        </div>
     );
 };
 
-export default BaseCardText;
+export default BaseCardCarousel;

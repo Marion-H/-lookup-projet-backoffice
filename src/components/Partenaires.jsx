@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import BaseCardText from "./builders/BaseCardCarousel";
 import { Row, Table, Container, Spinner } from "reactstrap";
 import axios from "axios";
 const Partenaires = () => {
@@ -57,14 +56,14 @@ const Partenaires = () => {
             </Row>
             <Row>
                 <Table>
-                    {Items.map((item, key) => (
-                        <BaseCardText
-                            key={key}
-                            item={item.item}
-                            value={item.value}
-                            dataArray={Items}
-                        />
-                    ))}
+                    {/* {Items.map((item, key) => (
+            <BaseCardText
+              key={key}
+              item={item.item}
+              value={item.value}
+              dataArray={Items}
+            />
+          ))} */}
                 </Table>
             </Row>
         </Container>

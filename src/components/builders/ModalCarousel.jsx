@@ -13,13 +13,26 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 
-const ModalCarousel = ({ onClick, title, description, link, picture }) => {
+const ModalCarousel = ({
+    onClick,
+    title,
+    description,
+    link,
+    picture,
+    uuid,
+}) => {
     const [modal, setModal] = useState(false);
 
-    const [titleChange, setTitleChange] = useState({ title });
-    const [descriptionChange, setDescriptionChange] = useState({ description });
-    const [linkChange, setLinkChange] = useState({ link });
-    const [pictureChange, setPictureChange] = useState({ picture });
+    const [titleChange, setTitleChange] = useState(title);
+    const [descriptionChange, setDescriptionChange] = useState(description);
+    const [linkChange, setLinkChange] = useState(link);
+    const [pictureChange, setPictureChange] = useState(picture);
+    const [carousel, setcarousel] = useState({
+        title,
+        description,
+        link,
+        picture,
+    });
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -27,8 +40,10 @@ const ModalCarousel = ({ onClick, title, description, link, picture }) => {
 
     const putCarousel = async () => {
         try {
+            if (titleChange === "") {
+            }
             await Axios.put(
-                `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/950e3eb0-4b1d-4e84-8841-7b4a5d087f70`,
+                `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
                 {
                     titleChange,
                     descriptionChange,
@@ -58,25 +73,28 @@ const ModalCarousel = ({ onClick, title, description, link, picture }) => {
                     <ModalBody>
                         <Row>
                             <Col lg="12">
-                                <label>{title} </label>
+                                <label>Titre </label>
                             </Col>
-
-                            <Col lg="6">Title value</Col>
+                        </Row>
+                        <Row>
+                            <Col lg="6">{title}</Col>
                             <Col lg="6">
                                 <input
                                     type="text"
                                     onChange={(e) =>
-                                        setTitleChange(e.target.value)
+                                        // setTitleChange(e.target.value)
+                                        setcarousel({ title: e.target.value })
                                     }
                                 />
                             </Col>
                         </Row>
                         <Row>
                             <Col lg="12">
-                                <label>{description} </label>
+                                <label> Description</label>
                             </Col>
-
-                            <Col lg="6">Descriptif value</Col>
+                        </Row>
+                        <Row>
+                            <Col lg="6">{description}</Col>
                             <Col lg="6">
                                 <input
                                     type="text"
@@ -88,10 +106,11 @@ const ModalCarousel = ({ onClick, title, description, link, picture }) => {
                         </Row>
                         <Row>
                             <Col lg="12">
-                                <label>{link} </label>
+                                <label>Lien </label>
                             </Col>
-
-                            <Col lg="6">Lien value</Col>
+                        </Row>
+                        <Row>
+                            <Col lg="6">{link}</Col>
                             <Col lg="6">
                                 <input
                                     type="text"
@@ -103,10 +122,11 @@ const ModalCarousel = ({ onClick, title, description, link, picture }) => {
                         </Row>
                         <Row>
                             <Col lg="12">
-                                <label>{picture} </label>
+                                <label> Image</label>
                             </Col>
-
-                            <Col lg="6">Picture value</Col>
+                        </Row>
+                        <Row>
+                            <Col lg="6">{picture}</Col>
                             <Col lg="6">
                                 <input
                                     type="text"

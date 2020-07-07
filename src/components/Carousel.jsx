@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BaseCardText from "./builders/BaseCardCarousel";
+import BaseCardCarousel from "./builders/BaseCardCarousel";
 import { Container, Row, Table, Spinner } from "reactstrap";
 import axios from "axios";
 
@@ -23,33 +23,6 @@ const Carousel = () => {
         getCarousel();
     }, []);
 
-    let Items = [];
-    const ItemLoop = (table) => {
-        for (let i = 0; i < Object.keys(table).length; i++) {
-            let ItemValue = {
-                item: Object.keys(table[0])[i],
-                value: Object.values(table[0])[i],
-            };
-            console.log(Object.keys(table).length);
-            console.log(table);
-            console.log(Object.keys(table[0]));
-            Items.push(ItemValue);
-        }
-    };
-    ItemLoop(carouselDatas);
-    // console.log("coucou", Items);
-
-    // const carouselInfo = [
-    //   {
-    //     id: 1,
-    //     titre: "Some title",
-    //     sujet: "an interesting subject",
-    //     date: "26/06/2020",
-    //     image:
-    //       "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    //   },
-    // ];
-
     if (isLoading) {
         return <Spinner color="primary" />;
     }
@@ -61,12 +34,13 @@ const Carousel = () => {
             </Row>
             <Row>
                 <Table>
-                    {Items.map((item, key) => (
-                        <BaseCardText
-                            key={key}
-                            item={item.item}
-                            value={item.value}
-                            dataArray={carouselDatas}
+                    {carouselDatas.map((it, key) => (
+                        <BaseCardCarousel
+                            uuid={it.uuid}
+                            titre={it.title}
+                            link={it.link}
+                            picture={it.picture}
+                            descriptif={it.description}
                             onClick={() => alert("coucou")}
                         />
                     ))}
