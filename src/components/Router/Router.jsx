@@ -10,25 +10,29 @@ import RelationPresse from "../RelationPresse";
 import Partenaires from "../Partenaires";
 import LookUp from "../LookUp";
 import styles from "./Router.module.css";
-// import EditModal from "../builders/EditModal";
+import ModalCarousel from "../builders/ModalCarousel";
 
 export default function Router() {
-  return (
-    <div className={styles.navRow}>
-      <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/products" component={Products} />
-          <Route exact path="/carousel" component={Carousel} />
-          <Route exact path="/services" component={Services} />
-          <Route exact path="/conferences" component={Conferences} />
-          <Route exact path="/relationpresse" component={RelationPresse} />
-          <Route exact path="/partenaires" component={Partenaires} />
-          <Route exact path="/info" component={LookUp} />
-          {/* <Route path="/edit_modal" component={EditModal} /> */}
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+    return (
+        <div className={styles.navRow}>
+            <BrowserRouter>
+                <NavBar />
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/products" component={Products} />
+                    <Route exact path="/carousel" component={Carousel} />
+                    <Route exact path="/services" component={Services} />
+                    <Route exact path="/conferences" component={Conferences} />
+                    <Route
+                        exact
+                        path="/relationpresse"
+                        component={RelationPresse}
+                    />
+                    <Route exact path="/partenaires" component={Partenaires} />
+                    <Route exact path="/info" component={LookUp} />
+                    <Route path="/edit_modal" component={ModalCarousel} />
+                </Switch>
+            </BrowserRouter>
+        </div>
+    );
 }
