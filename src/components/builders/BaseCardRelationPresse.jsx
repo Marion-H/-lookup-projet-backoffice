@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  Button,
-} from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import ModalPresse from "./ModalPresse";
 
-const BaseCardRelationPresse = ({ descriptif, picture, titre, price }) => {
+const BaseCardRelationPresse = ({ descriptif, picture, titre, uuid }) => {
   return (
     <div>
       <Card>
@@ -16,7 +10,12 @@ const BaseCardRelationPresse = ({ descriptif, picture, titre, price }) => {
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
-          <Button> Go! </Button>
+          <ModalPresse
+            uuid={uuid}
+            title={titre}
+            description={descriptif}
+            picture={picture}
+          />
         </CardBody>
       </Card>
     </div>
