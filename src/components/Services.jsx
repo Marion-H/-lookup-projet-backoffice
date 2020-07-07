@@ -33,9 +33,9 @@ const Services = () => {
         <h1>Services</h1>
       </Row>
       <Row>
-        {serviceDatas.map((it, key) => (
+        {serviceDatas.map((it) => (
           <BaseCardServices
-            key={key}
+            uuid={it.uuid}
             titre={it.title}
             descriptif={it.description}
             logo={it.logo}
