@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import BaseCardImage from "./builders/BaseCardCarousel";
-import { Row, Container, Spinner, Table } from "reactstrap";
+import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 import BaseCardServices from "./builders/BaseCardServices";
 const Services = () => {
@@ -34,16 +33,14 @@ const Services = () => {
         <h1>Services</h1>
       </Row>
       <Row>
-        <Table>
-          {serviceDatas.map((it, key) => (
-            <BaseCardServices
-              key={key}
-              titre={it.title}
-              descriptif={it.description}
-              logo={it.logo}
-            />
-          ))}
-        </Table>
+        {serviceDatas.map((it, key) => (
+          <BaseCardServices
+            key={key}
+            titre={it.title}
+            descriptif={it.description}
+            logo={it.logo}
+          />
+        ))}
       </Row>{" "}
     </Container>
   );
