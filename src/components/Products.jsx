@@ -1,54 +1,31 @@
-import React from "react";
-import { Row, Table, Container } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Row, Table, Container, Spinner } from "reactstrap";
+import axios from "axios";
+import BaseCardProduct from "./builders/BaseCardProduct";
 const Products = () => {
-  const productInfo = [
-    {
-      id: 1,
-      nom: "LookUp",
-      prix: 45.99,
-      descriptif:
-        "this is a fancy product with some nice text talking about it. If we add some more text it should wrap",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
+  const [productData, setProductData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const [productDatas, setProductDatas] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires"
+        );
+        setProductData(res.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // useEffect(() => {
-  //   getProduct();
-  // }, []);
-
-  // const getProduct = async () => {
-  //   try {
-  //     const res = Axios.get(
-  //       "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
-  //     );
-  //     setProductDatas(res);
-  //     console.log(productDatas);
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // if (isLoading) {
-  //   return <Spinner color="primary" />;
-  // }
-  let Items = [];
-
-  const ItemLoop = (table) => {
-    for (let i = 0; i < Object.keys(table[0]).length; i++) {
-      let ItemValue = {
-        item: Object.keys(table[0])[i],
-        value: Object.values(table[0])[i],
-      };
-      Items.push(ItemValue);
-    }
-  };
-  ItemLoop(productInfo);
+  if (isLoading) {
+    return <Spinner color="primary" />;
+  }
 
   return (
     <Container>
@@ -57,14 +34,14 @@ const Products = () => {
       </Row>
       <Row>
         <Table>
-          {/* {Items.map((item, key) => (
-            <BaseCardText
+          {productData.map((it, key) => (
+            <BaseCardProduct
               key={key}
-              item={item.item}
-              value={item.value}
-              dataArray={productInfo}
+              name={it.name}
+              prix={it.price}
+              descriptif={it.description}
             />
-          ))} */}
+          ))}
         </Table>
       </Row>
     </Container>

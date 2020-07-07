@@ -13,7 +13,6 @@ const Conferences = () => {
           "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences"
         );
         setConferenceDatas(res.data);
-        console.log(conferenceDatas);
       } catch (err) {
         console.log(err);
       } finally {
@@ -21,6 +20,7 @@ const Conferences = () => {
       }
     };
     getConference();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {

@@ -17,7 +17,6 @@ const Partenaires = () => {
         "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires"
       );
       setPartenaireData(res);
-      console.log(partenaireData);
     } catch (err) {
       console.log(err);
     } finally {
