@@ -8,7 +8,7 @@ function NavBar() {
 
   const navlinks = [
     {
-      title: "Products",
+      title: "Produits",
       to: "/products",
     },
     {

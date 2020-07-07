@@ -10,7 +10,7 @@ const Products = () => {
     const getProduct = async () => {
       try {
         const res = await axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires"
+          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
         );
         setProductData(res.data);
       } catch (err) {
@@ -30,15 +30,17 @@ const Products = () => {
   return (
     <Container>
       <Row>
-        <h1>Products</h1>
+        <h1>Produits</h1>
       </Row>
       <Row>
         {productData.map((it, key) => (
           <BaseCardProduct
-            key={key}
+            key={it.uuid}
+            uuid={it.uuid}
             name={it.name}
-            prix={it.price}
-            descriptif={it.description}
+            price={it.price}
+            description={it.description}
+            picture={it.picture}
           />
         ))}
       </Row>
