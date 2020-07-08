@@ -6,8 +6,9 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
+  Button,
 } from "reactstrap";
-import ModalProduct from "./ModalProduct";
+import { Link } from "react-router-dom";
 
 const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
   return (
@@ -19,13 +20,9 @@ const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
           <CardText>descriptif: {description}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
 
-          <ModalProduct
-            uuid={uuid}
-            name={name}
-            description={description}
-            price={price}
-            picture={picture}
-          />
+          <Link to={`/${uuid}/products_info`}>
+            <Button>Informations</Button>
+          </Link>
         </CardBody>
       </Card>
     </div>

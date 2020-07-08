@@ -33,7 +33,7 @@ const Products = () => {
         <h1>Produits</h1>
       </Row>
       <Row>
-        {productData.map((it, key) => (
+        {productData.map((it) => (
           <BaseCardProduct
             key={it.uuid}
             uuid={it.uuid}

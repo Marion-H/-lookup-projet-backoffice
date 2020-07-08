@@ -17,7 +17,17 @@ import Axios from "axios";
 
 toast.configure();
 
-function ModalProduct({ description, picture, name, price, uuid, onClick }) {
+function ModalProduct({
+  uuid,
+  title,
+  description,
+  description2,
+  description3,
+  picture,
+  picture2,
+  picture3,
+  onClick,
+}) {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -43,22 +53,25 @@ function ModalProduct({ description, picture, name, price, uuid, onClick }) {
   const [modal, setModal] = useState(false);
 
   const [product, setProduct] = useState({
-    name,
+    title,
     description,
+    description2,
+    description3,
     picture,
-    price,
+    picture2,
+    picture3,
   });
   const { handleSubmit, register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzQ3NTAsImV4cCI6MTU5NDEzODM1MH0.fukWDHGJ0x3wC9m8xb-tNaxSf_BWdgfIvgL-_wflNm8";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMTgyMzMsImV4cCI6MTU5NDIyMTgzM30.ki6o6DIeAUV4JIsBKPaNQhk7nGRtJq5PlYMfXwY61eA";
 
   const putProduct = async () => {
     try {
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}`,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
         product,
         {
           headers: {
@@ -80,25 +93,25 @@ function ModalProduct({ description, picture, name, price, uuid, onClick }) {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Produits</ModalHeader>
+        <ModalHeader toggle={toggle}>Produits informations</ModalHeader>
         <Form onSubmit={handleSubmit(putProduct)}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Nom </label>
+                <h6>Titre</h6>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{name}</Col>
+              <Col lg="6">{title}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="name"
+                  name="title"
                   onChange={(e) =>
                     setProduct({
                       ...product,
-                      name: e.target.value,
+                      title: e.target.value,
                     })
                   }
                 />
@@ -106,13 +119,15 @@ function ModalProduct({ description, picture, name, price, uuid, onClick }) {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description</label>
+                <label>
+                  <h6>Description</h6>{" "}
+                </label>
               </Col>
             </Row>
             <Row>
               <Col lg="6">{description}</Col>
               <Col lg="6">
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"
@@ -126,8 +141,42 @@ function ModalProduct({ description, picture, name, price, uuid, onClick }) {
               </Col>
             </Row>
             <Row>
+              <Col lg="6">{description2}</Col>
+              <Col lg="6">
+                <textarea
+                  ref={register({ required: true })}
+                  name="description2"
+                  type="text"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      description2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{description3}</Col>
+              <Col lg="6">
+                <textarea
+                  ref={register({ required: true })}
+                  name="description3"
+                  type="text"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      description3: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
               <Col lg="12">
-                <label>Image </label>
+                <label>
+                  <h6>Image</h6>
+                </label>
               </Col>
             </Row>
             <Row>
@@ -147,21 +196,32 @@ function ModalProduct({ description, picture, name, price, uuid, onClick }) {
               </Col>
             </Row>
             <Row>
-              <Col lg="12">
-                <label> Prix</label>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{price} €</Col>
+              <Col lg="6">{picture2}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="price"
+                  name="picture2"
                   onChange={(e) =>
                     setProduct({
                       ...product,
-                      price: e.target.value,
+                      picture2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{picture3}</Col>
+              <Col lg="6">
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="picture3"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      picture3: e.target.value,
                     })
                   }
                 />
