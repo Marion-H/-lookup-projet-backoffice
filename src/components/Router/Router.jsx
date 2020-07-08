@@ -1,6 +1,7 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "../Home";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import Login from "../Login";
 import NavBar from "../Navbar/NavBar";
 import Products from "../Products";
 import Carousel from "../Carousel";
@@ -11,28 +12,66 @@ import Partenaires from "../Partenaires";
 import LookUp from "../LookUp";
 import styles from "./Router.module.css";
 import ModalCarousel from "../builders/ModalCarousel";
+import Home from "../Home";
+import { reconnect } from "../../store/actionCreators";
+
+function AuthRoute({ component: Component, ...rest }) {
+  const token = useSelector((state) => state.admin.token);
+  //   const tokenStorage = sessionStorage.getItem("token");
+  //   const dispatch = useDispatch();
+
+  //   useEffect(() => {
+  //     const token = sessionStorage.getItem("token");
+
+  //     if (token !== null) {
+  //       dispatch(reconnect(token));
+  //     }
+  //   }, []);
+
+  if (token) {
+    return (
+      <Route
+        {...rest}
+        render={(props) => (
+          <>
+            <NavBar />
+            <Component {...props} />
+          </>
+        )}
+      />
+    );
+  }
+
+  return <Redirect to="/login" />;
+}
 
 export default function Router() {
-    return (
-        <div className={styles.navRow}>
-            <BrowserRouter>
-                <NavBar />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/products" component={Products} />
-                    <Route exact path="/carousel" component={Carousel} />
-                    <Route exact path="/services" component={Services} />
-                    <Route exact path="/conferences" component={Conferences} />
-                    <Route
-                        exact
-                        path="/relationpresse"
-                        component={RelationPresse}
-                    />
-                    <Route exact path="/partenaires" component={Partenaires} />
-                    <Route exact path="/info" component={LookUp} />
-                    <Route path="/edit_modal" component={ModalCarousel} />
-                </Switch>
-            </BrowserRouter>
-        </div>
-    );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if (token !== null) {
+      dispatch(reconnect(token));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div className={styles.navRow}>
+      <BrowserRouter>
+        <Switch>
+          <AuthRoute exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <AuthRoute path="/products" component={Products} />
+          <AuthRoute path="/carousel" component={Carousel} />
+          <AuthRoute path="/services" component={Services} />
+          <AuthRoute path="/conferences" component={Conferences} />
+          <AuthRoute path="/relationpresse" component={RelationPresse} />
+          <AuthRoute path="/partenaires" component={Partenaires} />
+          <AuthRoute path="/info" component={LookUp} />
+          <AuthRoute path="/edit_modal" component={ModalCarousel} />
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
 }
