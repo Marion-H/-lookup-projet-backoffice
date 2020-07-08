@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -15,7 +15,6 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 
-toast.configure();
 const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
   const notifySuccess = () => {
     toast.success("Relation Presse bien modifié !", {
@@ -156,17 +155,6 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };

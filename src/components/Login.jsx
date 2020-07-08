@@ -1,39 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { createStore } from "redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Button, Container, Row, Col, Spinner } from "reactstrap";
 
-import { Form, Button, Container, Row, Col } from "reactstrap";
-// import Axios from 'axios';
+import { login, logout } from "../store/actionCreators";
 
-toast.configure();
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = (values) => console.log(values);
-  const notifySuccess = () => {
-    toast.success("Bienvenue !", {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.admin.token);
+
+  useEffect(() => {
+    if (token) {
+      history.push("/");
+    }
+    //eslint-disable-next-line
+  }, [token]);
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      await dispatch(login({ ...data }, history));
+    } catch (err) {
+      // TODO: handle error
+    } finally {
+      setLoading(false);
+    }
   };
-  const notifyError = () => {
-    toast.error("Email ou password incorrect !", {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
+
   return (
     <Container>
       <Row>
@@ -46,6 +44,7 @@ const Login = () => {
           <Col>
             <input
               name="email"
+              type="text"
               ref={register({
                 required: "Required",
                 pattern: {
@@ -58,29 +57,19 @@ const Login = () => {
           </Col>
           <Col>
             <input
-              name="username"
+              name="password"
+              type="password"
               ref={register({
-                validate: (value) => value !== "admin" || "Nice try!",
+                required: "Required",
               })}
             />
-            {errors.username && errors.username.message}
+            {errors.password && errors.password.message}
           </Col>
-          <Button color="success" type="submit">
-            Submit
+          <Button color="success" type="submit" disabled={loading}>
+            {loading ? <Spinner size="sm" /> : "Submit"}
           </Button>
         </Form>
       </Row>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };
