@@ -6,10 +6,10 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  Button,
 } from "reactstrap";
+import ModalConferences from "./ModalConference";
 
-const BaseCardConference = ({ subject, date, titre, picture }) => {
+const BaseCardConference = ({ subject, date, titre, picture, uuid }) => {
   return (
     <div>
       <Card>
@@ -18,7 +18,13 @@ const BaseCardConference = ({ subject, date, titre, picture }) => {
           <CardTitle>{titre}</CardTitle>
           <CardSubtitle>Date: {date}</CardSubtitle>
           <CardText>sujet: {subject}</CardText>
-          <Button> Go! </Button>
+          <ModalConferences
+            title={titre}
+            subject={subject}
+            date={date}
+            picture={picture}
+            uuid={uuid}
+          />
         </CardBody>
       </Card>
     </div>
