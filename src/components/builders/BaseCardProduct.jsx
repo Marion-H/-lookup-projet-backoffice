@@ -5,20 +5,24 @@ import {
   CardText,
   CardBody,
   CardTitle,
-  Button,
   CardSubtitle,
+  Button,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
-const BaseCardProduct = ({ descriptif, logo, name, price }) => {
+const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src={logo} alt={descriptif} />
+        <CardImg top width="100%" src={picture} alt={description} />
         <CardBody>
           <CardTitle>{name}</CardTitle>
-          <CardText>descriptif: {descriptif}</CardText>
-          <CardSubtitle>prix: {price}</CardSubtitle>
-          <Button> Go! </Button>
+          <CardText>descriptif: {description}</CardText>
+          <CardSubtitle>prix: {price} €</CardSubtitle>
+
+          <Link to={`/${uuid}/products_info`}>
+            <Button>Informations</Button>
+          </Link>
         </CardBody>
       </Card>
     </div>
