@@ -16,9 +16,9 @@ import {
 import Axios from "axios";
 
 toast.configure();
-const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
+const AddPartner = ({ onClick }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Partenaire bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -41,24 +41,20 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
-    title,
-    description,
-    logo,
-  });
+  const [partenaire, setPartenaire] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzU5ODAsImV4cCI6MTU5NDEzOTU4MH0.ha6WGPdG-97FDpBZS1ADx6aKPami6Afu95mqxBmVoKo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMjA2OTMsImV4cCI6MTU5NDIyNDI5M30.LC8-R6hdv0r-PfJVvCqSI0PJ9GGfMfFMZ4beKxp3mhA";
 
-  const putCarousel = async () => {
+  const postPartenaire = async () => {
     try {
-      await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        carousel,
+      await Axios.post(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/`,
+        partenaire,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,12 +71,12 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   return (
     <Container>
       <Button color="danger" onClick={toggle}>
-        Modifier
+        Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <Form onSubmit={handleSubmit(postPartenaire)}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -88,15 +84,14 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setPartenaire({
+                      ...partenaire,
                       title: e.target.value,
                     })
                   }
@@ -109,15 +104,14 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setPartenaire({
+                      ...partenaire,
                       description: e.target.value,
                     })
                   }
@@ -126,19 +120,18 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Logooo</label>
+                <label> Logo</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{logo}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setPartenaire({
+                      ...partenaire,
                       logo: e.target.value,
                     })
                   }
@@ -171,4 +164,4 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   );
 };
 
-export default ModalCarousel;
+export default AddPartner;

@@ -16,7 +16,7 @@ import {
 import Axios from "axios";
 
 toast.configure();
-const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
+const AddService = ({ onClick }) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -41,24 +41,20 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
-    title,
-    description,
-    logo,
-  });
+  const [services, setService] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzU5ODAsImV4cCI6MTU5NDEzOTU4MH0.ha6WGPdG-97FDpBZS1ADx6aKPami6Afu95mqxBmVoKo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMjQwMDgsImV4cCI6MTU5NDIyNzYwOH0.JjSegdHiJ_53PL3hdBk5fgv7beHulG_0ux4KdpiLgeY";
 
-  const putCarousel = async () => {
+  const postService = async () => {
     try {
-      await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        carousel,
+      await Axios.post(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/`,
+        services,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -75,12 +71,12 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   return (
     <Container>
       <Button color="danger" onClick={toggle}>
-        Modifier
+        Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <ModalHeader toggle={toggle}>Conferences</ModalHeader>
+        <Form onSubmit={handleSubmit(postService)}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -88,15 +84,14 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setService({
+                      ...services,
                       title: e.target.value,
                     })
                   }
@@ -105,19 +100,18 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description</label>
+                <label>Subject</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setService({
+                      ...services,
                       description: e.target.value,
                     })
                   }
@@ -126,19 +120,18 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Logooo</label>
+                <label> Image</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{logo}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setService({
+                      ...services,
                       logo: e.target.value,
                     })
                   }
@@ -171,4 +164,4 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   );
 };
 
-export default ModalCarousel;
+export default AddService;
