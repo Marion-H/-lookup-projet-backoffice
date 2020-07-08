@@ -18,7 +18,7 @@ import Axios from "axios";
 toast.configure();
 const AddService = ({ onClick }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Service bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,

@@ -18,7 +18,7 @@ import Axios from "axios";
 toast.configure();
 const AddPresse = ({ onClick }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Relation Presse bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,

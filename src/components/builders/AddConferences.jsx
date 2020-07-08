@@ -18,7 +18,7 @@ import Axios from "axios";
 toast.configure();
 const AddConferences = ({ onClick }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Conference bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
