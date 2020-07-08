@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  Button,
-} from "reactstrap";
+import ModaleServices from "./ModaleServices";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
-const BaseCardServices = ({ descriptif, logo, titre }) => {
+const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
   return (
     <div>
       <Card>
@@ -16,7 +10,12 @@ const BaseCardServices = ({ descriptif, logo, titre }) => {
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
-          <Button> Go! </Button>
+          <ModaleServices
+            uuid={uuid}
+            title={titre}
+            logo={logo}
+            description={descriptif}
+          />
         </CardBody>
       </Card>
     </div>

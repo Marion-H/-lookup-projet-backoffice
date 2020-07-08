@@ -33,9 +33,9 @@ const RelationPresse = () => {
         <h1>Relation Presse</h1>
       </Row>
       <Row>
-        {relationPressDatas.map((it, key) => (
+        {relationPressDatas.map((it) => (
           <BaseCardRelationPresse
-            key={key}
+            uuid={it.uuid}
             titre={it.title}
             descriptif={it.description}
             picture={it.picture}
