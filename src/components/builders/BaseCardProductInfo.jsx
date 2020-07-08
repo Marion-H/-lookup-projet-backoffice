@@ -8,6 +8,7 @@ import {
   Row,
   CardHeader,
   Spinner,
+  CardGroup,
 } from "reactstrap";
 import ModalProduct from "./ModalProduct";
 import { useParams } from "react-router-dom";
@@ -43,36 +44,48 @@ const BaseCardProductInfo = () => {
       {productInfo.map((info) => (
         <>
           <Row>
-            <Card>
-              <CardHeader>{info.title}</CardHeader>
-              <CardImg top width="100%" src={info.picture} alt={info.title} />
-              <CardBody>
-                <CardText>descriptif : {info.description}</CardText>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardImg top width="100%" src={info.picture2} alt={info.title} />
-              <CardBody>
-                <CardText>descriptif : {info.description2}</CardText>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardImg top width="100%" src={info.picture3} alt={info.title} />
-              <CardBody>
-                <CardText>descriptif : {info.description3}</CardText>
-              </CardBody>
-            </Card>
-            <ModalProduct
-              key={info.uuid}
-              uuid={info.uuid}
-              title={info.title}
-              description={info.description}
-              description2={info.description2}
-              description3={info.description3}
-              picture={info.picture}
-              picture2={info.picture2}
-              picture3={info.picture3}
-            />
+            <CardGroup>
+              <Card>
+                <CardHeader>{info.title}</CardHeader>
+                <CardImg top width="100%" src={info.picture} alt={info.title} />
+                <CardBody>
+                  <CardText>descriptif : {info.description}</CardText>
+                </CardBody>
+              </Card>
+              <Card>
+                <CardImg
+                  top
+                  width="100%"
+                  src={info.picture2}
+                  alt={info.title}
+                />
+                <CardBody>
+                  <CardText>descriptif : {info.description2}</CardText>
+                </CardBody>
+              </Card>
+              <Card>
+                <CardImg
+                  top
+                  width="100%"
+                  src={info.picture3}
+                  alt={info.title}
+                />
+                <CardBody>
+                  <CardText>descriptif : {info.description3}</CardText>
+                </CardBody>
+              </Card>
+              <ModalProduct
+                key={info.uuid}
+                uuid={info.uuid}
+                title={info.title}
+                description={info.description}
+                description2={info.description2}
+                description3={info.description3}
+                picture={info.picture}
+                picture2={info.picture2}
+                picture3={info.picture3}
+              />
+            </CardGroup>
           </Row>
         </>
       ))}
