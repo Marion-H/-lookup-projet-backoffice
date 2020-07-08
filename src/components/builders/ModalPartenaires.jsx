@@ -16,14 +16,7 @@ import {
 import Axios from "axios";
 
 toast.configure();
-const ModalCarousel = ({
-  onClick,
-  title,
-  description,
-  link,
-  picture,
-  uuid,
-}) => {
+const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -51,8 +44,7 @@ const ModalCarousel = ({
   const [carousel, setCarousel] = useState({
     title,
     description,
-    link,
-    picture,
+    logo,
   });
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
@@ -65,7 +57,7 @@ const ModalCarousel = ({
   const putCarousel = async () => {
     try {
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
         carousel,
         {
           headers: {
@@ -87,7 +79,7 @@ const ModalCarousel = ({
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Carousel</ModalHeader>
+        <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
         <Form onSubmit={handleSubmit(putCarousel)}>
           <ModalBody>
             <Row>
@@ -134,32 +126,11 @@ const ModalCarousel = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label>Lien </label>
+                <label> Logo</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{link}</Col>
-              <Col lg="6">
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="lien"
-                  onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      link: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="12">
-                <label> Image</label>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{picture}</Col>
+              <Col lg="6">{logo}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
@@ -168,7 +139,7 @@ const ModalCarousel = ({
                   onChange={(e) =>
                     setCarousel({
                       ...carousel,
-                      picture: e.target.value,
+                      logo: e.target.value,
                     })
                   }
                 />

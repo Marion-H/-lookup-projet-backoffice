@@ -16,14 +16,7 @@ import {
 import Axios from "axios";
 
 toast.configure();
-const ModalCarousel = ({
-  onClick,
-  title,
-  description,
-  link,
-  picture,
-  uuid,
-}) => {
+const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -48,10 +41,10 @@ const ModalCarousel = ({
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
+  const [conferences, setConferences] = useState({
     title,
-    description,
-    link,
+    subject,
+    date,
     picture,
   });
   const { handleSubmit, register } = useForm();
@@ -60,13 +53,13 @@ const ModalCarousel = ({
   const toggle = () => setModal(!modal);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzU5ODAsImV4cCI6MTU5NDEzOTU4MH0.ha6WGPdG-97FDpBZS1ADx6aKPami6Afu95mqxBmVoKo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxOTc1OTcsImV4cCI6MTU5NDIwMTE5N30.Oyd5rs4XH97xGKjeOi7ujVPjXml20WlltghGtA1YViA";
 
-  const putCarousel = async () => {
+  const putConferences = async () => {
     try {
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
-        carousel,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/${uuid}`,
+        conferences,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,8 +80,8 @@ const ModalCarousel = ({
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Carousel</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <ModalHeader toggle={toggle}>Conferences</ModalHeader>
+        <Form onSubmit={handleSubmit(putConferences)}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -103,8 +96,8 @@ const ModalCarousel = ({
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setConferences({
+                      ...conferences,
                       title: e.target.value,
                     })
                   }
@@ -113,20 +106,20 @@ const ModalCarousel = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description</label>
+                <label>Subject</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
+              <Col lg="6">{subject}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  name="description"
+                  name="subject"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      description: e.target.value,
+                    setConferences({
+                      ...conferences,
+                      subject: e.target.value,
                     })
                   }
                 />
@@ -134,20 +127,20 @@ const ModalCarousel = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label>Lien </label>
+                <label>Date</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{link}</Col>
+              <Col lg="6">{date}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="lien"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      link: e.target.value,
+                    setConferences({
+                      ...conferences,
+                      date: e.target.value,
                     })
                   }
                 />
@@ -166,8 +159,8 @@ const ModalCarousel = ({
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setConferences({
+                      ...conferences,
                       picture: e.target.value,
                     })
                   }
@@ -200,4 +193,4 @@ const ModalCarousel = ({
   );
 };
 
-export default ModalCarousel;
+export default ModalConferences;

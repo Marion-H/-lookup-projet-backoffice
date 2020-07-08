@@ -40,6 +40,7 @@ const Conferences = () => {
             date={it.date}
             titre={it.title}
             picture={it.picture}
+            uuid={it.uuid}
           />
         ))}
       </Row>

@@ -31,6 +31,10 @@ function NavBar() {
       title: "Partenaires",
       to: "/partenaires",
     },
+    {
+      title: "Repertoire",
+      to: "/repo",
+    },
   ];
   return (
     <div className={styles.navigation}>
