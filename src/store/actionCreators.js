@@ -5,6 +5,7 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: "LOGOUT",
   });
+  sessionStorage.clear();
   toast.info("Deconnecter");
 };
 
@@ -25,7 +26,7 @@ export const login = ({ email, password }, history) => async (dispatch) => {
     history.push("/");
   } catch (error) {
     console.log(error);
-    toast.error("Email ou password érroné...");
+    toast.error("Email ou password erroné...");
   }
 };
 
