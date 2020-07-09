@@ -22,7 +22,7 @@ const Services = () => {
     };
     getService();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [serviceDatas]);
+  }, []);
 
   if (isLoading) {
     return <Spinner color="primary" />;

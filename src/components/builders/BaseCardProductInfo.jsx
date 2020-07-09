@@ -34,7 +34,7 @@ const BaseCardProductInfo = () => {
     };
     getProductInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productInfo]);
+  }, []);
 
   if (isLoading) {
     return <Spinner color="primary" />;
