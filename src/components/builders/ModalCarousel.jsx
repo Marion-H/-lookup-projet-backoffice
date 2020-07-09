@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const ModalCarousel = ({
@@ -59,8 +60,7 @@ const ModalCarousel = ({
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzU5ODAsImV4cCI6MTU5NDEzOTU4MH0.ha6WGPdG-97FDpBZS1ADx6aKPami6Afu95mqxBmVoKo";
+  const token = useSelector((state) => state.admin.token);
 
   const putCarousel = async () => {
     try {

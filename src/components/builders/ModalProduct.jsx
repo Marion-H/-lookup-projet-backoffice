@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 
@@ -65,8 +66,7 @@ function ModalProduct({
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMTgyMzMsImV4cCI6MTU5NDIyMTgzM30.ki6o6DIeAUV4JIsBKPaNQhk7nGRtJq5PlYMfXwY61eA";
+  const token = useSelector((state) => state.admin.token);
 
   const putProduct = async () => {
     try {

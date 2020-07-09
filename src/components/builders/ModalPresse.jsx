@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
   const notifySuccess = () => {
@@ -50,9 +51,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzQ1OTksImV4cCI6MTU5NDEzODE5OX0.5sU_JBohg7lA8HG5BB8WDKXpoGGDKCr9sOrvlB2yhSs";
-
+  const token = useSelector((state) => state.admin.token);
   const putPresse = async () => {
     try {
       await Axios.put(
