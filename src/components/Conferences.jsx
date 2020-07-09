@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Container } from "reactstrap";
 import Axios from "axios";
 import BaseCardConference from "./builders/BaseCardConference";
+import AddConferences from "./builders/AddConferences";
 const Conferences = () => {
   const [conferenceDatas, setConferenceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,9 @@ const Conferences = () => {
             uuid={it.uuid}
           />
         ))}
+      </Row>
+      <Row>
+        <AddConferences />
       </Row>
     </Container>
   );

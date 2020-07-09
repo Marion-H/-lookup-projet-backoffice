@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 import BaseCardServices from "./builders/BaseCardServices";
+import AddService from "./builders/AddService";
 const Services = () => {
   const [serviceDatas, setServiceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +43,9 @@ const Services = () => {
           />
         ))}
       </Row>{" "}
+      <Row>
+        <AddService />
+      </Row>
     </Container>
   );
 };
