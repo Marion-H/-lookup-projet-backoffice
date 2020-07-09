@@ -9,7 +9,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Container,
   Row,
   Col,
 } from "reactstrap";
@@ -71,7 +70,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
   };
 
   return (
-    <Container>
+    <Col>
       <Button color="danger" onClick={toggle}>
         Modifier
       </Button>
@@ -154,7 +153,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
           </ModalFooter>
         </Form>
       </Modal>
-    </Container>
+    </Col>
   );
 };
 

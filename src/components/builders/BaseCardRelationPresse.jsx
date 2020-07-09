@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
 import ModalPresse from "./ModalPresse";
+import DeletePress from "./DeletePress";
 
 const BaseCardRelationPresse = ({ descriptif, picture, titre, uuid }) => {
   return (
@@ -10,12 +11,15 @@ const BaseCardRelationPresse = ({ descriptif, picture, titre, uuid }) => {
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
-          <ModalPresse
-            uuid={uuid}
-            title={titre}
-            description={descriptif}
-            picture={picture}
-          />
+          <Row>
+            <ModalPresse
+              uuid={uuid}
+              title={titre}
+              description={descriptif}
+              picture={picture}
+            />
+            <DeletePress uuid={uuid} />
+          </Row>
         </CardBody>
       </Card>
     </div>
