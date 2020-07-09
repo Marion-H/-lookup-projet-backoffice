@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const AddPresse = ({ onClick }) => {
@@ -47,9 +48,7 @@ const AddPresse = ({ onClick }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMjQwMDgsImV4cCI6MTU5NDIyNzYwOH0.JjSegdHiJ_53PL3hdBk5fgv7beHulG_0ux4KdpiLgeY";
-
+  const token = useSelector((state) => state.admin.token);
   const postPresse = async () => {
     try {
       await Axios.post(
@@ -149,17 +148,6 @@ const AddPresse = ({ onClick }) => {
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };

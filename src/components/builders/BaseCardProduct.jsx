@@ -7,8 +7,11 @@ import {
   CardTitle,
   CardSubtitle,
   Button,
+  Row,
+  Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import DeleteProduct from "./DeleteProduct";
 
 const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
   return (
@@ -19,10 +22,14 @@ const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
           <CardTitle>{name}</CardTitle>
           <CardText>descriptif: {description}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
-
-          <Link to={`/${uuid}/products_info`}>
-            <Button>Informations</Button>
-          </Link>
+          <Row>
+            <Col>
+              <Link to={`/${uuid}/products_info`}>
+                <Button>Informations</Button>
+              </Link>
+            </Col>
+            <DeleteProduct uuid={uuid} />
+          </Row>
         </CardBody>
       </Card>
     </div>

@@ -17,7 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddConferences = ({ onClick }) => {
+const AddProduct = ({ onClick }) => {
   const notifySuccess = () => {
     toast.success("Conference bien ajouté !", {
       position: "bottom-center",
@@ -42,18 +42,20 @@ const AddConferences = ({ onClick }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [conferences, setConferences] = useState({});
+  const [Product, setProduct] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const putConferences = async () => {
+
+  const postProduct = async () => {
     try {
+      console.log(Product);
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/`,
-        conferences,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/`,
+        Product,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,7 +65,6 @@ const AddConferences = ({ onClick }) => {
       notifySuccess();
     } catch (err) {
       notifyError();
-      console.log(err);
     }
   };
 
@@ -74,12 +75,12 @@ const AddConferences = ({ onClick }) => {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Conferences</ModalHeader>
-        <Form onSubmit={handleSubmit(putConferences)}>
+        <ModalHeader toggle={toggle}>Produit</ModalHeader>
+        <Form onSubmit={handleSubmit(postProduct)}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Titre </label>
+                <label>Nom</label>
               </Col>
             </Row>
             <Row>
@@ -89,9 +90,9 @@ const AddConferences = ({ onClick }) => {
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setConferences({
-                      ...conferences,
-                      title: e.target.value,
+                    setProduct({
+                      ...Product,
+                      name: e.target.value,
                     })
                   }
                 />
@@ -106,12 +107,12 @@ const AddConferences = ({ onClick }) => {
               <Col>
                 <textarea
                   ref={register({ required: true })}
-                  name="subject"
+                  name="description"
                   type="text"
                   onChange={(e) =>
-                    setConferences({
-                      ...conferences,
-                      subject: e.target.value,
+                    setProduct({
+                      ...Product,
+                      description: e.target.value,
                     })
                   }
                 />
@@ -119,19 +120,19 @@ const AddConferences = ({ onClick }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Date</label>
+                <label>Prix</label>
               </Col>
             </Row>
             <Row>
               <Col>
                 <input
                   ref={register({ required: true })}
-                  type="date"
-                  name="date"
+                  type="text"
+                  name="price"
                   onChange={(e) =>
-                    setConferences({
-                      ...conferences,
-                      date: e.target.value,
+                    setProduct({
+                      ...Product,
+                      price: e.target.value,
                     })
                   }
                 />
@@ -149,8 +150,8 @@ const AddConferences = ({ onClick }) => {
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setConferences({
-                      ...conferences,
+                    setProduct({
+                      ...Product,
                       picture: e.target.value,
                     })
                   }
@@ -172,4 +173,4 @@ const AddConferences = ({ onClick }) => {
   );
 };
 
-export default AddConferences;
+export default AddProduct;

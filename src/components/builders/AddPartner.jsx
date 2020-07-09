@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const AddPartner = ({ onClick }) => {
@@ -47,9 +48,7 @@ const AddPartner = ({ onClick }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMjA2OTMsImV4cCI6MTU5NDIyNDI5M30.LC8-R6hdv0r-PfJVvCqSI0PJ9GGfMfFMZ4beKxp3mhA";
-
+  const token = useSelector((state) => state.admin.token);
   const postPartenaire = async () => {
     try {
       await Axios.post(
@@ -149,17 +148,6 @@ const AddPartner = ({ onClick }) => {
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };
