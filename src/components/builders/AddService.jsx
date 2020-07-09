@@ -75,7 +75,7 @@ const AddService = ({ onClick }) => {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Conferences</ModalHeader>
+        <ModalHeader toggle={toggle}>Services</ModalHeader>
         <Form onSubmit={handleSubmit(postService)}>
           <ModalBody>
             <Row>
@@ -100,7 +100,7 @@ const AddService = ({ onClick }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Subject</label>
+                <label>Description</label>
               </Col>
             </Row>
             <Row>

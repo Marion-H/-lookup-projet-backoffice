@@ -100,12 +100,12 @@ const AddConferences = ({ onClick }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Subject</label>
+                <label>Description</label>
               </Col>
             </Row>
             <Row>
               <Col>
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="subject"
                   type="text"
@@ -127,8 +127,8 @@ const AddConferences = ({ onClick }) => {
               <Col>
                 <input
                   ref={register({ required: true })}
-                  type="text"
-                  name="lien"
+                  type="date"
+                  name="date"
                   onChange={(e) =>
                     setConferences({
                       ...conferences,
