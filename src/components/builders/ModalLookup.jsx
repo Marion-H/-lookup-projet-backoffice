@@ -25,9 +25,9 @@ const ModalServices = ({
   postalCode,
   city,
   email,
+  password,
   phone,
   siret,
-  onClick,
 }) => {
   const notifySuccess = () => {
     toast.success("Services bien modifié !", {
@@ -60,27 +60,23 @@ const ModalServices = ({
     postalCode,
     city,
     email,
+    password,
     phone,
     siret,
   });
-  const { handleSubmit, register } = useForm();
+  const { register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const putLookup = async () => {
+  const putLookup = async (e) => {
+    const uuid = sessionStorage.getItem("uuid");
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/login/${uuid}`,
-        companyName,
-        streetName,
-        streetNumber,
-        postalCode,
-        city,
-        email,
-        phone,
-        siret,
+        lookupDatas,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -102,7 +98,7 @@ const ModalServices = ({
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Lookup infos</ModalHeader>
-        <Form onSubmit={handleSubmit(putLookup)}>
+        <Form onSubmit={putLookup}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -211,27 +207,6 @@ const ModalServices = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label>Email: </label>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{email}</Col>
-              <Col lg="6">
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="lien"
-                  onChange={(e) =>
-                    setLookupDatas({
-                      ...lookupDatas,
-                      email: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="12">
                 <label>Telephone: </label>
               </Col>
             </Row>
@@ -272,9 +247,51 @@ const ModalServices = ({
                 />
               </Col>
             </Row>
+            <Row>
+              <Col lg="12">
+                <label>Email: </label>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{email}</Col>
+              <Col lg="6">
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="lien"
+                  onChange={(e) =>
+                    setLookupDatas({
+                      ...lookupDatas,
+                      email: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="12">
+                <label>Password: </label>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{password}</Col>
+              <Col lg="6">
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="lien"
+                  onChange={(e) =>
+                    setLookupDatas({
+                      ...lookupDatas,
+                      password: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>

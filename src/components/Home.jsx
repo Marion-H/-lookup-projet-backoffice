@@ -47,6 +47,7 @@ const Home = () => {
           email={lookupDatas.email}
           phone={lookupDatas.phone}
           siret={lookupDatas.siret}
+          password={lookupDatas.password}
         />
       </Row>
     </Container>

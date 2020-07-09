@@ -22,6 +22,8 @@ const BaseCardLookup = ({
           <CardText>
             adresse: {streetNumber}, {streetName}, {city} {postalCode}
           </CardText>
+          <CardText>Telephone: {phone}</CardText>
+          <CardText>siret: {siret}</CardText>
           <ModalLookup
             uuid={uuid}
             companyName={companyName}
