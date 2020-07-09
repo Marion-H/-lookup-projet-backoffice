@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const ModalServices = ({ onClick, title, description, logo, uuid }) => {
@@ -51,9 +52,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzQwNDQsImV4cCI6MTU5NDEzNzY0NH0.a8gVKN6mPjKruX3xPJGn7s-ZncagUtkql8qabJkkwWs";
-
+  const token = useSelector((state) => state.admin.token);
   const putServices = async () => {
     try {
       await Axios.put(

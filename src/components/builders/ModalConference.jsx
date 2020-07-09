@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
@@ -52,8 +53,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxOTc1OTcsImV4cCI6MTU5NDIwMTE5N30.Oyd5rs4XH97xGKjeOi7ujVPjXml20WlltghGtA1YViA";
+  const token = useSelector((state) => state.admin.token);
 
   const putConferences = async () => {
     try {
