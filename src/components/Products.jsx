@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Container, Spinner } from "reactstrap";
 import axios from "axios";
 import BaseCardProduct from "./builders/BaseCardProduct";
+import AddProduct from "./builders/AddProduct";
 const Products = () => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,9 @@ const Products = () => {
             picture={it.picture}
           />
         ))}
+      </Row>
+      <Row>
+        <AddProduct />
       </Row>
     </Container>
   );

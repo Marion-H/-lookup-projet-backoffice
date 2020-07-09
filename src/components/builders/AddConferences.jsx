@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -9,15 +9,17 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Container,
   Row,
   Col,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
+toast.configure();
+const AddConferences = ({ onClick }) => {
   const notifySuccess = () => {
-    toast.success("Relation Presse bien modifié !", {
+    toast.success("Conference bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -40,22 +42,18 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [presses, setPresses] = useState({
-    title,
-    description,
-    picture,
-  });
+  const [conferences, setConferences] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const putPresse = async () => {
+  const putConferences = async () => {
     try {
-      await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/${uuid}`,
-        presses,
+      await Axios.post(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/`,
+        conferences,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,14 +68,14 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
   };
 
   return (
-    <Col>
+    <Container>
       <Button color="danger" onClick={toggle}>
-        Modifier
+        Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Relation presse</ModalHeader>
-        <Form onSubmit={handleSubmit(putPresse)}>
+        <ModalHeader toggle={toggle}>Conferences</ModalHeader>
+        <Form onSubmit={handleSubmit(putConferences)}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -85,15 +83,14 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setPresses({
-                      ...presses,
+                    setConferences({
+                      ...conferences,
                       title: e.target.value,
                     })
                   }
@@ -102,20 +99,19 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description:</label>
+                <label>Description</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
-              <Col lg="6">
-                <input
+              <Col>
+                <textarea
                   ref={register({ required: true })}
-                  name="description"
+                  name="subject"
                   type="text"
                   onChange={(e) =>
-                    setPresses({
-                      ...presses,
-                      description: e.target.value,
+                    setConferences({
+                      ...conferences,
+                      subject: e.target.value,
                     })
                   }
                 />
@@ -123,20 +119,39 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Image: </label>
+                <label>Date</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{picture}</Col>
-              <Col lg="6">
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="date"
+                  name="date"
+                  onChange={(e) =>
+                    setConferences({
+                      ...conferences,
+                      date: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="12">
+                <label> Image</label>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="lien"
+                  name="image"
                   onChange={(e) =>
-                    setPresses({
-                      ...presses,
-                      link: e.target.value,
+                    setConferences({
+                      ...conferences,
+                      picture: e.target.value,
                     })
                   }
                 />
@@ -153,8 +168,8 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
           </ModalFooter>
         </Form>
       </Modal>
-    </Col>
+    </Container>
   );
 };
 
-export default ModalPresse;
+export default AddConferences;

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Container, Spinner } from "reactstrap";
 import Axios from "axios";
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
+import AddPresse from "./builders/AddPresse";
 const RelationPresse = () => {
   const [relationPressDatas, setRelationPressDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,6 +42,9 @@ const RelationPresse = () => {
             picture={it.picture}
           />
         ))}
+      </Row>
+      <Row>
+        <AddPresse />
       </Row>
     </Container>
   );

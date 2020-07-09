@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Container, Spinner } from "reactstrap";
 import axios from "axios";
 import BaseCardPartenaires from "./builders/BaseCardPartenaires";
+import AddPartner from "./builders/AddPartner";
 const Partenaires = () => {
   const [partenaireData, setPartenaireData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +32,7 @@ const Partenaires = () => {
   return (
     <Container>
       <Row>
-        <h1>Partenaires</h1>
+        <h1>Partenaiiires</h1>
       </Row>
       <Row>
         {partenaireData.map((it) => (
@@ -43,6 +44,9 @@ const Partenaires = () => {
             logo={it.logo}
           />
         ))}
+      </Row>
+      <Row>
+        <AddPartner />
       </Row>
     </Container>
   );

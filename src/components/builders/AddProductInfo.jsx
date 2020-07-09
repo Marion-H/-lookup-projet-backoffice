@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Container,
   Row,
   Col,
 } from "reactstrap";
@@ -16,9 +17,9 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
+const AddProductInfo = ({ onClick, uuid }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Informations bien ajoutés !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -41,11 +42,7 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
-    title,
-    description,
-    logo,
-  });
+  const [productInfo, setProductInfo] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
@@ -53,11 +50,11 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  const putCarousel = async () => {
+  const postProductInfo = async () => {
     try {
-      await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        carousel,
+      await Axios.post(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/`,
+        { ...productInfo, ProductUuid: uuid },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,36 +63,35 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
       );
       notifySuccess();
     } catch (err) {
-      notifyError();
       console.log(err);
+      notifyError();
     }
   };
 
   return (
-    <Col>
+    <Container>
       <Button color="danger" onClick={toggle}>
-        Modifier
+        Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <ModalHeader toggle={toggle}>Produits</ModalHeader>
+        <Form onSubmit={handleSubmit(postProductInfo)}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Titre </label>
+                <label>Titre</label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setProductInfo({
+                      ...productInfo,
                       title: e.target.value,
                     })
                   }
@@ -104,41 +100,107 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description</label>
+                <label>
+                  <h5>Description</h5>
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
-              <Col lg="6">
-                <input
+              <Col>
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setProductInfo({
+                      ...productInfo,
                       description: e.target.value,
                     })
                   }
                 />
               </Col>
             </Row>
+
+            <Row>
+              <Col>
+                <textarea
+                  ref={register({ required: true })}
+                  name="description2"
+                  type="text"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      description2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <textarea
+                  ref={register({ required: true })}
+                  name="description3"
+                  type="text"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      description3: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
             <Row>
               <Col lg="12">
-                <label> Logooo</label>
+                <label>
+                  <h5>Image</h5>
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{logo}</Col>
-              <Col lg="6">
+              <Col>
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      logo: e.target.value,
+                    setProductInfo({
+                      ...productInfo,
+                      picture: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="image2"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      picture2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="image3"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      picture3: e.target.value,
                     })
                   }
                 />
@@ -155,19 +217,8 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </Col>
+    </Container>
   );
 };
 
-export default ModalCarousel;
+export default AddProductInfo;
