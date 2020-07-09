@@ -17,9 +17,9 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddProduct = ({ onClick }) => {
+const AddProductInfo = ({ onClick, uuid }) => {
   const notifySuccess = () => {
-    toast.success("Conference bien ajouté !", {
+    toast.success("Informations bien ajoutés !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -42,7 +42,7 @@ const AddProduct = ({ onClick }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [Product, setProduct] = useState({});
+  const [productInfo, setProductInfo] = useState({});
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
@@ -50,11 +50,11 @@ const AddProduct = ({ onClick }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  const postProduct = async () => {
+  const postProductInfo = async () => {
     try {
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/`,
-        Product,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/`,
+        { ...productInfo, ProductUuid: uuid },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,6 +63,7 @@ const AddProduct = ({ onClick }) => {
       );
       notifySuccess();
     } catch (err) {
+      console.log(err);
       notifyError();
     }
   };
@@ -74,12 +75,12 @@ const AddProduct = ({ onClick }) => {
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Produit</ModalHeader>
-        <Form onSubmit={handleSubmit(postProduct)}>
+        <ModalHeader toggle={toggle}>Produits</ModalHeader>
+        <Form onSubmit={handleSubmit(postProductInfo)}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Nom</label>
+                <label>Titre</label>
               </Col>
             </Row>
             <Row>
@@ -89,9 +90,9 @@ const AddProduct = ({ onClick }) => {
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
-                      name: e.target.value,
+                    setProductInfo({
+                      ...productInfo,
+                      title: e.target.value,
                     })
                   }
                 />
@@ -99,7 +100,9 @@ const AddProduct = ({ onClick }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Description</label>
+                <label>
+                  <h5>Description</h5>
+                </label>
               </Col>
             </Row>
             <Row>
@@ -109,37 +112,52 @@ const AddProduct = ({ onClick }) => {
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
+                    setProductInfo({
+                      ...productInfo,
                       description: e.target.value,
                     })
                   }
                 />
               </Col>
             </Row>
-            <Row>
-              <Col lg="12">
-                <label>Prix</label>
-              </Col>
-            </Row>
+
             <Row>
               <Col>
-                <input
+                <textarea
                   ref={register({ required: true })}
+                  name="description2"
                   type="text"
-                  name="price"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
-                      price: e.target.value,
+                    setProductInfo({
+                      ...productInfo,
+                      description2: e.target.value,
                     })
                   }
                 />
               </Col>
             </Row>
+
+            <Row>
+              <Col>
+                <textarea
+                  ref={register({ required: true })}
+                  name="description3"
+                  type="text"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      description3: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
             <Row>
               <Col lg="12">
-                <label> Image</label>
+                <label>
+                  <h5>Image</h5>
+                </label>
               </Col>
             </Row>
             <Row>
@@ -149,9 +167,40 @@ const AddProduct = ({ onClick }) => {
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
+                    setProductInfo({
+                      ...productInfo,
                       picture: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="image2"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      picture2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="image3"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      picture3: e.target.value,
                     })
                   }
                 />
@@ -172,4 +221,4 @@ const AddProduct = ({ onClick }) => {
   );
 };
 
-export default AddProduct;
+export default AddProductInfo;
