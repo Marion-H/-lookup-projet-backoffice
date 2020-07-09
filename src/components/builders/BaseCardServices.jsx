@@ -19,7 +19,7 @@ const BaseCardServices = ({ descriptif, logo, titre, uuid, getService }) => {
               description={descriptif}
               getService={getService}
             />
-            <DeleteService uuid={uuid} />
+            <DeleteService uuid={uuid} getService={getService} />
           </Row>
         </CardBody>
       </Card>

@@ -45,7 +45,7 @@ const Services = () => {
         ))}
       </Row>{" "}
       <Row>
-        <AddService />
+        <AddService getService={getService} />
       </Row>
     </Container>
   );

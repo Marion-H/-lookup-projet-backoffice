@@ -17,7 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddService = ({ onClick }) => {
+const AddService = ({ getService }) => {
   const notifySuccess = () => {
     toast.success("Service bien ajouté !", {
       position: "bottom-center",
@@ -43,13 +43,14 @@ const AddService = ({ onClick }) => {
   const [modal, setModal] = useState(false);
 
   const [services, setService] = useState({});
-  const { handleSubmit, register } = useForm();
+  const { register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const postService = async () => {
+  const postService = async (e) => {
+    e.preventDefault();
     try {
       await Axios.post(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/`,
@@ -60,6 +61,7 @@ const AddService = ({ onClick }) => {
           },
         }
       );
+      getService();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -75,7 +77,7 @@ const AddService = ({ onClick }) => {
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Services</ModalHeader>
-        <Form onSubmit={handleSubmit(postService)}>
+        <Form onSubmit={postService}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -139,7 +141,7 @@ const AddService = ({ onClick }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>
