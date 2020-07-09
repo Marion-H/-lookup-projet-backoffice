@@ -9,7 +9,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Container,
   Row,
   Col,
 } from "reactstrap";
@@ -72,7 +71,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
   };
 
   return (
-    <Container>
+    <Col>
       <Button color="danger" onClick={toggle}>
         Modifier
       </Button>
@@ -166,7 +165,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
         draggable
         pauseOnHover
       />
-    </Container>
+    </Col>
   );
 };
 

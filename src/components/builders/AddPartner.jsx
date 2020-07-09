@@ -105,7 +105,7 @@ const AddPartner = ({ onClick }) => {
             </Row>
             <Row>
               <Col>
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"

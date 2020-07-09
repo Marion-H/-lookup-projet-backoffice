@@ -100,12 +100,12 @@ const AddPresse = ({ onClick }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Subject</label>
+                <label>Description</label>
               </Col>
             </Row>
             <Row>
               <Col>
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"

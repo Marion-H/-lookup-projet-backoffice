@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
+import { useSelector } from "react-redux";
 
 toast.configure();
 const AddService = ({ onClick }) => {
@@ -47,9 +48,7 @@ const AddService = ({ onClick }) => {
 
   const toggle = () => setModal(!modal);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMjQwMDgsImV4cCI6MTU5NDIyNzYwOH0.JjSegdHiJ_53PL3hdBk5fgv7beHulG_0ux4KdpiLgeY";
-
+  const token = useSelector((state) => state.admin.token);
   const postService = async () => {
     try {
       await Axios.post(
@@ -105,7 +104,7 @@ const AddService = ({ onClick }) => {
             </Row>
             <Row>
               <Col>
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"
