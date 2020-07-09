@@ -1,57 +1,52 @@
-import React from "react";
-import BaseCardText from "./builders/BaseCardText";
-import { Row, Table, Container } from "reactstrap";
+import React, { useState, useEffect } from "react";
+import { Row, Container, Spinner } from "reactstrap";
+import axios from "axios";
+import BaseCardPartenaires from "./builders/BaseCardPartenaires";
+import AddPartner from "./builders/AddPartner";
 const Partenaires = () => {
-  const partenairesInfo = [
-    {
-      id: 1,
-      titre: "pyrenees atlantiques",
-      descriptif: "an important partner",
-      image:
-        "https://mlodp7767kae.i.optimole.com/ZvkZDw-upSZOLoJ/w:840/h:630/q:auto/https://kickstore.fr/wp-content/uploads/2019/06/lookup2.png",
-    },
-  ];
+  const [partenaireData, setPartenaireData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const ItemLoop = () => {
-  //     for (let i = 0; i < Object.keys(partenairesInfo[0]).length; i++) {
-  //         return (
-  //             <BaseCardText
-  //                 item={Object.keys(partenairesInfo[0])[i]}
-  //                 value={partenairesInfo[0][i]}
-  //                 dataArray={partenairesInfo}
-  //             />
-  //         );
-  //     }
-  // };
+  useEffect(() => {
+    getPartenaire();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getPartenaire = async () => {
+    try {
+      const res = await axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires"
+      );
+      setPartenaireData(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <Spinner color="primary" />;
+  }
 
   return (
     <Container>
       <Row>
-        <h1>Relation Presse</h1>
+        <h1>Partenaiiires</h1>
       </Row>
       <Row>
-        <Table>
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[0]}
-            value={partenairesInfo[0].id}
-            dataArray={partenairesInfo}
+        {partenaireData.map((it) => (
+          <BaseCardPartenaires
+            key={it.uuid}
+            uuid={it.uuid}
+            titre={it.title}
+            descriptif={it.description}
+            logo={it.logo}
           />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[1]}
-            value={partenairesInfo[0].titre}
-            dataArray={partenairesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[2]}
-            value={partenairesInfo[0].descriptif}
-            dataArray={partenairesInfo}
-          />
-          <BaseCardText
-            item={Object.keys(partenairesInfo[0])[3]}
-            value={partenairesInfo[0].image}
-            dataArray={partenairesInfo}
-          />
-        </Table>
+        ))}
+      </Row>
+      <Row>
+        <AddPartner />
       </Row>
     </Container>
   );
