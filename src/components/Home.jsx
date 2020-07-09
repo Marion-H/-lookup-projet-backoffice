@@ -4,9 +4,10 @@ import { Container, Row, Spinner } from "reactstrap";
 import axios from "axios";
 
 const Home = () => {
-  const [lookupDatas, setLookupDatas] = useState([]);
+  // const dispatch = useDispatch();
+  const [lookupDatas, setLookupDatas] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const uuid = "10803292-a8a8-4eec-895b-9b89fc959f4f";
+  const uuid = sessionStorage.getItem("uuid");
 
   useEffect(() => {
     const getLookupDatas = async () => {
@@ -22,6 +23,7 @@ const Home = () => {
       }
     };
     getLookupDatas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -31,23 +33,21 @@ const Home = () => {
   return (
     <Container>
       <Row>
-        <h1>Carousel</h1>
+        <h1>Lookup Infos</h1>
       </Row>
       <Row>
-        {/* {lookupDatas.map((it) => (
-          <BaseCardLookup
-            key={it.uuid}
-            uuid={it.uuid}
-            companyName={it.companyName}
-            streetName={it.streetName}
-            streetNumber={it.streetNumber}
-            postalCode={it.postalCode}
-            city={it.city}
-            email={it.email}
-            phone={it.phone}
-            siret={it.siret}
-          />
-        ))} */}
+        <BaseCardLookup
+          key={lookupDatas.uuid}
+          uuid={lookupDatas.uuid}
+          companyName={lookupDatas.companyName}
+          streetName={lookupDatas.streetName}
+          streetNumber={lookupDatas.streetNumber}
+          postalCode={lookupDatas.postalCode}
+          city={lookupDatas.city}
+          email={lookupDatas.email}
+          phone={lookupDatas.phone}
+          siret={lookupDatas.siret}
+        />
       </Row>
     </Container>
   );

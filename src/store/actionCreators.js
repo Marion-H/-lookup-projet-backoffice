@@ -12,7 +12,7 @@ export const logout = () => (dispatch) => {
 export const login = ({ email, password }, history) => async (dispatch) => {
   try {
     const {
-      data: { token },
+      data: { token, uuid },
     } = await Axios.post(
       `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/login`,
       {
@@ -21,7 +21,10 @@ export const login = ({ email, password }, history) => async (dispatch) => {
       }
     );
     dispatch({ type: "LOGIN", payload: token });
+    dispatch({ type: "UUIDLOOKUP", payload: uuid });
     sessionStorage.setItem("token", token);
+    sessionStorage.setItem("uuid", uuid);
+
     toast.success("Connecter");
     history.push("/");
   } catch (error) {
