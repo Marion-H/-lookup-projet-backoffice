@@ -15,8 +15,7 @@ import {
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-toast.configure();
-const ModalServices = ({ onClick, title, description, logo, uuid }) => {
+const ModalServices = ({ title, description, logo, uuid, getService }) => {
   const notifySuccess = () => {
     toast.success("Services bien modifié !", {
       position: "bottom-center",
@@ -46,13 +45,13 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
     description,
     logo,
   });
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const putServices = async () => {
+  const putServices = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/${uuid}`,
@@ -63,6 +62,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
           },
         }
       );
+      getService();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -78,7 +78,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Services</ModalHeader>
-        <Form onSubmit={handleSubmit(putServices)}>
+        <Form onSubmit={putServices}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -145,7 +145,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>
