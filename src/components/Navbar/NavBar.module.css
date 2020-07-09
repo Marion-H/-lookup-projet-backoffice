@@ -3,8 +3,7 @@
   width: 200px;
   height: 100vh;
   border-right: solid lightgrey;
-  justify-content: space-evenly;
-  /* position: sticky; */
+  justify-content: space-between;
 }
 .logo {
   width: 180px;

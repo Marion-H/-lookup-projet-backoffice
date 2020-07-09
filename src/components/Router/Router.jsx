@@ -14,19 +14,11 @@ import styles from "./Router.module.css";
 import ModalCarousel from "../builders/ModalCarousel";
 import Home from "../Home";
 import { reconnect } from "../../store/actionCreators";
+import Repo from "../Repo";
+import BaseCardProductInfo from "../builders/BaseCardProductInfo";
 
 function AuthRoute({ component: Component, ...rest }) {
   const token = useSelector((state) => state.admin.token);
-  //   const tokenStorage = sessionStorage.getItem("token");
-  //   const dispatch = useDispatch();
-
-  //   useEffect(() => {
-  //     const token = sessionStorage.getItem("token");
-
-  //     if (token !== null) {
-  //       dispatch(reconnect(token));
-  //     }
-  //   }, []);
 
   if (token) {
     return (
@@ -70,6 +62,11 @@ export default function Router() {
           <AuthRoute path="/partenaires" component={Partenaires} />
           <AuthRoute path="/info" component={LookUp} />
           <AuthRoute path="/edit_modal" component={ModalCarousel} />
+          <AuthRoute path="/repo" component={Repo} />
+          <AuthRoute
+            path="/:uuid/products_info"
+            component={BaseCardProductInfo}
+          />
         </Switch>
       </BrowserRouter>
     </div>

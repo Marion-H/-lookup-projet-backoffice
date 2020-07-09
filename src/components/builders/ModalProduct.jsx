@@ -16,14 +16,18 @@ import {
 import Axios from "axios";
 
 toast.configure();
-const ModalCarousel = ({
-  onClick,
+
+function ModalProduct({
+  uuid,
   title,
   description,
-  link,
+  description2,
+  description3,
   picture,
-  uuid,
-}) => {
+  picture2,
+  picture3,
+  onClick,
+}) {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -48,25 +52,27 @@ const ModalCarousel = ({
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
+  const [product, setProduct] = useState({
     title,
     description,
-    link,
+    description2,
+    description3,
     picture,
+    picture2,
+    picture3,
   });
   const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQxMzU5ODAsImV4cCI6MTU5NDEzOTU4MH0.ha6WGPdG-97FDpBZS1ADx6aKPami6Afu95mqxBmVoKo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwODAzMjkyLWE4YTgtNGVlYy04OTViLTliODlmYzk1OWY0ZiIsImVtYWlsIjoiYW50aG9uaW42NEBsb29rdXAuZnIiLCJpYXQiOjE1OTQyMTgyMzMsImV4cCI6MTU5NDIyMTgzM30.ki6o6DIeAUV4JIsBKPaNQhk7nGRtJq5PlYMfXwY61eA";
 
-  const putCarousel = async () => {
+  const putProduct = async () => {
     try {
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
-        carousel,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
+        product,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,12 +93,12 @@ const ModalCarousel = ({
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Carousel</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <ModalHeader toggle={toggle}>Produits informations</ModalHeader>
+        <Form onSubmit={handleSubmit(putProduct)}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Titre </label>
+                <h6>Titre</h6>
               </Col>
             </Row>
             <Row>
@@ -103,8 +109,8 @@ const ModalCarousel = ({
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setProduct({
+                      ...product,
                       title: e.target.value,
                     })
                   }
@@ -113,19 +119,21 @@ const ModalCarousel = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label> Description</label>
+                <label>
+                  <h6>Description</h6>{" "}
+                </label>
               </Col>
             </Row>
             <Row>
               <Col lg="6">{description}</Col>
               <Col lg="6">
-                <input
+                <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setProduct({
+                      ...product,
                       description: e.target.value,
                     })
                   }
@@ -133,21 +141,32 @@ const ModalCarousel = ({
               </Col>
             </Row>
             <Row>
-              <Col lg="12">
-                <label>Lien </label>
+              <Col lg="6">{description2}</Col>
+              <Col lg="6">
+                <textarea
+                  ref={register({ required: true })}
+                  name="description2"
+                  type="text"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      description2: e.target.value,
+                    })
+                  }
+                />
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{link}</Col>
+              <Col lg="6">{description3}</Col>
               <Col lg="6">
-                <input
+                <textarea
                   ref={register({ required: true })}
+                  name="description3"
                   type="text"
-                  name="lien"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      link: e.target.value,
+                    setProduct({
+                      ...product,
+                      description3: e.target.value,
                     })
                   }
                 />
@@ -155,7 +174,9 @@ const ModalCarousel = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label> Image</label>
+                <label>
+                  <h6>Image</h6>
+                </label>
               </Col>
             </Row>
             <Row>
@@ -164,11 +185,43 @@ const ModalCarousel = ({
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="image"
+                  name="picture"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setProduct({
+                      ...product,
                       picture: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{picture2}</Col>
+              <Col lg="6">
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="picture2"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      picture2: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="6">{picture3}</Col>
+              <Col lg="6">
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="picture3"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      picture3: e.target.value,
                     })
                   }
                 />
@@ -198,6 +251,6 @@ const ModalCarousel = ({
       />
     </Container>
   );
-};
+}
 
-export default ModalCarousel;
+export default ModalProduct;
