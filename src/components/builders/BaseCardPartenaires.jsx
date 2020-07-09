@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
 import ModalPartenaires from "./ModalPartenaires";
+import DeletePartenaire from "./DeletePartenaire";
 
 const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
   return (
@@ -10,12 +11,15 @@ const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
-          <ModalPartenaires
-            uuid={uuid}
-            title={titre}
-            description={descriptif}
-            logo={logo}
-          />
+          <Row>
+            <ModalPartenaires
+              uuid={uuid}
+              title={titre}
+              description={descriptif}
+              logo={logo}
+            />
+            <DeletePartenaire uuid={uuid} />
+          </Row>
         </CardBody>
       </Card>
     </div>
