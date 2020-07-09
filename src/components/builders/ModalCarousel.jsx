@@ -18,12 +18,12 @@ import { useSelector } from "react-redux";
 
 toast.configure();
 const ModalCarousel = ({
-  onClick,
   title,
   description,
   link,
   picture,
   uuid,
+  getCarousel,
 }) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
@@ -55,14 +55,14 @@ const ModalCarousel = ({
     link,
     picture,
   });
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putCarousel = async () => {
+  const putCarousel = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
@@ -73,6 +73,7 @@ const ModalCarousel = ({
           },
         }
       );
+      getCarousel();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -88,7 +89,7 @@ const ModalCarousel = ({
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Carousel</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <Form onSubmit={putCarousel}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -176,7 +177,7 @@ const ModalCarousel = ({
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>
