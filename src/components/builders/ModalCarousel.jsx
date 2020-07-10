@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 toast.configure();
 const ModalCarousel = ({
@@ -56,6 +57,7 @@ const ModalCarousel = ({
     picture,
   });
   const { handleSubmit, register } = useForm();
+  const history = useHistory();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
@@ -75,6 +77,7 @@ const ModalCarousel = ({
       );
       notifySuccess();
     } catch (err) {
+      history.push("/login");
       notifyError();
       console.log(err);
     }
