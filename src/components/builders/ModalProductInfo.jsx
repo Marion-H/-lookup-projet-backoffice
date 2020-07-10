@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 toast.configure();
 
@@ -63,6 +64,7 @@ function ModalProduct({
     picture3,
   });
   const { handleSubmit, register } = useForm();
+  const history = useHistory();
 
   const toggle = () => setModal(!modal);
 
@@ -82,6 +84,7 @@ function ModalProduct({
       notifySuccess();
     } catch (err) {
       notifyError();
+      history.push("/login");
       console.log(err);
     }
   };
