@@ -1,5 +1,6 @@
 const initialState = {
   token: "",
+  uuidLookup: "",
 };
 
 const admin = (state = initialState, action) => {
@@ -17,6 +18,11 @@ const admin = (state = initialState, action) => {
       return {
         ...state,
         token: payload,
+      };
+    case "UUIDLOOKUP":
+      return {
+        ...state,
+        uuidLookup: payload,
       };
     default:
       return state;

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Row, Col, Spinner } from "reactstrap";
 
-import { login, logout } from "../store/actionCreators";
+import { login } from "../store/actionCreators";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
