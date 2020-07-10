@@ -16,7 +16,6 @@ import {
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-toast.configure();
 const AddService = ({ getService }) => {
   const notifySuccess = () => {
     toast.success("Service bien ajouté !", {

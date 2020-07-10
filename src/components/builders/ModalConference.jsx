@@ -16,7 +16,14 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
+const ModalConferences = ({
+  title,
+  subject,
+  date,
+  picture,
+  uuid,
+  getConference,
+}) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -47,14 +54,15 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
     date,
     picture,
   });
-  const { handleSubmit, register } = useForm();
+  const { register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putConferences = async () => {
+  const putConferences = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/${uuid}`,
@@ -65,6 +73,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
           },
         }
       );
+      getConference();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -80,7 +89,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Conferences</ModalHeader>
-        <Form onSubmit={handleSubmit(putConferences)}>
+        <Form onSubmit={putConferences}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -134,7 +143,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="date"
                   name="lien"
                   onChange={(e) =>
                     setConferences({
@@ -168,7 +177,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>

@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-export default function DeleteConference({ uuid }) {
+export default function DeleteConference({ uuid, getConference }) {
   const token = useSelector((state) => state.admin.token);
 
   const notifySuccess = () => {
@@ -40,6 +40,7 @@ export default function DeleteConference({ uuid }) {
           },
         }
       );
+      getConference();
       notifySuccess();
     } catch (error) {
       notifyError();
