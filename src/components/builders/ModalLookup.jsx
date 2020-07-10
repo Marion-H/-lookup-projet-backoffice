@@ -228,7 +228,7 @@ const ModalServices = ({
             </Row>
             <Row>
               <Col lg="12">
-                <label>Telephone: </label>
+                <label>Siret: </label>
               </Col>
             </Row>
             <Row>
