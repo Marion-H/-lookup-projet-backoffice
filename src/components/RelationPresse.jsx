@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Row, Container, Spinner } from "reactstrap";
+import { Row, Container, Spinner, Col } from "reactstrap";
 import Axios from "axios";
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 import AddPresse from "./builders/AddPresse";
@@ -35,12 +35,14 @@ const RelationPresse = () => {
       </Row>
       <Row>
         {relationPressDatas.map((it) => (
-          <BaseCardRelationPresse
-            uuid={it.uuid}
-            titre={it.title}
-            descriptif={it.description}
-            picture={it.picture}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardRelationPresse
+              uuid={it.uuid}
+              titre={it.title}
+              descriptif={it.description}
+              picture={it.picture}
+            />
+          </Col>
         ))}
       </Row>
       <Row>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Container } from "reactstrap";
+import { Row, Container, Col } from "reactstrap";
 import Axios from "axios";
 import BaseCardConference from "./builders/BaseCardConference";
 import AddConferences from "./builders/AddConferences";
@@ -35,14 +35,16 @@ const Conferences = () => {
       </Row>
       <Row>
         {conferenceDatas.map((it, k) => (
-          <BaseCardConference
-            key={k}
-            subject={it.subject}
-            date={it.date}
-            titre={it.title}
-            picture={it.picture}
-            uuid={it.uuid}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardConference
+              key={k}
+              subject={it.subject}
+              date={it.date}
+              titre={it.title}
+              picture={it.picture}
+              uuid={it.uuid}
+            />
+          </Col>
         ))}
       </Row>
       <Row>

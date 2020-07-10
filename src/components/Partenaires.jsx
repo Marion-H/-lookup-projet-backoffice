@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Container, Spinner } from "reactstrap";
+import { Row, Container, Spinner, Col } from "reactstrap";
 import axios from "axios";
 import BaseCardPartenaires from "./builders/BaseCardPartenaires";
 import AddPartner from "./builders/AddPartner";
@@ -32,17 +32,19 @@ const Partenaires = () => {
   return (
     <Container>
       <Row>
-        <h1>Partenaiiires</h1>
+        <h1>Partenaires</h1>
       </Row>
       <Row>
         {partenaireData.map((it) => (
-          <BaseCardPartenaires
-            key={it.uuid}
-            uuid={it.uuid}
-            titre={it.title}
-            descriptif={it.description}
-            logo={it.logo}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardPartenaires
+              key={it.uuid}
+              uuid={it.uuid}
+              titre={it.title}
+              descriptif={it.description}
+              logo={it.logo}
+            />
+          </Col>
         ))}
       </Row>
       <Row>

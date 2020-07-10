@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BaseCardCarousel from "./builders/BaseCardCarousel";
-import { Container, Row, Spinner } from "reactstrap";
+import { Container, Row, Spinner, Col } from "reactstrap";
 import axios from "axios";
 
 const Carousel = () => {
@@ -34,14 +34,16 @@ const Carousel = () => {
       </Row>
       <Row>
         {carouselDatas.map((it) => (
-          <BaseCardCarousel
-            key={it.uuid}
-            uuid={it.uuid}
-            titre={it.title}
-            link={it.link}
-            picture={it.picture}
-            descriptif={it.description}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardCarousel
+              key={it.uuid}
+              uuid={it.uuid}
+              titre={it.title}
+              link={it.link}
+              picture={it.picture}
+              descriptif={it.description}
+            />
+          </Col>
         ))}
       </Row>
     </Container>

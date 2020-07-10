@@ -58,7 +58,11 @@ const ModalCarousel = ({
   const { handleSubmit, register } = useForm();
   // const onSubmit = (values) => console.log(values);
 
-  const toggle = () => setModal(!modal);
+  const [clicked, setClicked] = useState(false);
+
+  const toggle = () => {
+    setModal(!modal);
+  };
 
   const token = useSelector((state) => state.admin.token);
 
@@ -73,6 +77,7 @@ const ModalCarousel = ({
           },
         }
       );
+      setClicked(true);
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -82,7 +87,7 @@ const ModalCarousel = ({
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color={clicked ? "primary" : "danger"} onClick={toggle}>
         Modifier
       </Button>
 
