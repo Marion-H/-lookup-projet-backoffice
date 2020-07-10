@@ -23,12 +23,14 @@ const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
           <CardText>descriptif: {description}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
           <Row>
-            <Col>
+            <Col xs="12" className="pb-2">
               <Link to={`/${uuid}/products_info`}>
                 <Button>Informations</Button>
               </Link>
             </Col>
-            <DeleteProduct uuid={uuid} />
+            <Col xs="12" className="pb-2">
+              <DeleteProduct uuid={uuid} />
+            </Col>
           </Row>
         </CardBody>
       </Card>

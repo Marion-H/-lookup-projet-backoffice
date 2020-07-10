@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BaseCardLookup from "./builders/BaseCardLookUp";
-import { Container, Row, Spinner } from "reactstrap";
+import { Container, Row, Spinner, Col } from "reactstrap";
 import axios from "axios";
 
 const Home = () => {
@@ -36,19 +36,21 @@ const Home = () => {
         <h1>Lookup Infos</h1>
       </Row>
       <Row>
-        <BaseCardLookup
-          key={lookupDatas.uuid}
-          uuid={lookupDatas.uuid}
-          companyName={lookupDatas.companyName}
-          streetName={lookupDatas.streetName}
-          streetNumber={lookupDatas.streetNumber}
-          postalCode={lookupDatas.postalCode}
-          city={lookupDatas.city}
-          email={lookupDatas.email}
-          phone={lookupDatas.phone}
-          siret={lookupDatas.siret}
-          password={lookupDatas.password}
-        />
+        <Col md="4" sm="6" xs="12" className="pb-4">
+          <BaseCardLookup
+            key={lookupDatas.uuid}
+            uuid={lookupDatas.uuid}
+            companyName={lookupDatas.companyName}
+            streetName={lookupDatas.streetName}
+            streetNumber={lookupDatas.streetNumber}
+            postalCode={lookupDatas.postalCode}
+            city={lookupDatas.city}
+            email={lookupDatas.email}
+            phone={lookupDatas.phone}
+            siret={lookupDatas.siret}
+            password={lookupDatas.password}
+          />
+        </Col>
       </Row>
     </Container>
   );

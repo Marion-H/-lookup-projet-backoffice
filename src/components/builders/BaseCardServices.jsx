@@ -1,6 +1,14 @@
 import React from "react";
 import ModaleServices from "./ModaleServices";
-import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+} from "reactstrap";
 import DeleteService from "./DeleteService";
 
 const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
@@ -12,13 +20,17 @@ const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
           <Row>
-            <ModaleServices
-              uuid={uuid}
-              title={titre}
-              logo={logo}
-              description={descriptif}
-            />
-            <DeleteService uuid={uuid} />
+            <Col xs="12" className="pb-2">
+              <ModaleServices
+                uuid={uuid}
+                title={titre}
+                logo={logo}
+                description={descriptif}
+              />
+            </Col>
+            <Col xs="12" className="pb-2">
+              <DeleteService uuid={uuid} />
+            </Col>
           </Row>
         </CardBody>
       </Card>

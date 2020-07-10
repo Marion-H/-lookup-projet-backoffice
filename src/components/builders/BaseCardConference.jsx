@@ -7,6 +7,7 @@ import {
   CardTitle,
   CardSubtitle,
   Row,
+  Col,
 } from "reactstrap";
 import ModalConferences from "./ModalConference";
 
@@ -22,14 +23,18 @@ const BaseCardConference = ({ subject, date, titre, picture, uuid }) => {
           <CardSubtitle>Date: {date}</CardSubtitle>
           <CardText>sujet: {subject}</CardText>
           <Row>
-            <ModalConferences
-              title={titre}
-              subject={subject}
-              date={date}
-              picture={picture}
-              uuid={uuid}
-            />
-            <DeleteConference uuid={uuid} />
+            <Col xs="12" className="pb-2">
+              <ModalConferences
+                title={titre}
+                subject={subject}
+                date={date}
+                picture={picture}
+                uuid={uuid}
+              />
+            </Col>
+            <Col xs="12" className="pb-2">
+              <DeleteConference uuid={uuid} />
+            </Col>
           </Row>
         </CardBody>
       </Card>
