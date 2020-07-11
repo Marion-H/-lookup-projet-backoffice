@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./NavBar.module.css";
 import { Navbar, Nav, NavItem, NavbarText, Button } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/actionCreators";
+// import { useHistory } from "react-router-dom";
+import jwt from "jsonwebtoken";
 
 function NavBar() {
   const logo = require("./LookUp.png");
@@ -40,6 +42,22 @@ function NavBar() {
     },
   ];
 
+  // const history = useHistory();
+
+  function isAuthenticated() {
+    const token = sessionStorage.getItem("token");
+    try {
+      const { exp } = jwt.decode(token);
+      if (exp < (new Date().getTime() + 1) / 1000) {
+        sessionStorage.clear();
+        return <Redirect to="/login" />;
+      }
+    } catch (err) {
+      return console.log("false");
+    }
+    return true;
+  }
+
   return (
     <div className={styles.navigation}>
       <Navbar>
@@ -47,7 +65,11 @@ function NavBar() {
           <img className={styles.logo} src={logo} alt="LookUp" />
           {navlinks.map((item) => (
             <NavItem className={styles.navItem}>
-              <Link className={styles.pageLinks} to={`${item.to}`}>
+              <Link
+                className={styles.pageLinks}
+                to={`${item.to}`}
+                onClick={isAuthenticated}
+              >
                 {item.title}
               </Link>
             </NavItem>
