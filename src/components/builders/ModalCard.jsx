@@ -15,7 +15,7 @@ const EditModal = ({ onClick }) => {
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={toggle}>
         Modifier
       </Button>
 
@@ -26,10 +26,10 @@ const EditModal = ({ onClick }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button color="primary" onClick={onClick}>
+          <Button color="success" onClick={onClick}>
             Valider
           </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
+          <Button color="danger" onClick={toggle}>
             Annuler
           </Button>
         </ModalFooter>

@@ -48,7 +48,9 @@ export default function DeleteConference({ uuid, getConference }) {
   };
   return (
     <Col>
-      <Button onClick={deleteConference}>Supprimer</Button>
+      <Button color="danger" onClick={deleteConference}>
+        Supprimer
+      </Button>
     </Col>
   );
 }

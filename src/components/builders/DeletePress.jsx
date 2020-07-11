@@ -48,7 +48,9 @@ export default function DeletePress({ uuid, getPress }) {
   };
   return (
     <Col>
-      <Button onClick={deletePress}>Supprimer</Button>
+      <Button color="danger" onClick={deletePress}>
+        Supprimer
+      </Button>
     </Col>
   );
 }

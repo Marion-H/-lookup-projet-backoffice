@@ -160,10 +160,10 @@ const AddProduct = ({ getProduct }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" type="submit" onClick={toggle}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>

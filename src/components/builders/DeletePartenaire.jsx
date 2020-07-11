@@ -48,7 +48,9 @@ export default function DeletePartenaire({ uuid, getPartenaire }) {
   };
   return (
     <Col>
-      <Button onClick={deletePartenaire}>Supprimer</Button>
+      <Button color="danger" onClick={deletePartenaire}>
+        Supprimer
+      </Button>
     </Col>
   );
 }

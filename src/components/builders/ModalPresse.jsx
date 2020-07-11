@@ -79,7 +79,7 @@ const ModalPresse = ({
 
   return (
     <Col>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={toggle}>
         Modifier
       </Button>
 
@@ -152,10 +152,10 @@ const ModalPresse = ({
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" type="submit" onClick={toggle}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>

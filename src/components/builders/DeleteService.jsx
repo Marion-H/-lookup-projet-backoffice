@@ -49,7 +49,9 @@ export default function DeleteService({ uuid, getService }) {
   };
   return (
     <Col>
-      <Button onClick={deleteService}>Supprimer</Button>
+      <Button color="danger" onClick={deleteService}>
+        Supprimer
+      </Button>
     </Col>
   );
 }
