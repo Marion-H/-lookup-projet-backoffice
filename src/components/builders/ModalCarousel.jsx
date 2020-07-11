@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const ModalCarousel = ({
   title,
@@ -56,6 +57,8 @@ const ModalCarousel = ({
   });
   const { register } = useForm();
 
+  const history = useHistory();
+
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
@@ -75,6 +78,7 @@ const ModalCarousel = ({
       getCarousel();
       notifySuccess();
     } catch (err) {
+      history.push("/login");
       notifyError();
       console.log(err);
     }

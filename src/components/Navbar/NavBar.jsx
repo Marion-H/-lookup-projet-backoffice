@@ -11,6 +11,10 @@ function NavBar() {
 
   const navlinks = [
     {
+      title: "LookUp Home",
+      to: "/",
+    },
+    {
       title: "Produits",
       to: "/products",
     },
@@ -33,10 +37,6 @@ function NavBar() {
     {
       title: "Partenaires",
       to: "/partenaires",
-    },
-    {
-      title: "Repertoire",
-      to: "/repo",
     },
   ];
 
