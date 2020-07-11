@@ -8,19 +8,20 @@ const RelationPresse = () => {
   const [relationPressDatas, setRelationPressDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getPress = async () => {
+    try {
+      const res = await Axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press"
+      );
+      setRelationPressDatas(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getPress = async () => {
-      try {
-        const res = await Axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press"
-        );
-        setRelationPressDatas(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getPress();
   }, []);
 
@@ -40,11 +41,12 @@ const RelationPresse = () => {
             titre={it.title}
             descriptif={it.description}
             picture={it.picture}
+            getPress={getPress}
           />
         ))}
       </Row>
       <Row>
-        <AddPresse />
+        <AddPresse getPress={getPress} />
       </Row>
     </Container>
   );

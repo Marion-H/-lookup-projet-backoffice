@@ -15,7 +15,14 @@ import {
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
+const ModalPresse = ({
+  onClick,
+  title,
+  description,
+  picture,
+  uuid,
+  getPress,
+}) => {
   const notifySuccess = () => {
     toast.success("Relation Presse bien modifié !", {
       position: "bottom-center",
@@ -45,13 +52,13 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
     description,
     picture,
   });
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const putPresse = async () => {
+  const putPresse = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/${uuid}`,
@@ -62,6 +69,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
           },
         }
       );
+      getPress();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -77,7 +85,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Relation presse</ModalHeader>
-        <Form onSubmit={handleSubmit(putPresse)}>
+        <Form onSubmit={putPresse}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -144,7 +152,7 @@ const ModalPresse = ({ onClick, title, description, picture, uuid }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="primary" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
             <Button color="secondary" onClick={toggle}>
