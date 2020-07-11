@@ -3,7 +3,7 @@ import ModaleServices from "./ModaleServices";
 import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
 import DeleteService from "./DeleteService";
 
-const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
+const BaseCardServices = ({ descriptif, logo, titre, uuid, getService }) => {
   return (
     <div>
       <Card>
@@ -17,8 +17,9 @@ const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
               title={titre}
               logo={logo}
               description={descriptif}
+              getService={getService}
             />
-            <DeleteService uuid={uuid} />
+            <DeleteService uuid={uuid} getService={getService} />
           </Row>
         </CardBody>
       </Card>

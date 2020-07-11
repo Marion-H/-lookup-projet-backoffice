@@ -3,7 +3,13 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
 import ModalPartenaires from "./ModalPartenaires";
 import DeletePartenaire from "./DeletePartenaire";
 
-const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
+const BaseCardPartenaires = ({
+  descriptif,
+  logo,
+  titre,
+  uuid,
+  getPartenaire,
+}) => {
   return (
     <div>
       <Card>
@@ -17,8 +23,9 @@ const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
               title={titre}
               description={descriptif}
               logo={logo}
+              getPartenaire={getPartenaire}
             />
-            <DeletePartenaire uuid={uuid} />
+            <DeletePartenaire uuid={uuid} getPartenaire={getPartenaire} />
           </Row>
         </CardBody>
       </Card>

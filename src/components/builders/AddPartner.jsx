@@ -17,7 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddPartner = ({ onClick }) => {
+const AddPartner = ({ getPartenaire }) => {
   const notifySuccess = () => {
     toast.success("Partenaire bien ajouté !", {
       position: "bottom-center",
@@ -43,13 +43,13 @@ const AddPartner = ({ onClick }) => {
   const [modal, setModal] = useState(false);
 
   const [partenaire, setPartenaire] = useState({});
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const postPartenaire = async () => {
+  const postPartenaire = async (e) => {
+    e.preventDefault();
     try {
       await Axios.post(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/`,
@@ -60,6 +60,7 @@ const AddPartner = ({ onClick }) => {
           },
         }
       );
+      getPartenaire();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -69,13 +70,13 @@ const AddPartner = ({ onClick }) => {
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="success" onClick={toggle}>
         Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
-        <Form onSubmit={handleSubmit(postPartenaire)}>
+        <Form onSubmit={postPartenaire}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -139,10 +140,10 @@ const AddPartner = ({ onClick }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>

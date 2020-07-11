@@ -20,19 +20,20 @@ const BaseCardProductInfo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { uuid } = useParams();
 
+  const getProductInfo = async () => {
+    try {
+      const res = await Axios.get(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}/products_info`
+      );
+      setProductInfo(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getProductInfo = async () => {
-      try {
-        const res = await Axios.get(
-          `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}/products_info`
-        );
-        setProductInfo(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getProductInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,7 +45,7 @@ const BaseCardProductInfo = () => {
     <Container>
       {!productInfo[0] ? (
         <Row>
-          <AddProductInfo uuid={uuid} />
+          <AddProductInfo uuid={uuid} getProductInfo={getProductInfo} />
         </Row>
       ) : (
         productInfo.map((info) => (
@@ -95,6 +96,7 @@ const BaseCardProductInfo = () => {
                   picture={info.picture}
                   picture2={info.picture2}
                   picture3={info.picture3}
+                  getProductInfo={getProductInfo}
                 />
               </CardGroup>
             </Row>

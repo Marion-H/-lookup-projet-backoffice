@@ -17,7 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddProductInfo = ({ onClick, uuid }) => {
+const AddProductInfo = ({ getProductInfo, uuid }) => {
   const notifySuccess = () => {
     toast.success("Informations bien ajoutés !", {
       position: "bottom-center",
@@ -43,14 +43,14 @@ const AddProductInfo = ({ onClick, uuid }) => {
   const [modal, setModal] = useState(false);
 
   const [productInfo, setProductInfo] = useState({});
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const postProductInfo = async () => {
+  const postProductInfo = async (e) => {
+    e.preventDefault();
     try {
       await Axios.post(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/`,
@@ -61,6 +61,7 @@ const AddProductInfo = ({ onClick, uuid }) => {
           },
         }
       );
+      getProductInfo();
       notifySuccess();
     } catch (err) {
       console.log(err);
@@ -70,13 +71,13 @@ const AddProductInfo = ({ onClick, uuid }) => {
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="succes" onClick={toggle}>
         Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Produits</ModalHeader>
-        <Form onSubmit={handleSubmit(postProductInfo)}>
+        <Form onSubmit={postProductInfo}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -208,10 +209,10 @@ const AddProductInfo = ({ onClick, uuid }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>

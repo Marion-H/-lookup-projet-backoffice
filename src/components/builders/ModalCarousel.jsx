@@ -17,14 +17,13 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-toast.configure();
 const ModalCarousel = ({
-  onClick,
   title,
   description,
   link,
   picture,
   uuid,
+  getCarousel,
 }) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
@@ -56,15 +55,16 @@ const ModalCarousel = ({
     link,
     picture,
   });
-  const { handleSubmit, register } = useForm();
+  const { register } = useForm();
+
   const history = useHistory();
-  // const onSubmit = (values) => console.log(values);
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putCarousel = async () => {
+  const putCarousel = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
@@ -75,6 +75,7 @@ const ModalCarousel = ({
           },
         }
       );
+      getCarousel();
       notifySuccess();
     } catch (err) {
       history.push("/login");
@@ -85,13 +86,13 @@ const ModalCarousel = ({
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={toggle}>
         Modifier
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Carousel</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <Form onSubmit={putCarousel}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -179,10 +180,10 @@ const ModalCarousel = ({
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>

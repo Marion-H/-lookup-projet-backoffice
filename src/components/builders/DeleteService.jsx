@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-export default function DeleteService({ uuid }) {
+export default function DeleteService({ uuid, getService }) {
   const token = useSelector((state) => state.admin.token);
 
   const notifySuccess = () => {
@@ -41,6 +41,7 @@ export default function DeleteService({ uuid }) {
           },
         }
       );
+      getService();
       notifySuccess();
     } catch (error) {
       notifyError();
@@ -48,7 +49,9 @@ export default function DeleteService({ uuid }) {
   };
   return (
     <Col>
-      <Button onClick={deleteService}>Supprimer</Button>
+      <Button color="danger" onClick={deleteService}>
+        Supprimer
+      </Button>
     </Col>
   );
 }

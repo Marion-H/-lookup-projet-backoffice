@@ -16,7 +16,14 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
+const ModalCarousel = ({
+  onClick,
+  title,
+  description,
+  logo,
+  uuid,
+  getPartenaire,
+}) => {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -46,14 +53,14 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
     description,
     logo,
   });
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putCarousel = async () => {
+  const putPartner = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
@@ -64,6 +71,7 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
           },
         }
       );
+      getPartenaire();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -73,13 +81,13 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
 
   return (
     <Col>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={toggle}>
         Modifier
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Partenaires</ModalHeader>
-        <Form onSubmit={handleSubmit(putCarousel)}>
+        <Form onSubmit={putPartner}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -146,10 +154,10 @@ const ModalCarousel = ({ onClick, title, description, logo, uuid }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>
