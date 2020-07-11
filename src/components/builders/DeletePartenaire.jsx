@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-export default function DeletePartenaire({ uuid }) {
+export default function DeletePartenaire({ uuid, getPartenaire }) {
   const token = useSelector((state) => state.admin.token);
 
   const notifySuccess = () => {
@@ -40,6 +40,7 @@ export default function DeletePartenaire({ uuid }) {
           },
         }
       );
+      getPartenaire();
       notifySuccess();
     } catch (error) {
       notifyError();
