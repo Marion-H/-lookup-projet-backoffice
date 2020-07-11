@@ -12,8 +12,16 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import DeleteProduct from "./DeleteProduct";
+import ModalProduct from "./ModalProduct";
 
-const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
+const BaseCardProduct = ({
+  description,
+  picture,
+  name,
+  price,
+  uuid,
+  getProduct,
+}) => {
   return (
     <div>
       <Card>
@@ -25,10 +33,13 @@ const BaseCardProduct = ({ description, picture, name, price, uuid }) => {
           <Row>
             <Col>
               <Link to={`/${uuid}/products_info`}>
-                <Button>Informations</Button>
+                <Button color="info">Informations</Button>
               </Link>
             </Col>
-            <DeleteProduct uuid={uuid} />
+            <Col>
+              <ModalProduct getProduct={getProduct} uuid={uuid} />
+            </Col>
+            <DeleteProduct uuid={uuid} getProduct={getProduct} />
           </Row>
         </CardBody>
       </Card>

@@ -18,17 +18,7 @@ import { useSelector } from "react-redux";
 
 toast.configure();
 
-function ModalProductInfo({
-  uuid,
-  title,
-  description,
-  description2,
-  description3,
-  picture,
-  picture2,
-  picture3,
-  getProductInfo,
-}) {
+function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
       position: "bottom-center",
@@ -53,14 +43,12 @@ function ModalProductInfo({
   };
   const [modal, setModal] = useState(false);
 
-  const [productInfo, setProductInfo] = useState({
-    title,
+  const [product, setProduct] = useState({
     description,
-    description2,
-    description3,
     picture,
-    picture2,
-    picture3,
+    name,
+    price,
+    uuid,
   });
   const { register } = useForm();
 
@@ -68,19 +56,19 @@ function ModalProductInfo({
 
   const token = useSelector((state) => state.admin.token);
 
-  const putProductInfo = async (e) => {
+  const putProduct = async (e) => {
     e.preventDefault();
     try {
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
-        productInfo,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}`,
+        product,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      getProductInfo();
+      getProduct();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -95,25 +83,25 @@ function ModalProductInfo({
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Produits informations</ModalHeader>
-        <Form onSubmit={putProductInfo}>
+        <ModalHeader toggle={toggle}>Produits</ModalHeader>
+        <Form onSubmit={putProduct}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <h6>Titre</h6>
+                <h6>Nom</h6>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
+              <Col lg="6">{name}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      title: e.target.value,
+                    setProduct({
+                      ...product,
+                      name: e.target.value,
                     })
                   }
                 />
@@ -134,41 +122,9 @@ function ModalProductInfo({
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
+                    setProduct({
+                      ...product,
                       description: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{description2}</Col>
-              <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description2"
-                  type="text"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      description2: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{description3}</Col>
-              <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description3"
-                  type="text"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      description3: e.target.value,
                     })
                   }
                 />
@@ -189,8 +145,8 @@ function ModalProductInfo({
                   type="text"
                   name="picture"
                   onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
+                    setProduct({
+                      ...product,
                       picture: e.target.value,
                     })
                   }
@@ -198,32 +154,23 @@ function ModalProductInfo({
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{picture2}</Col>
-              <Col lg="6">
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="picture2"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      picture2: e.target.value,
-                    })
-                  }
-                />
+              <Col lg="12">
+                <label>
+                  <h6>Prix</h6>
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{picture3}</Col>
+              <Col lg="6">{price} €</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="picture3"
+                  name="price"
                   onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      picture3: e.target.value,
+                    setProduct({
+                      ...product,
+                      price: e.target.value,
                     })
                   }
                 />
@@ -255,4 +202,4 @@ function ModalProductInfo({
   );
 }
 
-export default ModalProductInfo;
+export default ModalProduct;

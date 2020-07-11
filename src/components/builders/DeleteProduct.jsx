@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-export default function DeleteProduct({ uuid }) {
+export default function DeleteProduct({ uuid, getProduct }) {
   const token = useSelector((state) => state.admin.token);
 
   const notifySuccess = () => {
@@ -41,6 +41,7 @@ export default function DeleteProduct({ uuid }) {
           },
         }
       );
+      getProduct();
       notifySuccess();
     } catch (error) {
       console.log(error);
@@ -49,7 +50,9 @@ export default function DeleteProduct({ uuid }) {
   };
   return (
     <Col>
-      <Button onClick={deleteProduct}>Supprimer</Button>
+      <Button color="danger" onClick={deleteProduct}>
+        Supprimer
+      </Button>
     </Col>
   );
 }

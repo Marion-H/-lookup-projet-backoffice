@@ -7,19 +7,20 @@ const Products = () => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getProduct = async () => {
+    try {
+      const res = await axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
+      );
+      setProductData(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
-        );
-        setProductData(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,11 +43,12 @@ const Products = () => {
             price={it.price}
             description={it.description}
             picture={it.picture}
+            getProduct={getProduct}
           />
         ))}
       </Row>
       <Row>
-        <AddProduct />
+        <AddProduct getProduct={getProduct} />
       </Row>
     </Container>
   );
