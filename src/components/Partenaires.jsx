@@ -32,7 +32,7 @@ const Partenaires = () => {
   return (
     <Container>
       <Row>
-        <h1>Partenaiiires</h1>
+        <h1>Partenaires</h1>
       </Row>
       <Row>
         {partenaireData.map((it) => (
@@ -42,11 +42,12 @@ const Partenaires = () => {
             titre={it.title}
             descriptif={it.description}
             logo={it.logo}
+            getPartenaire={getPartenaire}
           />
         ))}
       </Row>
       <Row>
-        <AddPartner />
+        <AddPartner getPartenaire={getPartenaire} />
       </Row>
     </Container>
   );

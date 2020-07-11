@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 
 toast.configure();
 
-function ModalProduct({
+function ModalProductInfo({
   uuid,
   title,
   description,
@@ -28,7 +28,7 @@ function ModalProduct({
   picture,
   picture2,
   picture3,
-  onClick,
+  getProductInfo,
 }) {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
@@ -54,7 +54,7 @@ function ModalProduct({
   };
   const [modal, setModal] = useState(false);
 
-  const [product, setProduct] = useState({
+  const [productInfo, setProductInfo] = useState({
     title,
     description,
     description2,
@@ -63,24 +63,27 @@ function ModalProduct({
     picture2,
     picture3,
   });
-  const { handleSubmit, register } = useForm();
+  const { register } = useForm();
+
   const history = useHistory();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putProduct = async () => {
+  const putProductInfo = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
-        product,
+        productInfo,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      getProductInfo();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -91,13 +94,13 @@ function ModalProduct({
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={toggle}>
         Modifier
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Produits informations</ModalHeader>
-        <Form onSubmit={handleSubmit(putProduct)}>
+        <Form onSubmit={putProductInfo}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -112,8 +115,8 @@ function ModalProduct({
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       title: e.target.value,
                     })
                   }
@@ -135,8 +138,8 @@ function ModalProduct({
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       description: e.target.value,
                     })
                   }
@@ -151,8 +154,8 @@ function ModalProduct({
                   name="description2"
                   type="text"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       description2: e.target.value,
                     })
                   }
@@ -167,8 +170,8 @@ function ModalProduct({
                   name="description3"
                   type="text"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       description3: e.target.value,
                     })
                   }
@@ -190,8 +193,8 @@ function ModalProduct({
                   type="text"
                   name="picture"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture: e.target.value,
                     })
                   }
@@ -206,8 +209,8 @@ function ModalProduct({
                   type="text"
                   name="picture2"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture2: e.target.value,
                     })
                   }
@@ -222,8 +225,8 @@ function ModalProduct({
                   type="text"
                   name="picture3"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture3: e.target.value,
                     })
                   }
@@ -232,10 +235,10 @@ function ModalProduct({
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
+            <Button color="success" type="submit" onClick={toggle}>
               Valider
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>
@@ -256,4 +259,4 @@ function ModalProduct({
   );
 }
 
-export default ModalProduct;
+export default ModalProductInfo;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -17,9 +17,10 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 
 toast.configure();
-const AddProduct = ({ getProduct }) => {
+
+function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
   const notifySuccess = () => {
-    toast.success("Conference bien ajouté !", {
+    toast.success("Carousel bien modifié !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -42,19 +43,25 @@ const AddProduct = ({ getProduct }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [Product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    description,
+    picture,
+    name,
+    price,
+    uuid,
+  });
   const { register } = useForm();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const postProduct = async (e) => {
+  const putProduct = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/`,
-        Product,
+      await Axios.put(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}`,
+        product,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,33 +72,35 @@ const AddProduct = ({ getProduct }) => {
       notifySuccess();
     } catch (err) {
       notifyError();
+      console.log(err);
     }
   };
 
   return (
     <Container>
-      <Button color="success" onClick={toggle}>
-        Ajouter
+      <Button color="warning" onClick={toggle}>
+        Modifier
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Produit</ModalHeader>
-        <Form onSubmit={postProduct}>
+        <ModalHeader toggle={toggle}>Produits</ModalHeader>
+        <Form onSubmit={putProduct}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Nom</label>
+                <h6>Nom</h6>
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col lg="6">{name}</Col>
+              <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
+                      ...product,
                       name: e.target.value,
                     })
                   }
@@ -100,18 +109,21 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Description</label>
+                <label>
+                  <h6>Description</h6>{" "}
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col lg="6">{description}</Col>
+              <Col lg="6">
                 <textarea
                   ref={register({ required: true })}
                   name="description"
                   type="text"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
+                      ...product,
                       description: e.target.value,
                     })
                   }
@@ -120,19 +132,22 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Prix</label>
+                <label>
+                  <h6>Image</h6>
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col lg="6">{picture}</Col>
+              <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="price"
+                  name="picture"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
-                      price: e.target.value,
+                      ...product,
+                      picture: e.target.value,
                     })
                   }
                 />
@@ -140,19 +155,22 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label> Image</label>
+                <label>
+                  <h6>Prix</h6>
+                </label>
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col lg="6">{price} €</Col>
+              <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
-                  name="image"
+                  name="price"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
-                      picture: e.target.value,
+                      ...product,
+                      price: e.target.value,
                     })
                   }
                 />
@@ -169,8 +187,19 @@ const AddProduct = ({ getProduct }) => {
           </ModalFooter>
         </Form>
       </Modal>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
-};
+}
 
-export default AddProduct;
+export default ModalProduct;
