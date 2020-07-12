@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
@@ -60,7 +60,7 @@ const ModalCarousel = ({
   });
 
   const { register } = useForm();
-  const history = useHistory();
+
   const token = useSelector((state) => state.admin.token);
   const dispatch = useDispatch();
 
@@ -81,7 +81,7 @@ const ModalCarousel = ({
       getCarousel();
       notifySuccess();
     } catch (err) {
-      history.push("/login");
+      dispatch(logout());
       notifyError();
       console.log(err);
     }
