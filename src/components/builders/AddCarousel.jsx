@@ -47,6 +47,7 @@ const AddCarousel = () => {
 
   const [carousel, setCarousel] = useState({});
   const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
 
   const toggle = () => setModal(!modal);
