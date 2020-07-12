@@ -12,6 +12,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -47,6 +48,8 @@ const AddProduct = ({ getProduct }) => {
   const [modal, setModal] = useState(false);
 
   const [Product, setProduct] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
   const dispatch = useDispatch();
 
@@ -71,6 +74,8 @@ const AddProduct = ({ getProduct }) => {
     } catch (err) {
       dispatch(logout());
       notifyError();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -184,7 +189,7 @@ const AddProduct = ({ getProduct }) => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler
