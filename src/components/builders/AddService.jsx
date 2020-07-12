@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -12,6 +12,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -46,6 +47,8 @@ const AddService = ({ getService }) => {
   const [modal, setModal] = useState(false);
 
   const [services, setService] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
   const dispatch = useDispatch();
 
@@ -69,6 +72,8 @@ const AddService = ({ getService }) => {
     } catch (err) {
       notifyError();
       dispatch(logout());
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,7 +167,7 @@ const AddService = ({ getService }) => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler
@@ -170,17 +175,6 @@ const AddService = ({ getService }) => {
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };

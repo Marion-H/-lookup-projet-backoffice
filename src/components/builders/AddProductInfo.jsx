@@ -12,6 +12,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -50,6 +51,8 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
   const [modal, setModal] = useState(false);
 
   const [productInfo, setProductInfo] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
   const dispatch = useDispatch();
 
@@ -74,6 +77,8 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
     } catch (err) {
       dispatch(logout());
       notifyError();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -230,7 +235,7 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler
