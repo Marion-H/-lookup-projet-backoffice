@@ -40,6 +40,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
     });
   };
   const [modal, setModal] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const [services, setServices] = useState({
     title,
@@ -63,6 +64,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
           },
         }
       );
+      setClicked(true);
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -72,7 +74,7 @@ const ModalServices = ({ onClick, title, description, logo, uuid }) => {
 
   return (
     <Col>
-      <Button color="danger" onClick={toggle}>
+      <Button color={clicked ? "primary" : "danger"} onClick={toggle}>
         Modifier
       </Button>
 

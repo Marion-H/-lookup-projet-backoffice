@@ -53,6 +53,8 @@ const ModalServices = ({
   };
   const [modal, setModal] = useState(false);
 
+  const [clicked, setClicked] = useState(false);
+
   const [lookupDatas, setLookupDatas] = useState({
     companyName,
     streetName,
@@ -84,6 +86,7 @@ const ModalServices = ({
         }
       );
       notifySuccess();
+      setClicked(true);
     } catch (err) {
       notifyError();
       console.log(err);
@@ -92,7 +95,7 @@ const ModalServices = ({
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color={clicked ? "primary" : "danger"} onClick={toggle}>
         Modifier
       </Button>
 

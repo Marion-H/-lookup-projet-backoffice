@@ -41,6 +41,8 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
   };
   const [modal, setModal] = useState(false);
 
+  const [clicked, setClicked] = useState(false);
+
   const [conferences, setConferences] = useState({
     title,
     subject,
@@ -65,6 +67,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
           },
         }
       );
+      setClicked(true);
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -74,7 +77,7 @@ const ModalConferences = ({ onClick, title, subject, date, picture, uuid }) => {
 
   return (
     <Col>
-      <Button color="danger" onClick={toggle}>
+      <Button color={clicked ? "primary" : "danger"} onClick={toggle}>
         Modifier
       </Button>
 
