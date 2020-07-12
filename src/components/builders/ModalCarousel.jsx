@@ -93,27 +93,20 @@ const ModalCarousel = ({
       try {
         const { exp } = jwt.decode(token);
         if (exp < (new Date().getTime() + 1) / 1000) {
-          console.log("nope");
-          return false;
+          return dispatch(logout());
         }
-        console.log("true");
-
-        return true;
+        return toggle();
       } catch (err) {
-        console.log("false");
         notifyError();
-        return false;
+        return dispatch(logout());
       }
     }
-    return false;
+    return dispatch(logout());
   };
 
   return (
     <Container>
-      <Button
-        color="warning"
-        onClick={isAuthenticated() ? toggle : dispatch(logout())}
-      >
+      <Button color="warning" onClick={isAuthenticated}>
         Modifier
       </Button>
 

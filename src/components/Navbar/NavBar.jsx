@@ -73,8 +73,8 @@ function NavBar() {
       <Navbar>
         <Nav vertical>
           <img className={styles.logo} src={logo} alt="LookUp" />
-          {navlinks.map((item) => (
-            <NavItem className={styles.navItem}>
+          {navlinks.map((item, key) => (
+            <NavItem className={styles.navItem} key={key}>
               <Link
                 className={styles.pageLinks}
                 to={`${item.to}`}
