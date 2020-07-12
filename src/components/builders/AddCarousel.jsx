@@ -12,6 +12,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -45,6 +46,8 @@ const AddCarousel = () => {
   const [modal, setModal] = useState(false);
 
   const [carousel, setCarousel] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
 
   const toggle = () => setModal(!modal);
@@ -66,6 +69,8 @@ const AddCarousel = () => {
     } catch (err) {
       notifyError();
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,7 +167,7 @@ const AddCarousel = () => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler

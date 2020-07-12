@@ -12,6 +12,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -47,6 +48,8 @@ const AddPartner = ({ getPartenaire }) => {
   const [modal, setModal] = useState(false);
 
   const [partenaire, setPartenaire] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
   const dispatch = useDispatch();
 
@@ -70,6 +73,8 @@ const AddPartner = ({ getPartenaire }) => {
     } catch (err) {
       notifyError();
       dispatch(logout());
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,7 +168,7 @@ const AddPartner = ({ getPartenaire }) => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler

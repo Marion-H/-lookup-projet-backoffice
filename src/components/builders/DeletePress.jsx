@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Col } from "reactstrap";
+import React, { useState } from "react";
+import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/actionCreators";
 
 export default function DeletePress({ uuid, getPress }) {
+  const [loading, setLoading] = useState(false);
+
   const token = useSelector((state) => state.admin.token);
   const dispatch = useDispatch();
 
@@ -49,12 +51,14 @@ export default function DeletePress({ uuid, getPress }) {
     } catch (error) {
       notifyError();
       dispatch(logout());
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <Col>
       <Button color="danger" onClick={deletePress}>
-        Supprimer
+        {loading ? <Spinner size="sm" /> : "Supprimer"}
       </Button>
     </Col>
   );
