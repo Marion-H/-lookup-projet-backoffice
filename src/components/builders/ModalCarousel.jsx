@@ -15,7 +15,11 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
+
+import { logout } from "../../store/actionCreators";
 
 const ModalCarousel = ({
   title,
@@ -48,20 +52,19 @@ const ModalCarousel = ({
     });
   };
   const [modal, setModal] = useState(false);
-
   const [carousel, setCarousel] = useState({
     title,
     description,
     link,
     picture,
   });
+
   const { register } = useForm();
 
-  const history = useHistory();
+  const token = useSelector((state) => state.admin.token);
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
-
-  const token = useSelector((state) => state.admin.token);
 
   const putCarousel = async (e) => {
     e.preventDefault();
@@ -78,15 +81,31 @@ const ModalCarousel = ({
       getCarousel();
       notifySuccess();
     } catch (err) {
-      history.push("/login");
+      dispatch(logout());
       notifyError();
-      console.log(err);
     }
+  };
+
+  const isAuthenticated = () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const { exp } = jwt.decode(token);
+        if (exp < (new Date().getTime() + 1) / 1000) {
+          return dispatch(logout());
+        }
+        return toggle();
+      } catch (err) {
+        notifyError();
+        return dispatch(logout());
+      }
+    }
+    return dispatch(logout());
   };
 
   return (
     <Container>
-      <Button color="warning" onClick={toggle}>
+      <Button color="warning" onClick={isAuthenticated}>
         Modifier
       </Button>
 
