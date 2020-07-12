@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./NavBar.module.css";
 import { Navbar, Nav, NavItem, NavbarText, Button } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import jwt from "jsonwebtoken";
+import { toast } from "react-toastify";
+
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/actionCreators";
-// import { useHistory } from "react-router-dom";
-import jwt from "jsonwebtoken";
 
 function NavBar() {
   const logo = require("./LookUp.png");
@@ -42,20 +43,29 @@ function NavBar() {
     },
   ];
 
-  // const history = useHistory();
+  const notifyError = () => {
+    toast.error("Erreur Notification !", {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   function isAuthenticated() {
     const token = sessionStorage.getItem("token");
     try {
       const { exp } = jwt.decode(token);
       if (exp < (new Date().getTime() + 1) / 1000) {
-        sessionStorage.clear();
-        return <Redirect to="/login" />;
+        return dispatch(logout());
       }
     } catch (err) {
-      return console.log("false");
+      notifyError();
+      return dispatch(logout());
     }
-    return true;
   }
 
   return (
