@@ -18,6 +18,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import { logout } from "../../store/actionCreators";
 
 toast.configure();
@@ -93,7 +96,7 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
 
   return (
     <Container>
-      <Button color="succes" onClick={isAuthenticated}>
+      <Button color="success" onClick={isAuthenticated}>
         Ajouter
       </Button>
 
@@ -129,49 +132,44 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
               </Col>
             </Row>
             <Row>
-              <Col>
-                <textarea
-                  ref={register({ required: true })}
-                  name="description"
-                  type="text"
-                  onChange={(e) =>
+              <Col lg="6">
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
                     setProductInfo({
                       ...productInfo,
-                      description: e.target.value,
-                    })
-                  }
+                      description: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
-
             <Row>
-              <Col>
-                <textarea
-                  ref={register({ required: true })}
-                  name="description2"
-                  type="text"
-                  onChange={(e) =>
+              <Col lg="6">
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
                     setProductInfo({
                       ...productInfo,
-                      description2: e.target.value,
-                    })
-                  }
+                      description2: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
-
             <Row>
-              <Col>
-                <textarea
-                  ref={register({ required: true })}
-                  name="description3"
-                  type="text"
-                  onChange={(e) =>
+              <Col lg="6">
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
                     setProductInfo({
                       ...productInfo,
-                      description3: e.target.value,
-                    })
-                  }
+                      description3: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>

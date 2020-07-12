@@ -13,6 +13,8 @@ import {
 import ModalProductInfo from "./ModalProductInfo";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
+import ReactHtmlParser from "react-html-parser";
+
 import AddProductInfo from "./AddProductInfo";
 
 const BaseCardProductInfo = () => {
@@ -61,7 +63,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description}</CardText>
+                    <CardText>
+                      Texte 1 : {ReactHtmlParser(info.description)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <Card>
@@ -72,7 +76,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description2}</CardText>
+                    <CardText>
+                      Texte 2 : {ReactHtmlParser(info.description2)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <Card>
@@ -83,7 +89,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description3}</CardText>
+                    <CardText>
+                      Texte 3 :{ReactHtmlParser(info.description3)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <ModalProductInfo
