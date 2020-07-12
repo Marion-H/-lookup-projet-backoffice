@@ -11,6 +11,7 @@ import {
   ModalFooter,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
@@ -49,6 +50,8 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
     description,
     picture,
   });
+  const [loading, setLoading] = useState(false);
+
   const { register } = useForm();
   const dispatch = useDispatch();
 
@@ -72,6 +75,8 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
     } catch (err) {
       notifyError();
       dispatch(logout());
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -168,7 +173,7 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
           </ModalBody>
           <ModalFooter>
             <Button color="success" type="submit" onClick={toggle}>
-              Valider
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
             <Button color="danger" onClick={toggle}>
               Annuler
