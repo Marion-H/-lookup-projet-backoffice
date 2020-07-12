@@ -83,7 +83,6 @@ const ModalCarousel = ({
     } catch (err) {
       dispatch(logout());
       notifyError();
-      console.log(err);
     }
   };
 
