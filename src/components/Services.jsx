@@ -36,6 +36,7 @@ const Services = () => {
       <Row>
         {serviceDatas.map((it) => (
           <BaseCardServices
+            key={it.uuid}
             uuid={it.uuid}
             titre={it.title}
             descriptif={it.description}

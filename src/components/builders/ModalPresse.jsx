@@ -14,15 +14,12 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
 
-const ModalPresse = ({
-  onClick,
-  title,
-  description,
-  picture,
-  uuid,
-  getPress,
-}) => {
+import { logout } from "../../store/actionCreators";
+
+const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
   const notifySuccess = () => {
     toast.success("Relation Presse bien modifié !", {
       position: "bottom-center",
@@ -53,6 +50,7 @@ const ModalPresse = ({
     picture,
   });
   const { register } = useForm();
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
 
@@ -73,13 +71,30 @@ const ModalPresse = ({
       notifySuccess();
     } catch (err) {
       notifyError();
-      console.log(err);
+      dispatch(logout());
     }
+  };
+
+  const isAuthenticated = () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const { exp } = jwt.decode(token);
+        if (exp < (new Date().getTime() + 1) / 1000) {
+          return dispatch(logout());
+        }
+        return toggle();
+      } catch (err) {
+        notifyError();
+        return dispatch(logout());
+      }
+    }
+    return dispatch(logout());
   };
 
   return (
     <Col>
-      <Button color="warning" onClick={toggle}>
+      <Button color="warning" onClick={isAuthenticated}>
         Modifier
       </Button>
 

@@ -14,7 +14,10 @@ import {
   Col,
 } from "reactstrap";
 import Axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
+
+import { logout } from "../../store/actionCreators";
 
 toast.configure();
 const ModalServices = ({
@@ -28,6 +31,7 @@ const ModalServices = ({
   password,
   phone,
   siret,
+  getLookupDatas,
 }) => {
   const notifySuccess = () => {
     toast.success("Services bien modifié !", {
@@ -65,6 +69,7 @@ const ModalServices = ({
     siret,
   });
   const { register } = useForm();
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
 
@@ -82,6 +87,7 @@ const ModalServices = ({
           },
         }
       );
+      getLookupDatas();
       notifySuccess();
     } catch (err) {
       notifyError();
@@ -89,9 +95,26 @@ const ModalServices = ({
     }
   };
 
+  const isAuthenticated = () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const { exp } = jwt.decode(token);
+        if (exp < (new Date().getTime() + 1) / 1000) {
+          return dispatch(logout());
+        }
+        return toggle();
+      } catch (err) {
+        notifyError();
+        return dispatch(logout());
+      }
+    }
+    return dispatch(logout());
+  };
+
   return (
     <Container>
-      <Button color="warning" onClick={toggle}>
+      <Button color="warning" onClick={isAuthenticated}>
         Modifier
       </Button>
 
@@ -277,7 +300,7 @@ const ModalServices = ({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="password"
                   name="lien"
                   onChange={(e) =>
                     setLookupDatas({
