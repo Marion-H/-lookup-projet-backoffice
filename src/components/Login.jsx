@@ -33,17 +33,22 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <Row>
+    <Container className="d-flex flex-column align-items-center">
+      <Row className="mt-5">
         <Col>
           <h1>Login</h1>
         </Col>
       </Row>
       <Row>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          onSubmit={handleSubmit(onSubmit)}
+          className="d-flex flex-column align-items-center"
+        >
           <Col>
             <input
+              className="mb-3 mt-4"
               name="email"
+              placeholder="email"
               type="text"
               ref={register({
                 required: "Required",
@@ -57,7 +62,9 @@ const Login = () => {
           </Col>
           <Col>
             <input
+              className="mb-4"
               name="password"
+              placeholder="password"
               type="password"
               ref={register({
                 required: "Required",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Container, Spinner } from "reactstrap";
+import { Row, Container, Spinner, Col } from "reactstrap";
 import axios from "axios";
 import BaseCardProduct from "./builders/BaseCardProduct";
 import AddProduct from "./builders/AddProduct";
@@ -31,20 +31,22 @@ const Products = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Produits</h1>
       </Row>
       <Row>
         {productData.map((it) => (
-          <BaseCardProduct
-            key={it.uuid}
-            uuid={it.uuid}
-            name={it.name}
-            price={it.price}
-            description={it.description}
-            picture={it.picture}
-            getProduct={getProduct}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardProduct
+              key={it.uuid}
+              uuid={it.uuid}
+              name={it.name}
+              price={it.price}
+              description={it.description}
+              picture={it.picture}
+              getProduct={getProduct}
+            />
+          </Col>
         ))}
       </Row>
       <Row>
