@@ -1,5 +1,7 @@
 import React from "react";
 import ModaleServices from "./ModaleServices";
+import ReactHtmlParser from "react-html-parser";
+
 import {
   Card,
   CardImg,
@@ -15,10 +17,10 @@ const BaseCardServices = ({ descriptif, logo, titre, uuid, getService }) => {
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src={logo} alt={descriptif} />
+        <CardImg top width="100%" src={logo} alt={uuid} />
         <CardBody>
           <CardTitle>{titre}</CardTitle>
-          <CardText>descriptif: {descriptif}</CardText>
+          <CardText>description: {ReactHtmlParser(descriptif)}</CardText>
           <Row>
             <Col xs="12" className="pb-2">
               <ModaleServices
