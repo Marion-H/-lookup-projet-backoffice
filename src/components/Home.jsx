@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Lookup Infos</h1>
       </Row>
       <Row>

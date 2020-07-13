@@ -30,16 +30,16 @@ const BaseCardProduct = ({
           <CardTitle>{name}</CardTitle>
           <CardText>descriptif: {description}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
-          <Row>
-            <Col xs="12" className="pb-2">
+          <Row className="d-flex flex-column align-items-center">
+            <Col xs="12" className="pb-2 ml-4">
               <Link to={`/${uuid}/products_info`}>
                 <Button color="info">Informations</Button>
               </Link>
             </Col>
-            <Col xs="12" className="pb-2">
+            <Col xs="12" className="pb-2 d-flex justify-content-center">
               <ModalProduct getProduct={getProduct} uuid={uuid} />
             </Col>
-            <Col xs="12" className="pb-2">
+            <Col xs="12" className="pb-2 d-flex justify-content-center">
               <DeleteProduct uuid={uuid} getProduct={getProduct} />
             </Col>
           </Row>

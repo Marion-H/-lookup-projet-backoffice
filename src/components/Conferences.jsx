@@ -30,7 +30,7 @@ const Conferences = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Conferences</h1>
       </Row>
       <Row>

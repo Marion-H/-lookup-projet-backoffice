@@ -29,7 +29,7 @@ const Carousel = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Carousel</h1>
       </Row>
       <Row>

@@ -31,7 +31,7 @@ const RelationPresse = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Relation Presse</h1>
       </Row>
       <Row>

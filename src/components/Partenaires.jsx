@@ -31,7 +31,7 @@ const Partenaires = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Partenaires</h1>
       </Row>
       <Row>

@@ -31,7 +31,7 @@ const Products = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Produits</h1>
       </Row>
       <Row>
