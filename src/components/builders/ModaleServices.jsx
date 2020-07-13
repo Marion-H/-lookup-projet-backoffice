@@ -166,7 +166,7 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
                   onChange={(e) =>
                     setServices({
                       ...services,
-                      link: e.target.value,
+                      logo: e.target.value,
                     })
                   }
                 />
