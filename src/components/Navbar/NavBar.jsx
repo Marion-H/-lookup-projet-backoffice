@@ -41,6 +41,10 @@ function NavBar() {
       title: "Partenaires",
       to: "/partenaires",
     },
+    {
+      title: "Repertoire",
+      to: "/repo",
+    },
   ];
 
   const notifyError = () => {
