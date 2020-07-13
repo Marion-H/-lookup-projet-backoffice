@@ -18,7 +18,9 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ReactHtmlParser from "react-html-parser";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { logout } from "../../store/actionCreators";
 
 toast.configure();
@@ -134,6 +136,7 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
                 />
               </Col>
             </Row>
+
             <Row>
               <Col lg="12">
                 <label>
@@ -141,22 +144,26 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
                 </label>
               </Col>
             </Row>
+
             <Row>
-              <Col lg="6">{description}</Col>
+              <Col lg="6">{ReactHtmlParser(description)}</Col>
+
               <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description"
-                  type="text"
-                  onChange={(e) =>
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+
                     setProduct({
                       ...product,
-                      description: e.target.value,
-                    })
-                  }
+
+                      description: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
+
             <Row>
               <Col lg="12">
                 <label>
