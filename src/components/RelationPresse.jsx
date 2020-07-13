@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Row, Container, Spinner } from "reactstrap";
+import { Row, Container, Spinner, Col } from "reactstrap";
 import Axios from "axios";
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 import AddPresse from "./builders/AddPresse";
@@ -31,19 +31,21 @@ const RelationPresse = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Relation Presse</h1>
       </Row>
       <Row>
         {relationPressDatas.map((it) => (
-          <BaseCardRelationPresse
-            key={it.uuid}
-            uuid={it.uuid}
-            titre={it.title}
-            descriptif={it.description}
-            picture={it.picture}
-            getPress={getPress}
-          />
+          <Col md="4" sm="6" xs="12" className="pb-4">
+            <BaseCardRelationPresse
+              key={it.uuid}
+              uuid={it.uuid}
+              titre={it.title}
+              descriptif={it.description}
+              picture={it.picture}
+              getPress={getPress}
+            />
+          </Col>
         ))}
       </Row>
       <Row>
