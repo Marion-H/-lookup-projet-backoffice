@@ -174,7 +174,7 @@ function ModalProductInfo({
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description2}</Col>
+              <Col lg="6">{ReactHtmlParser(description2)}</Col>
               <Col lg="6">
                 <CKEditor
                   editor={ClassicEditor}
@@ -189,7 +189,7 @@ function ModalProductInfo({
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description3}</Col>
+              <Col lg="6">{ReactHtmlParser(description3)}</Col>
               <Col lg="6">
                 <CKEditor
                   editor={ClassicEditor}
