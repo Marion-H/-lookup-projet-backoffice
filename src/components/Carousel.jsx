@@ -8,20 +8,20 @@ const Carousel = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getCarousel = async () => {
-      try {
-        const res = await axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/"
-        );
-        setCarouselDatas(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getCarousel();
   }, []);
+  const getCarousel = async () => {
+    try {
+      const res = await axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/"
+      );
+      setCarouselDatas(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (isLoading) {
     return <Spinner color="primary" />;
@@ -42,6 +42,7 @@ const Carousel = () => {
               link={it.link}
               picture={it.picture}
               descriptif={it.description}
+              getCarousel={getCarousel}
             />
           </Col>
         ))}

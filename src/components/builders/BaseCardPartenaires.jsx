@@ -11,7 +11,13 @@ import {
 import ModalPartenaires from "./ModalPartenaires";
 import DeletePartenaire from "./DeletePartenaire";
 
-const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
+const BaseCardPartenaires = ({
+  descriptif,
+  logo,
+  titre,
+  uuid,
+  getPartenaire,
+}) => {
   return (
     <div>
       <Card>
@@ -26,10 +32,11 @@ const BaseCardPartenaires = ({ descriptif, logo, titre, uuid }) => {
                 title={titre}
                 description={descriptif}
                 logo={logo}
+                getPartenaire={getPartenaire}
               />
             </Col>
             <Col xs="12" className="pb-2">
-              <DeletePartenaire uuid={uuid} />
+              <DeletePartenaire uuid={uuid} getPartenaire={getPartenaire} />
             </Col>
           </Row>
         </CardBody>

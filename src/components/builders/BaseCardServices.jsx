@@ -11,7 +11,7 @@ import {
 } from "reactstrap";
 import DeleteService from "./DeleteService";
 
-const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
+const BaseCardServices = ({ descriptif, logo, titre, uuid, getService }) => {
   return (
     <div>
       <Card>
@@ -26,10 +26,11 @@ const BaseCardServices = ({ descriptif, logo, titre, uuid }) => {
                 title={titre}
                 logo={logo}
                 description={descriptif}
+                getService={getService}
               />
             </Col>
             <Col xs="12" className="pb-2">
-              <DeleteService uuid={uuid} />
+              <DeleteService uuid={uuid} getService={getService} />
             </Col>
           </Row>
         </CardBody>

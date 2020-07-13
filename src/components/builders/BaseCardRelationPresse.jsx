@@ -11,7 +11,13 @@ import {
 import ModalPresse from "./ModalPresse";
 import DeletePress from "./DeletePress";
 
-const BaseCardRelationPresse = ({ descriptif, picture, titre, uuid }) => {
+const BaseCardRelationPresse = ({
+  descriptif,
+  picture,
+  titre,
+  uuid,
+  getPress,
+}) => {
   return (
     <div>
       <Card>
@@ -26,10 +32,11 @@ const BaseCardRelationPresse = ({ descriptif, picture, titre, uuid }) => {
                 title={titre}
                 description={descriptif}
                 picture={picture}
+                getPress={getPress}
               />
             </Col>
             <Col xs="12" className="pb-2">
-              <DeletePress uuid={uuid} />
+              <DeletePress uuid={uuid} getPress={getPress} />
             </Col>
           </Row>
         </CardBody>

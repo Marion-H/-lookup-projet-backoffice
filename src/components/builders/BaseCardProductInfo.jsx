@@ -13,6 +13,8 @@ import {
 import ModalProductInfo from "./ModalProductInfo";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
+import ReactHtmlParser from "react-html-parser";
+
 import AddProductInfo from "./AddProductInfo";
 
 const BaseCardProductInfo = () => {
@@ -20,19 +22,20 @@ const BaseCardProductInfo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { uuid } = useParams();
 
+  const getProductInfo = async () => {
+    try {
+      const res = await Axios.get(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}/products_info`
+      );
+      setProductInfo(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getProductInfo = async () => {
-      try {
-        const res = await Axios.get(
-          `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}/products_info`
-        );
-        setProductInfo(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getProductInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,7 +47,7 @@ const BaseCardProductInfo = () => {
     <Container>
       {!productInfo[0] ? (
         <Row>
-          <AddProductInfo uuid={uuid} />
+          <AddProductInfo uuid={uuid} getProductInfo={getProductInfo} />
         </Row>
       ) : (
         productInfo.map((info) => (
@@ -60,7 +63,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description}</CardText>
+                    <CardText>
+                      Texte 1 : {ReactHtmlParser(info.description)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <Card>
@@ -71,7 +76,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description2}</CardText>
+                    <CardText>
+                      Texte 2 : {ReactHtmlParser(info.description2)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <Card>
@@ -82,7 +89,9 @@ const BaseCardProductInfo = () => {
                     alt={info.title}
                   />
                   <CardBody>
-                    <CardText>descriptif : {info.description3}</CardText>
+                    <CardText>
+                      Texte 3 :{ReactHtmlParser(info.description3)}
+                    </CardText>
                   </CardBody>
                 </Card>
                 <ModalProductInfo
@@ -95,6 +104,7 @@ const BaseCardProductInfo = () => {
                   picture={info.picture}
                   picture2={info.picture2}
                   picture3={info.picture3}
+                  getProductInfo={getProductInfo}
                 />
               </CardGroup>
             </Row>

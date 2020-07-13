@@ -7,19 +7,19 @@ const Services = () => {
   const [serviceDatas, setServiceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getService = async () => {
+    try {
+      const res = await Axios.get(
+        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
+      );
+      setServiceDatas(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
-    const getService = async () => {
-      try {
-        const res = await Axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
-        );
-        setServiceDatas(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getService();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,12 +41,13 @@ const Services = () => {
               titre={it.title}
               descriptif={it.description}
               logo={it.logo}
+              getService={getService}
             />
           </Col>
         ))}
       </Row>{" "}
       <Row>
-        <AddService />
+        <AddService getService={getService} />
       </Row>
     </Container>
   );

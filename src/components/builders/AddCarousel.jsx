@@ -16,15 +16,12 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import jwt from "jsonwebtoken";
-
-import { logout } from "../../store/actionCreators";
 
 toast.configure();
-const AddProduct = ({ getProduct }) => {
+
+const AddCarousel = () => {
   const notifySuccess = () => {
-    toast.success("Conference bien ajouté !", {
+    toast.success("Partenaire bien ajouté !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -34,6 +31,7 @@ const AddProduct = ({ getProduct }) => {
       progress: undefined,
     });
   };
+
   const notifyError = () => {
     toast.error("Erreur Notification !", {
       position: "bottom-center",
@@ -47,68 +45,48 @@ const AddProduct = ({ getProduct }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [Product, setProduct] = useState({});
+  const [carousel, setCarousel] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { register } = useForm();
-  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-
-  const postProduct = async (e) => {
+  const postCarousel = async (e) => {
     e.preventDefault();
     try {
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/`,
-        Product,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/`,
+        carousel,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      getProduct();
       notifySuccess();
     } catch (err) {
-      dispatch(logout());
       notifyError();
+      console.log(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const isAuthenticated = () => {
-    const token = sessionStorage.getItem("token");
-    if (token) {
-      try {
-        const { exp } = jwt.decode(token);
-        if (exp < (new Date().getTime() + 1) / 1000) {
-          return dispatch(logout());
-        }
-        return toggle();
-      } catch (err) {
-        notifyError();
-        return dispatch(logout());
-      }
-    }
-    return dispatch(logout());
-  };
-
   return (
     <Container>
-      <Button color="success" onClick={isAuthenticated}>
+      <Button color="success" onClick={toggle}>
         Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
-        <ModalHeader toggle={toggle}>Produit</ModalHeader>
-        <Form onSubmit={postProduct}>
+        <ModalHeader toggle={toggle}>Carousels</ModalHeader>
+        <Form onSubmit={postCarousel}>
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Nom</label>
+                <label>Titre </label>
               </Col>
             </Row>
             <Row>
@@ -118,9 +96,9 @@ const AddProduct = ({ getProduct }) => {
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
-                      name: e.target.value,
+                    setCarousel({
+                      ...carousel,
+                      title: e.target.value,
                     })
                   }
                 />
@@ -128,7 +106,7 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col lg="12">
-                <label>Description</label>
+                <label> Description</label>
               </Col>
             </Row>
             <Row>
@@ -138,29 +116,9 @@ const AddProduct = ({ getProduct }) => {
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
+                    setCarousel({
+                      ...carousel,
                       description: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="12">
-                <label>Prix</label>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="price"
-                  onChange={(e) =>
-                    setProduct({
-                      ...Product,
-                      price: e.target.value,
                     })
                   }
                 />
@@ -178,9 +136,29 @@ const AddProduct = ({ getProduct }) => {
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setProduct({
-                      ...Product,
+                    setCarousel({
+                      ...carousel,
                       picture: e.target.value,
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="12">
+                <label> Link</label>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <input
+                  ref={register({ required: true })}
+                  type="text"
+                  name="image"
+                  onChange={(e) =>
+                    setCarousel({
+                      ...carousel,
+                      link: e.target.value,
                     })
                   }
                 />
@@ -201,4 +179,4 @@ const AddProduct = ({ getProduct }) => {
   );
 };
 
-export default AddProduct;
+export default AddCarousel;

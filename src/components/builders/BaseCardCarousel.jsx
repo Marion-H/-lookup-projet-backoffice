@@ -8,30 +8,30 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import ModalCarousel from "./ModalCarousel";
-import styles from "./CardStyle.module.css";
 
-const BaseCardCarousel = ({ descriptif, picture, titre, link, uuid }) => {
+const BaseCardCarousel = ({
+  descriptif,
+  picture,
+  titre,
+  link,
+  uuid,
+  getCarousel,
+}) => {
   return (
     <div>
       <Card>
-        <CardImg
-          className={styles.cardImg}
-          top
-          src={picture}
-          alt={descriptif}
-        />
+        <CardImg top src={picture} alt={descriptif} />
         <CardBody>
           <CardTitle>{titre}</CardTitle>
-          <CardSubtitle className={styles.title}>Lien: {link}</CardSubtitle>
-          <CardText className={styles.description}>
-            descriptif: {descriptif}
-          </CardText>
+          <CardSubtitle>Lien: {link}</CardSubtitle>
+          <CardText>descriptif: {descriptif}</CardText>
           <ModalCarousel
             uuid={uuid}
             title={titre}
             description={descriptif}
             link={link}
             picture={picture}
+            getCarousel={getCarousel}
           />
         </CardBody>
       </Card>

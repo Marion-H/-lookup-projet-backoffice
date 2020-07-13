@@ -13,7 +13,14 @@ import ModalConferences from "./ModalConference";
 
 import DeleteConference from "./DeleteConference";
 
-const BaseCardConference = ({ subject, date, titre, picture, uuid }) => {
+const BaseCardConference = ({
+  subject,
+  date,
+  titre,
+  picture,
+  uuid,
+  getConference,
+}) => {
   return (
     <div>
       <Card>
@@ -30,10 +37,11 @@ const BaseCardConference = ({ subject, date, titre, picture, uuid }) => {
                 date={date}
                 picture={picture}
                 uuid={uuid}
+                getConference={getConference}
               />
             </Col>
             <Col xs="12" className="pb-2">
-              <DeleteConference uuid={uuid} />
+              <DeleteConference uuid={uuid} getConference={getConference} />
             </Col>
           </Row>
         </CardBody>

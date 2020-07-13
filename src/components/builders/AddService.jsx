@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -12,12 +12,16 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
 
-toast.configure();
-const AddService = ({ onClick }) => {
+import { logout } from "../../store/actionCreators";
+
+const AddService = ({ getService }) => {
   const notifySuccess = () => {
     toast.success("Service bien ajouté !", {
       position: "bottom-center",
@@ -43,13 +47,16 @@ const AddService = ({ onClick }) => {
   const [modal, setModal] = useState(false);
 
   const [services, setService] = useState({});
-  const { handleSubmit, register } = useForm();
-  // const onSubmit = (values) => console.log(values);
+  const [loading, setLoading] = useState(false);
+
+  const { register } = useForm();
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const postService = async () => {
+  const postService = async (e) => {
+    e.preventDefault();
     try {
       await Axios.post(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/`,
@@ -60,22 +67,42 @@ const AddService = ({ onClick }) => {
           },
         }
       );
+      getService();
       notifySuccess();
     } catch (err) {
       notifyError();
-      console.log(err);
+      dispatch(logout());
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const isAuthenticated = () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const { exp } = jwt.decode(token);
+        if (exp < (new Date().getTime() + 1) / 1000) {
+          return dispatch(logout());
+        }
+        return toggle();
+      } catch (err) {
+        notifyError();
+        return dispatch(logout());
+      }
+    }
+    return dispatch(logout());
   };
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="success" onClick={isAuthenticated}>
         Ajouter
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Services</ModalHeader>
-        <Form onSubmit={handleSubmit(postService)}>
+        <Form onSubmit={postService}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -139,26 +166,15 @@ const AddService = ({ onClick }) => {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
-              Valider
+            <Button color="success" type="submit" onClick={toggle}>
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 };

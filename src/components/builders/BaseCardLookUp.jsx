@@ -12,6 +12,7 @@ const BaseCardLookup = ({
   email,
   phone,
   siret,
+  getLookupDatas,
 }) => {
   return (
     <div>
@@ -34,6 +35,7 @@ const BaseCardLookup = ({
             email={email}
             phone={phone}
             siret={siret}
+            getLookupDatas={getLookupDatas}
           />
         </CardBody>
       </Card>

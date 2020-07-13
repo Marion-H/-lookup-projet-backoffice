@@ -43,12 +43,13 @@ const Partenaires = () => {
               titre={it.title}
               descriptif={it.description}
               logo={it.logo}
+              getPartenaire={getPartenaire}
             />
           </Col>
         ))}
       </Row>
       <Row>
-        <AddPartner />
+        <AddPartner getPartenaire={getPartenaire} />
       </Row>
     </Container>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import {
@@ -12,13 +12,23 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
+import { useDispatch } from "react-redux";
+import jwt from "jsonwebtoken";
+
+import CKEditor from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ReactHtmlParser from "react-html-parser";
+
+import { logout } from "../../store/actionCreators";
+
 toast.configure();
 
-function ModalProduct({
+function ModalProductInfo({
   uuid,
   title,
   description,
@@ -27,7 +37,7 @@ function ModalProduct({
   picture,
   picture2,
   picture3,
-  onClick,
+  getProductInfo,
 }) {
   const notifySuccess = () => {
     toast.success("Carousel bien modifié !", {
@@ -53,7 +63,7 @@ function ModalProduct({
   };
   const [modal, setModal] = useState(false);
 
-  const [product, setProduct] = useState({
+  const [productInfo, setProductInfo] = useState({
     title,
     description,
     description2,
@@ -62,39 +72,63 @@ function ModalProduct({
     picture2,
     picture3,
   });
-  const { handleSubmit, register } = useForm();
+  const [loading, setLoading] = useState(false);
+
+  const { register } = useForm();
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
 
-  const putProduct = async () => {
+  const putProductInfo = async (e) => {
+    e.preventDefault();
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
-        product,
+        productInfo,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+      getProductInfo();
       notifySuccess();
     } catch (err) {
       notifyError();
-      console.log(err);
+      dispatch(logout());
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const isAuthenticated = () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      try {
+        const { exp } = jwt.decode(token);
+        if (exp < (new Date().getTime() + 1) / 1000) {
+          return dispatch(logout());
+        }
+        return toggle();
+      } catch (err) {
+        notifyError();
+        return dispatch(logout());
+      }
+    }
+    return dispatch(logout());
   };
 
   return (
     <Container>
-      <Button color="danger" onClick={toggle}>
+      <Button color="warning" onClick={isAuthenticated}>
         Modifier
       </Button>
 
       <Modal isOpen={modal} toggle={toggle} size="lg">
         <ModalHeader toggle={toggle}>Produits informations</ModalHeader>
-        <Form onSubmit={handleSubmit(putProduct)}>
+        <Form onSubmit={putProductInfo}>
           <ModalBody>
             <Row>
               <Col lg="12">
@@ -109,8 +143,8 @@ function ModalProduct({
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       title: e.target.value,
                     })
                   }
@@ -125,50 +159,47 @@ function ModalProduct({
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{description}</Col>
+              <Col lg="6">{ReactHtmlParser(description)}</Col>
               <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description"
-                  type="text"
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      description: e.target.value,
-                    })
-                  }
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setProductInfo({
+                      ...productInfo,
+                      description: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
             <Row>
               <Col lg="6">{description2}</Col>
               <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description2"
-                  type="text"
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      description2: e.target.value,
-                    })
-                  }
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setProductInfo({
+                      ...productInfo,
+                      description2: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
             <Row>
               <Col lg="6">{description3}</Col>
               <Col lg="6">
-                <textarea
-                  ref={register({ required: true })}
-                  name="description3"
-                  type="text"
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      description3: e.target.value,
-                    })
-                  }
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setProductInfo({
+                      ...productInfo,
+                      description3: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>
@@ -187,8 +218,8 @@ function ModalProduct({
                   type="text"
                   name="picture"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture: e.target.value,
                     })
                   }
@@ -203,8 +234,8 @@ function ModalProduct({
                   type="text"
                   name="picture2"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture2: e.target.value,
                     })
                   }
@@ -219,8 +250,8 @@ function ModalProduct({
                   type="text"
                   name="picture3"
                   onChange={(e) =>
-                    setProduct({
-                      ...product,
+                    setProductInfo({
+                      ...productInfo,
                       picture3: e.target.value,
                     })
                   }
@@ -229,28 +260,17 @@ function ModalProduct({
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={onClick}>
-              Valider
+            <Button color="success" type="submit" onClick={toggle}>
+              {loading ? <Spinner size="sm" /> : "Valider"}
             </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
+            <Button color="danger" onClick={toggle}>
               Annuler
             </Button>
           </ModalFooter>
         </Form>
       </Modal>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </Container>
   );
 }
 
-export default ModalProduct;
+export default ModalProductInfo;

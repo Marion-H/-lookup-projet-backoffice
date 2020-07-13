@@ -9,19 +9,19 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const uuid = sessionStorage.getItem("uuid");
 
+  const getLookupDatas = async () => {
+    try {
+      const res = await axios.get(
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/${uuid}`
+      );
+      setLookupDatas(res.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
-    const getLookupDatas = async () => {
-      try {
-        const res = await axios.get(
-          `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/${uuid}`
-        );
-        setLookupDatas(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getLookupDatas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,6 +49,7 @@ const Home = () => {
             phone={lookupDatas.phone}
             siret={lookupDatas.siret}
             password={lookupDatas.password}
+            getLookupDatas={getLookupDatas}
           />
         </Col>
       </Row>

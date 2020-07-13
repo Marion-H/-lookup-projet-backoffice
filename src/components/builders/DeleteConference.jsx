@@ -1,11 +1,17 @@
-import React from "react";
-import { Button, Col } from "reactstrap";
+import React, { useState } from "react";
+import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
-export default function DeleteConference({ uuid }) {
+import { logout } from "../../store/actionCreators";
+
+export default function DeleteConference({ uuid, getConference }) {
+  const [loading, setLoading] = useState(false);
+
   const token = useSelector((state) => state.admin.token);
+  const dispatch = useDispatch();
 
   const notifySuccess = () => {
     toast.success("Conférence supprimée!", {
@@ -40,14 +46,20 @@ export default function DeleteConference({ uuid }) {
           },
         }
       );
+      getConference();
       notifySuccess();
     } catch (error) {
+      dispatch(logout());
       notifyError();
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <Col>
-      <Button onClick={deleteConference}>Supprimer</Button>
+      <Button color="danger" onClick={deleteConference}>
+        {loading ? <Spinner size="sm" /> : "Supprimer"}
+      </Button>
     </Col>
   );
 }
