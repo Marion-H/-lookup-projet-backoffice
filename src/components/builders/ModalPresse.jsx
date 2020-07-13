@@ -164,7 +164,7 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
                   onChange={(e) =>
                     setPresses({
                       ...presses,
-                      link: e.target.value,
+                      picture: e.target.value,
                     })
                   }
                 />
