@@ -4,7 +4,7 @@ import { Row, Container, Spinner, Col } from "reactstrap";
 import Axios from "axios";
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 import AddPresse from "./builders/AddPresse";
-const RelationPresse = () => {
+const RelationPresse = ({ uuid, titre, descriptif, picture }) => {
   const [relationPressDatas, setRelationPressDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

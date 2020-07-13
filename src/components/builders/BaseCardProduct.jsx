@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import DeleteProduct from "./DeleteProduct";
 import ModalProduct from "./ModalProduct";
+import ReactHtmlParser from "react-html-parser";
 
 const BaseCardProduct = ({
   description,
@@ -28,7 +29,7 @@ const BaseCardProduct = ({
         <CardImg top width="100%" src={picture} alt={description} />
         <CardBody>
           <CardTitle>{name}</CardTitle>
-          <CardText>descriptif: {description}</CardText>
+          <CardText>descriptif: {ReactHtmlParser(description)}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
           <Row className="d-flex flex-column align-items-center">
             <Col xs="12" className="pb-2 ml-4">
@@ -37,7 +38,14 @@ const BaseCardProduct = ({
               </Link>
             </Col>
             <Col xs="12" className="pb-2 d-flex justify-content-center">
-              <ModalProduct getProduct={getProduct} uuid={uuid} />
+              <ModalProduct
+                uuid={uuid}
+                description={description}
+                picture={picture}
+                name={name}
+                price={price}
+                getProduct={getProduct}
+              />
             </Col>
             <Col xs="12" className="pb-2 d-flex justify-content-center">
               <DeleteProduct uuid={uuid} getProduct={getProduct} />
