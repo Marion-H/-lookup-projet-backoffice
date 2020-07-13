@@ -1,25 +1,39 @@
 import React from "react";
 import ModaleServices from "./ModaleServices";
-import { Card, CardImg, CardText, CardBody, CardTitle, Row } from "reactstrap";
+import ReactHtmlParser from "react-html-parser";
+
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+} from "reactstrap";
 import DeleteService from "./DeleteService";
 
 const BaseCardServices = ({ descriptif, logo, titre, uuid, getService }) => {
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src={logo} alt={descriptif} />
+        <CardImg top width="100%" src={logo} alt={uuid} />
         <CardBody>
           <CardTitle>{titre}</CardTitle>
-          <CardText>descriptif: {descriptif}</CardText>
+          <CardText>description: {ReactHtmlParser(descriptif)}</CardText>
           <Row>
-            <ModaleServices
-              uuid={uuid}
-              title={titre}
-              logo={logo}
-              description={descriptif}
-              getService={getService}
-            />
-            <DeleteService uuid={uuid} getService={getService} />
+            <Col xs="12" className="pb-2">
+              <ModaleServices
+                uuid={uuid}
+                title={titre}
+                logo={logo}
+                description={descriptif}
+                getService={getService}
+              />
+            </Col>
+            <Col xs="12" className="pb-2">
+              <DeleteService uuid={uuid} getService={getService} />
+            </Col>
           </Row>
         </CardBody>
       </Card>

@@ -28,7 +28,7 @@ const Repo = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="d-flex justify-content-center">
         <h1>Répertoire</h1>
       </Row>
       <Row>
