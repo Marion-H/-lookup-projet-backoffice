@@ -45,11 +45,12 @@ const Services = () => {
             />
           </Col>
         ))}
-      </Row>{" "}
+      </Row>
       <Row>
         <AddService getService={getService} />
       </Row>
     </Container>
   );
 };
+
 export default Services;
