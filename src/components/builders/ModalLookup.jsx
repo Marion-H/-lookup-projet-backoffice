@@ -34,7 +34,7 @@ const ModalServices = ({
   getLookupDatas,
 }) => {
   const notifySuccess = () => {
-    toast.success("Services bien modifié !", {
+    toast.success("Vos information sont modifié !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,

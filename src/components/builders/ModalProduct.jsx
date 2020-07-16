@@ -27,7 +27,7 @@ toast.configure();
 
 function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Produit bien modifié !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -121,18 +121,19 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{name}</Col>
+              <Col lg="6">{ReactHtmlParser(name)}</Col>
               <Col lg="6">
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="title"
-                  onChange={(e) =>
+                <CKEditor
+                  editor={ClassicEditor}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+
                     setProduct({
                       ...product,
-                      name: e.target.value,
-                    })
-                  }
+
+                      name: data,
+                    });
+                  }}
                 />
               </Col>
             </Row>

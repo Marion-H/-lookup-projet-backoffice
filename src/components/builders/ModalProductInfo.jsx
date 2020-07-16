@@ -40,7 +40,7 @@ function ModalProductInfo({
   getProductInfo,
 }) {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Information produit bien modifié !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
