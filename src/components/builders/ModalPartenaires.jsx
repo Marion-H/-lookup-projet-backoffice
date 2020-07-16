@@ -21,9 +21,9 @@ import jwt from "jsonwebtoken";
 import { logout } from "../../store/actionCreators";
 
 toast.configure();
-const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
+const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
   const notifySuccess = () => {
-    toast.success("Carousel bien modifié !", {
+    toast.success("Partenaire bien modifié !", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -46,8 +46,8 @@ const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [carousel, setCarousel] = useState({
-    title,
+  const [partner, setPartner] = useState({
+    link,
     description,
     logo,
   });
@@ -65,7 +65,7 @@ const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
     try {
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        carousel,
+        partner,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,20 +111,20 @@ const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
           <ModalBody>
             <Row>
               <Col lg="12">
-                <label>Titre </label>
+                <label>Lien vers: </label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{title}</Col>
+              <Col lg="6">{link}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="text"
                   name="title"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      title: e.target.value,
+                    setPartner({
+                      ...partner,
+                      link: e.target.value,
                     })
                   }
                 />
@@ -143,8 +143,8 @@ const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
                   name="description"
                   type="text"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setPartner({
+                      ...partner,
                       description: e.target.value,
                     })
                   }
@@ -164,8 +164,8 @@ const ModalCarousel = ({ title, description, logo, uuid, getPartenaire }) => {
                   type="text"
                   name="image"
                   onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
+                    setPartner({
+                      ...partner,
                       logo: e.target.value,
                     })
                   }

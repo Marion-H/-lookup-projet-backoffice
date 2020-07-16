@@ -14,7 +14,7 @@ import DeletePartenaire from "./DeletePartenaire";
 const BaseCardPartenaires = ({
   descriptif,
   logo,
-  titre,
+  link,
   uuid,
   getPartenaire,
 }) => {
@@ -23,13 +23,13 @@ const BaseCardPartenaires = ({
       <Card>
         <CardImg top width="100%" src={logo} alt={descriptif} />
         <CardBody>
-          <CardTitle>{titre}</CardTitle>
+          <CardTitle>{link}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>
           <Row>
             <Col xs="12" className="pb-2">
               <ModalPartenaires
                 uuid={uuid}
-                title={titre}
+                link={link}
                 description={descriptif}
                 logo={logo}
                 getPartenaire={getPartenaire}
