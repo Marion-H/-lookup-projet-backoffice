@@ -40,7 +40,7 @@ const Partenaires = () => {
             <BaseCardPartenaires
               key={it.uuid}
               uuid={it.uuid}
-              titre={it.title}
+              link={it.link}
               descriptif={it.description}
               logo={it.logo}
               getPartenaire={getPartenaire}
