@@ -28,7 +28,7 @@ const BaseCardProduct = ({
       <Card>
         <CardImg top width="100%" src={picture} alt={description} />
         <CardBody>
-          <CardTitle>{name}</CardTitle>
+          <CardTitle>{ReactHtmlParser(name)}</CardTitle>
           <CardText>descriptif: {ReactHtmlParser(description)}</CardText>
           <CardSubtitle>prix: {price} €</CardSubtitle>
           <Row className="d-flex flex-column align-items-center">
