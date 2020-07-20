@@ -72,7 +72,6 @@ const AddConferences = ({ getConference }) => {
       notifySuccess();
     } catch (err) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }

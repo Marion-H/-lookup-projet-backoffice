@@ -21,7 +21,7 @@ const BaseCardRelationPresse = ({
   return (
     <div>
       <Card>
-        <CardImg top width="100%" src={picture} alt={descriptif} />
+        <CardImg top src={picture} alt={descriptif} />
         <CardBody>
           <CardTitle>{titre}</CardTitle>
           <CardText>descriptif: {descriptif}</CardText>

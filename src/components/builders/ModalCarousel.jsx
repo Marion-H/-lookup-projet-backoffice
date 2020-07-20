@@ -83,7 +83,6 @@ const ModalCarousel = ({
       getCarousel();
       notifySuccess();
     } catch (err) {
-      dispatch(logout());
       notifyError();
     } finally {
       setLoading(false);
