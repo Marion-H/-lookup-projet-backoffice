@@ -77,7 +77,6 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
       notifySuccess();
     } catch (err) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }

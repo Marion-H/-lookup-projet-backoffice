@@ -74,7 +74,6 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
       notifySuccess();
     } catch (err) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }
