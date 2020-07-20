@@ -72,7 +72,6 @@ const AddProduct = ({ getProduct }) => {
       getProduct();
       notifySuccess();
     } catch (err) {
-      dispatch(logout());
       notifyError();
     } finally {
       setLoading(false);

@@ -81,7 +81,6 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
       getProduct();
       notifySuccess();
     } catch (err) {
-      dispatch(logout());
       notifyError();
     } finally {
       setLoading(false);
@@ -200,7 +199,8 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="number"
+                  step="0.1"
                   name="price"
                   onChange={(e) =>
                     setProduct({

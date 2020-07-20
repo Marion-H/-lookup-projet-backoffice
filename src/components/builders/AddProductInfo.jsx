@@ -75,7 +75,6 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
       getProductInfo();
       notifySuccess();
     } catch (err) {
-      dispatch(logout());
       notifyError();
     } finally {
       setLoading(false);

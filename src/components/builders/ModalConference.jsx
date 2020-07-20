@@ -84,7 +84,6 @@ const ModalConferences = ({
       notifySuccess();
     } catch (err) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }

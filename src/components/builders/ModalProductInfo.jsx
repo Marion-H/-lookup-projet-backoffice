@@ -97,7 +97,6 @@ function ModalProductInfo({
       notifySuccess();
     } catch (err) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }
@@ -114,7 +113,6 @@ function ModalProductInfo({
         return toggle();
       } catch (err) {
         notifyError();
-        return dispatch(logout());
       }
     }
     return dispatch(logout());
