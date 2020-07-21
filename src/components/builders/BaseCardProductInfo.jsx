@@ -11,6 +11,9 @@ import {
   CardGroup,
 } from "reactstrap";
 import ModalProductInfo from "./ModalProductInfo";
+import ModalProductInfo2 from "./ModalProductInfo2";
+import ModalProductInfo3 from "./ModalProductInfo3";
+
 import { useParams } from "react-router-dom";
 import Axios from "axios";
 import ReactHtmlParser from "react-html-parser";
@@ -67,6 +70,14 @@ const BaseCardProductInfo = () => {
                       Texte 1 : {ReactHtmlParser(info.description)}
                     </CardText>
                   </CardBody>
+                  <ModalProductInfo
+                    key={info.uuid}
+                    uuid={info.uuid}
+                    title={info.title}
+                    description={info.description}
+                    picture={info.picture}
+                    getProductInfo={getProductInfo}
+                  />
                 </Card>
                 <Card>
                   <CardImg
@@ -80,6 +91,13 @@ const BaseCardProductInfo = () => {
                       Texte 2 : {ReactHtmlParser(info.description2)}
                     </CardText>
                   </CardBody>
+                  <ModalProductInfo2
+                    key={info.uuid}
+                    uuid={info.uuid}
+                    description2={info.description2}
+                    picture2={info.picture2}
+                    getProductInfo={getProductInfo}
+                  />
                 </Card>
                 <Card>
                   <CardImg
@@ -93,19 +111,14 @@ const BaseCardProductInfo = () => {
                       Texte 3 :{ReactHtmlParser(info.description3)}
                     </CardText>
                   </CardBody>
+                  <ModalProductInfo3
+                    key={info.uuid}
+                    uuid={info.uuid}
+                    description3={info.description3}
+                    picture3={info.picture3}
+                    getProductInfo={getProductInfo}
+                  />
                 </Card>
-                <ModalProductInfo
-                  key={info.uuid}
-                  uuid={info.uuid}
-                  title={info.title}
-                  description={info.description}
-                  description2={info.description2}
-                  description3={info.description3}
-                  picture={info.picture}
-                  picture2={info.picture2}
-                  picture3={info.picture3}
-                  getProductInfo={getProductInfo}
-                />
               </CardGroup>
             </Row>
           </>
