@@ -15,11 +15,9 @@ import {
   Spinner,
 } from "reactstrap";
 import Axios from "axios";
-import { useSelector } from "react-redux";
-
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-
+import { imgurToken } from "../../imgurToken";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
@@ -81,12 +79,39 @@ function ModalProductInfo({
 
   const token = useSelector((state) => state.admin.token);
 
+  const handlePicture1 = (e) => {
+    setProductInfo({ ...productInfo, picture: e.target.files[0] });
+  };
+
+  const handlePicture2 = (e) => {
+    setProductInfo({ ...productInfo, picture2: e.target.files[0] });
+  };
+
+  const handlePicture3 = (e) => {
+    setProductInfo({ ...productInfo, picture3: e.target.files[0] });
+  };
+
   const putProductInfo = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        productInfo.picture,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
-        productInfo,
+        {
+          title: productInfo.title,
+          description: productInfo.description,
+          description2: productInfo.description2,
+          description3: productInfo.description3,
+          picture: resImgur.data.data.link,
+          picture2: resImgur.data.data.link,
+          picture3: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -213,14 +238,10 @@ function ModalProductInfo({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={productInfo.picture}
                   name="picture"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      picture: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture1}
                 />
               </Col>
             </Row>
@@ -229,14 +250,10 @@ function ModalProductInfo({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={productInfo.picture2}
                   name="picture2"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      picture2: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture2}
                 />
               </Col>
             </Row>
@@ -245,14 +262,10 @@ function ModalProductInfo({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={productInfo.picture3}
                   name="picture3"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      picture3: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture3}
                 />
               </Col>
             </Row>

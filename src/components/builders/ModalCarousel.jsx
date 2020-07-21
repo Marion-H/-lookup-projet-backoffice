@@ -15,11 +15,9 @@ import {
   Spinner,
 } from "reactstrap";
 import Axios from "axios";
-import { useSelector } from "react-redux";
-
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-
+import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
 
 const ModalCarousel = ({
@@ -68,12 +66,30 @@ const ModalCarousel = ({
 
   const toggle = () => setModal(!modal);
 
+  const handlePicture = (e) => {
+    setCarousel({ ...carousel, picture: e.target.files[0] });
+  };
+
   const putCarousel = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        carousel.picture,
+        {
+          headers: {
+            Authorization: `Client-ID ${imgurToken}`,
+          },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
-        carousel,
+        {
+          title: carousel.title,
+          description: carousel.description,
+          link: carousel.link,
+          picture: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -189,14 +205,10 @@ const ModalCarousel = ({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={carousel.picture}
                   name="image"
-                  onChange={(e) =>
-                    setCarousel({
-                      ...carousel,
-                      picture: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture}
                 />
               </Col>
             </Row>

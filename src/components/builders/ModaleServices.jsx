@@ -14,12 +14,12 @@ import {
   Spinner,
 } from "reactstrap";
 import Axios from "axios";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
+import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 
@@ -60,13 +60,28 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
 
   const toggle = () => setModal(!modal);
 
+  const handleLogo = (e) => {
+    setServices({ ...services, logo: e.target.files[0] });
+  };
+
   const token = useSelector((state) => state.admin.token);
   const putServices = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        services.logo,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/${uuid}`,
-        services,
+        {
+          title: services.title,
+          description: services.description,
+          logo: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -160,14 +175,10 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={services.logo}
                   name="lien"
-                  onChange={(e) =>
-                    setServices({
-                      ...services,
-                      logo: e.target.value,
-                    })
-                  }
+                  onChange={handleLogo}
                 />
               </Col>
             </Row>

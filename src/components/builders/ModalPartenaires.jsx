@@ -17,6 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
+import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 
@@ -59,7 +60,6 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
-  const imgurToken = "098c033cc533cb0";
 
   const handleLogo = (e) => {
     setPartner({ ...partner, logo: e.target.files[0] });
@@ -75,9 +75,6 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
           headers: { Authorization: `Client-ID ${imgurToken}` },
         }
       );
-      // console.log(resImgur.data.data.link);
-      // await setPartner({ ...partner, logo: resImgur.data.data.link });
-      // console.log(partner);
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
         {

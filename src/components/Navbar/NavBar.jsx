@@ -29,10 +29,12 @@ function NavBar() {
       title: "Services",
       to: "/services",
     },
-    {
-      title: "Conferences",
-      to: "/conferences",
-    },
+    // Linked to conference table wich is not used
+    // Can be used later to modify A propos if needed
+    // {
+    //   title: "Conferences",
+    //   to: "/conferences",
+    // },
     {
       title: "Relation Presse",
       to: "/relationpresse",
