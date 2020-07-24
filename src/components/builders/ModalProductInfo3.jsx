@@ -26,17 +26,7 @@ import { logout } from "../../store/actionCreators";
 
 toast.configure();
 
-function ModalProductInfo({
-  uuid,
-  title,
-  description,
-  description2,
-  description3,
-  picture,
-  picture2,
-  picture3,
-  getProductInfo,
-}) {
+function ModalProductInfo({ uuid, description3, picture3, getProductInfo }) {
   const notifySuccess = () => {
     toast.success("Information produit bien modifié !", {
       position: "bottom-center",
@@ -61,10 +51,9 @@ function ModalProductInfo({
   };
   const [modal, setModal] = useState(false);
 
-  const [productInfo, setProductInfo] = useState({
-    title,
-    description,
-    picture,
+  const [productInfo3, setProductInfo3] = useState({
+    description3,
+    picture3,
   });
   const [loading, setLoading] = useState(false);
 
@@ -75,8 +64,8 @@ function ModalProductInfo({
 
   const token = useSelector((state) => state.admin.token);
 
-  const handlePicture1 = (e) => {
-    setProductInfo({ ...productInfo, picture: e.target.files[0] });
+  const handlePicture3 = (e) => {
+    setProductInfo3({ ...productInfo3, picture3: e.target.files[0] });
   };
 
   const putProductInfo = async (e) => {
@@ -84,7 +73,7 @@ function ModalProductInfo({
     try {
       const resImgur = await Axios.post(
         "https://api.imgur.com/3/image",
-        productInfo.picture,
+        productInfo3.picture3,
         {
           headers: { Authorization: `Client-ID ${imgurToken}` },
         }
@@ -92,9 +81,8 @@ function ModalProductInfo({
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
         {
-          title: productInfo.title,
-          description: productInfo.description,
-          picture: resImgur.data.data.link,
+          description3: productInfo3.description3,
+          picture3: resImgur.data.data.link,
         },
         {
           headers: {
@@ -139,42 +127,21 @@ function ModalProductInfo({
           <ModalBody>
             <Row>
               <Col lg="12">
-                <h6>Titre</h6>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="6">{title}</Col>
-              <Col lg="6">
-                <input
-                  ref={register({ required: true })}
-                  type="text"
-                  name="title"
-                  onChange={(e) =>
-                    setProductInfo({
-                      ...productInfo,
-                      title: e.target.value,
-                    })
-                  }
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="12">
                 <label>
                   <h6>Description</h6>{" "}
                 </label>
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{ReactHtmlParser(description)}</Col>
+              <Col lg="6">{ReactHtmlParser(description3)}</Col>
               <Col lg="6">
                 <CKEditor
                   editor={ClassicEditor}
                   onChange={(event, editor) => {
                     const data = editor.getData();
-                    setProductInfo({
-                      ...productInfo,
-                      description: data,
+                    setProductInfo3({
+                      ...productInfo3,
+                      description3: data,
                     });
                   }}
                 />
@@ -188,14 +155,14 @@ function ModalProductInfo({
               </Col>
             </Row>
             <Row>
-              <Col lg="6">{picture}</Col>
+              <Col lg="6">{picture3}</Col>
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
                   type="file"
-                  files={productInfo.picture}
-                  name="picture"
-                  onChange={handlePicture1}
+                  files={productInfo3.picture3}
+                  name="picture2"
+                  onChange={handlePicture3}
                 />
               </Col>
             </Row>

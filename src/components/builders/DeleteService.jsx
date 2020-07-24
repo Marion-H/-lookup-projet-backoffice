@@ -3,15 +3,11 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-
-import { logout } from "../../store/actionCreators";
 
 export default function DeleteService({ uuid, getService }) {
   const [loading, setLoading] = useState(false);
 
   const token = useSelector((state) => state.admin.token);
-  const dispatch = useDispatch();
 
   const notifySuccess = () => {
     toast.success("Service supprimé!", {
@@ -51,7 +47,6 @@ export default function DeleteService({ uuid, getService }) {
       notifySuccess();
     } catch (error) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }

@@ -15,13 +15,13 @@ import {
   Spinner,
 } from "reactstrap";
 import Axios from "axios";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ReactHtmlParser from "react-html-parser";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { logout } from "../../store/actionCreators";
+import { imgurToken } from "../../imgurToken";
 
 toast.configure();
 
@@ -66,12 +66,28 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
 
   const token = useSelector((state) => state.admin.token);
 
+  const handlePicture = (e) => {
+    setProduct({ ...product, picture: e.target.files[0] });
+  };
+
   const putProduct = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        product.picture,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}`,
-        product,
+        {
+          description: product.description,
+          picture: resImgur.data.data.link,
+          name: product.name,
+          price: product.price,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -176,14 +192,10 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={product.picture}
                   name="picture"
-                  onChange={(e) =>
-                    setProduct({
-                      ...product,
-                      picture: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture}
                 />
               </Col>
             </Row>

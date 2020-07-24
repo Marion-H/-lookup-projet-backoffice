@@ -3,15 +3,11 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-
-import { logout } from "../../store/actionCreators";
 
 export default function DeletePartenaire({ uuid, getPartenaire }) {
   const [loading, setLoading] = useState(false);
 
   const token = useSelector((state) => state.admin.token);
-  const dispatch = useDispatch();
 
   const notifySuccess = () => {
     toast.success("Parternaire supprimé!", {
@@ -50,7 +46,6 @@ export default function DeletePartenaire({ uuid, getPartenaire }) {
       notifySuccess();
     } catch (error) {
       notifyError();
-      dispatch(logout());
     } finally {
       setLoading(false);
     }
