@@ -181,7 +181,6 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
                   name="image"
                   onChange={handleLogo}
                 />
-
                 <img src={partner.logo} alt="preview" width="100%" />
               </Col>
             </Row>
