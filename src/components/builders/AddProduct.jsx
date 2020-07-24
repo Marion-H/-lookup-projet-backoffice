@@ -18,6 +18,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
+import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 
@@ -47,7 +48,7 @@ const AddProduct = ({ getProduct }) => {
   };
   const [modal, setModal] = useState(false);
 
-  const [Product, setProduct] = useState({});
+  const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { register } = useForm();
@@ -57,12 +58,28 @@ const AddProduct = ({ getProduct }) => {
 
   const token = useSelector((state) => state.admin.token);
 
+  const handleImage = (e) => {
+    setProduct({ ...product, picture: e.target.files[0] });
+  };
+
   const postProduct = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        product.picture,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/`,
-        Product,
+        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products`,
+        {
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          picture: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +135,7 @@ const AddProduct = ({ getProduct }) => {
                   name="title"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
+                      ...product,
                       name: e.target.value,
                     })
                   }
@@ -138,7 +155,7 @@ const AddProduct = ({ getProduct }) => {
                   type="text"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
+                      ...product,
                       description: e.target.value,
                     })
                   }
@@ -158,7 +175,7 @@ const AddProduct = ({ getProduct }) => {
                   name="price"
                   onChange={(e) =>
                     setProduct({
-                      ...Product,
+                      ...product,
                       price: e.target.value,
                     })
                   }
@@ -174,14 +191,9 @@ const AddProduct = ({ getProduct }) => {
               <Col>
                 <input
                   ref={register({ required: true })}
-                  type="text"
-                  name="image"
-                  onChange={(e) =>
-                    setProduct({
-                      ...Product,
-                      picture: e.target.value,
-                    })
-                  }
+                  type="file"
+                  files={product.picture}
+                  onChange={handleImage}
                 />
               </Col>
             </Row>

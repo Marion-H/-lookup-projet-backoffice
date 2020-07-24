@@ -17,6 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
+import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 
@@ -60,12 +61,27 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
 
   const token = useSelector((state) => state.admin.token);
 
+  const handleLogo = (e) => {
+    setPartner({ ...partner, logo: e.target.files[0] });
+  };
+
   const putPartner = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        partner.logo,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        partner,
+        {
+          link: partner.link,
+          description: partner.description,
+          logo: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -160,15 +176,12 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={partner.logo}
                   name="image"
-                  onChange={(e) =>
-                    setPartner({
-                      ...partner,
-                      logo: e.target.value,
-                    })
-                  }
+                  onChange={handleLogo}
                 />
+                <img src={partner.logo} alt="preview" width="100%" />
               </Col>
             </Row>
           </ModalBody>

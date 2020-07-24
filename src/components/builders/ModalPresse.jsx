@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -17,7 +16,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-
+import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
 
 const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
@@ -58,12 +57,28 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
+
+  const handlePicture = (e) => {
+    setPresses({ ...presses, picture: e.target.files[0] });
+  };
+
   const putPresse = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        presses.picture,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/${uuid}`,
-        presses,
+        {
+          title: presses.title,
+          description: presses.description,
+          picture: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -158,14 +173,10 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={presses.picture}
                   name="lien"
-                  onChange={(e) =>
-                    setPresses({
-                      ...presses,
-                      picture: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture}
                 />
               </Col>
             </Row>

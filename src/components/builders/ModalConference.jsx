@@ -17,7 +17,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-
+import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
 
 toast.configure();
@@ -68,12 +68,28 @@ const ModalConferences = ({
 
   const token = useSelector((state) => state.admin.token);
 
+  const handlePicture = (e) => {
+    setConferences({ ...conferences, picture: e.target.files[0] });
+  };
+
   const putConferences = async (e) => {
     e.preventDefault();
     try {
+      const resImgur = await Axios.post(
+        "https://api.imgur.com/3/image",
+        conferences.picture,
+        {
+          headers: { Authorization: `Client-ID ${imgurToken}` },
+        }
+      );
       await Axios.put(
         `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/${uuid}`,
-        conferences,
+        {
+          title: conferences.title,
+          subject: conferences.subject,
+          date: conferences.date,
+          picture: resImgur.data.data.link,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -189,14 +205,10 @@ const ModalConferences = ({
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="text"
+                  type="file"
+                  files={conferences.picture}
                   name="image"
-                  onChange={(e) =>
-                    setConferences({
-                      ...conferences,
-                      picture: e.target.value,
-                    })
-                  }
+                  onChange={handlePicture}
                 />
               </Col>
             </Row>
