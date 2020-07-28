@@ -9,6 +9,7 @@ import { login } from "../store/actionCreators";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
   const { handleSubmit, register, errors } = useForm();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -26,12 +27,15 @@ const Login = () => {
       setLoading(true);
       await dispatch(login({ ...data }, history));
     } catch (err) {
-      // TODO: handle error
+      setError(err);
     } finally {
       setLoading(false);
     }
   };
 
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <Container className="d-flex flex-column align-items-center">
       <Row className="mt-5">

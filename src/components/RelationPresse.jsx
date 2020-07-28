@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { Row, Container, Spinner, Col } from "reactstrap";
 import Axios from "axios";
+
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 import AddPresse from "./builders/AddPresse";
-const RelationPresse = ({ uuid, titre, descriptif, picture }) => {
+
+const RelationPresse = () => {
   const [relationPressDatas, setRelationPressDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   const getPress = async () => {
     try {
@@ -15,7 +18,7 @@ const RelationPresse = ({ uuid, titre, descriptif, picture }) => {
       );
       setRelationPressDatas(res.data);
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -27,6 +30,10 @@ const RelationPresse = ({ uuid, titre, descriptif, picture }) => {
 
   if (isLoading) {
     return <Spinner color="info" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
