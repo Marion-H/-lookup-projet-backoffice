@@ -4,7 +4,6 @@ import { Container, Row, Spinner, Col } from "reactstrap";
 import axios from "axios";
 
 const Home = () => {
-  // const dispatch = useDispatch();
   const [lookupDatas, setLookupDatas] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const uuid = sessionStorage.getItem("uuid");

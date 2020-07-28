@@ -6,6 +6,7 @@ import AddPartner from "./builders/AddPartner";
 const Partenaires = () => {
   const [partenaireData, setPartenaireData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     getPartenaire();
@@ -19,7 +20,7 @@ const Partenaires = () => {
       );
       setPartenaireData(res.data);
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -27,6 +28,10 @@ const Partenaires = () => {
 
   if (isLoading) {
     return <Spinner color="primary" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (

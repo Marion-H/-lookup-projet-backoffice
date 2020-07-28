@@ -6,6 +6,7 @@ import AddProduct from "./builders/AddProduct";
 const Products = () => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   const getProduct = async () => {
     try {
@@ -14,7 +15,7 @@ const Products = () => {
       );
       setProductData(res.data);
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -27,6 +28,10 @@ const Products = () => {
 
   if (isLoading) {
     return <Spinner color="primary" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (

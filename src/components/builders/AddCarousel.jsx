@@ -47,6 +47,7 @@ const AddCarousel = () => {
 
   const [carousel, setCarousel] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   const { register } = useForm();
 
@@ -68,11 +69,15 @@ const AddCarousel = () => {
       notifySuccess();
     } catch (err) {
       notifyError();
-      console.log(err);
+      setError(err);
     } finally {
       setLoading(false);
     }
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <Container>
