@@ -30,11 +30,7 @@ function ModalProductInfo({
   uuid,
   title,
   description,
-  description2,
-  description3,
   picture,
-  picture2,
-  picture3,
   getProductInfo,
 }) {
   const notifySuccess = () => {

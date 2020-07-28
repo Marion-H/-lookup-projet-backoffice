@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Row, Container, Spinner, Col } from "reactstrap";
 import Axios from "axios";
+
 import BaseCardServices from "./builders/BaseCardServices";
 import AddService from "./builders/AddService";
+
 const Services = () => {
   const [serviceDatas, setServiceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   const getService = async () => {
     try {
@@ -14,7 +17,7 @@ const Services = () => {
       );
       setServiceDatas(res.data);
     } catch (err) {
-      console.log(err);
+      setError(err);
     } finally {
       setIsLoading(false);
     }
@@ -26,6 +29,10 @@ const Services = () => {
 
   if (isLoading) {
     return <Spinner color="primary" />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
