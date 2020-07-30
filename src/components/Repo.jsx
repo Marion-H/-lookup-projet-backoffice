@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Spinner, Container, Row } from "reactstrap";
+
 import BaseCardClients from "./builders/BaseCardClients";
+
 const Repo = () => {
   const [clients, setClients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     const getClients = async () => {
@@ -14,7 +17,7 @@ const Repo = () => {
         );
         setClients(res.data);
       } catch (error) {
-        console.log(error);
+        setError(error);
       } finally {
         setIsLoading(false);
       }
@@ -24,6 +27,10 @@ const Repo = () => {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
