@@ -3,6 +3,7 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import apiUrl from "../../apiUrl";
 
 export default function DeletePartenaire({ uuid, getPartenaire }) {
   const [loading, setLoading] = useState(false);
@@ -34,14 +35,11 @@ export default function DeletePartenaire({ uuid, getPartenaire }) {
 
   const deletePartenaire = async () => {
     try {
-      await Axios.delete(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.delete(`${apiUrl}/partenaires/${uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getPartenaire();
       notifySuccess();
     } catch (error) {

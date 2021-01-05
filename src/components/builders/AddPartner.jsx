@@ -21,6 +21,8 @@ import jwt from "jsonwebtoken";
 
 import { logout } from "../../store/actionCreators";
 
+import apiUrl from "../../apiUrl";
+
 toast.configure();
 const AddPartner = ({ getPartenaire }) => {
   const notifySuccess = () => {
@@ -59,15 +61,11 @@ const AddPartner = ({ getPartenaire }) => {
   const postPartenaire = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/`,
-        partenaire,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.post(`${apiUrl}/partenaires/`, partenaire, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getPartenaire();
       notifySuccess();
     } catch (err) {

@@ -23,6 +23,7 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const AddProductInfo = ({ getProductInfo, uuid }) => {
@@ -64,7 +65,7 @@ const AddProductInfo = ({ getProductInfo, uuid }) => {
     e.preventDefault();
     try {
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/`,
+        `${apiUrl}/products_info/`,
         { ...productInfo, ProductUuid: uuid },
         {
           headers: {

@@ -22,6 +22,7 @@ import ReactHtmlParser from "react-html-parser";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { logout } from "../../store/actionCreators";
 import { imgurToken } from "../../imgurToken";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 
@@ -81,7 +82,7 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}`,
+        `${apiUrl}/products/${uuid}`,
         {
           description: product.description,
           picture: resImgur.data.data.link,

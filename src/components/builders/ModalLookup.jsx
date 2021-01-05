@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const ModalServices = ({
@@ -80,15 +81,11 @@ const ModalServices = ({
     const uuid = sessionStorage.getItem("uuid");
     e.preventDefault();
     try {
-      await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/login/${uuid}`,
-        lookupDatas,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.put(`${apiUrl}/admin/login/${uuid}`, lookupDatas, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getLookupDatas();
       notifySuccess();
     } catch (err) {

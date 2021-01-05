@@ -19,6 +19,7 @@ import Axios from "axios";
 import ReactHtmlParser from "react-html-parser";
 
 import AddProductInfo from "./AddProductInfo";
+import apiUrl from "../../apiUrl";
 
 const BaseCardProductInfo = () => {
   const [productInfo, setProductInfo] = useState([]);
@@ -27,9 +28,7 @@ const BaseCardProductInfo = () => {
 
   const getProductInfo = async () => {
     try {
-      const res = await Axios.get(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products/${uuid}/products_info`
-      );
+      const res = await Axios.get(`${apiUrl}/products/${uuid}/products_info`);
       setProductInfo(res.data);
     } catch (err) {
       console.log(err);
