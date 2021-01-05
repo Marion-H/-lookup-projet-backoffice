@@ -3,6 +3,7 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import apiUrl from "../../apiUrl";
 
 export default function DeletePress({ uuid, getPress }) {
   const [loading, setLoading] = useState(false);
@@ -34,14 +35,11 @@ export default function DeletePress({ uuid, getPress }) {
 
   const deletePress = async () => {
     try {
-      await Axios.delete(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.delete(`${apiUrl}/press/${uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getPress();
       notifySuccess();
     } catch (error) {

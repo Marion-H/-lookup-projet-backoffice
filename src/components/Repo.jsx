@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Spinner, Container, Row } from "reactstrap";
 
+import apiUrl from "../apiUrl";
+
 import BaseCardClients from "./builders/BaseCardClients";
 
 const Repo = () => {
@@ -12,9 +14,7 @@ const Repo = () => {
   useEffect(() => {
     const getClients = async () => {
       try {
-        const res = await axios.get(
-          "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/clients"
-        );
+        const res = await axios.get(`${apiUrl}/clients`);
         setClients(res.data);
       } catch (error) {
         setError(error);

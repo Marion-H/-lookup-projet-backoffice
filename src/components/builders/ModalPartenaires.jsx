@@ -20,6 +20,7 @@ import jwt from "jsonwebtoken";
 import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
@@ -76,7 +77,7 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires/${uuid}`,
+        `${apiUrl}/partenaires/${uuid}`,
         {
           link: partner.link,
           description: partner.description,

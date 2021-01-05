@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
   const notifySuccess = () => {
@@ -73,7 +74,7 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/${uuid}`,
+        `${apiUrl}/press/${uuid}`,
         {
           title: presses.title,
           description: presses.description,

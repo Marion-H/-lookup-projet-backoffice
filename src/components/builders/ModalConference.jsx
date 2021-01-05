@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const ModalConferences = ({
@@ -83,7 +84,7 @@ const ModalConferences = ({
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/${uuid}`,
+        `${apiUrl}/conferences/${uuid}`,
         {
           title: conferences.title,
           subject: conferences.subject,

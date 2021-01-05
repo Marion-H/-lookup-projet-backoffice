@@ -3,6 +3,7 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import apiUrl from "../../apiUrl";
 
 export default function DeleteService({ uuid, getService }) {
   const [loading, setLoading] = useState(false);
@@ -35,14 +36,11 @@ export default function DeleteService({ uuid, getService }) {
 
   const deleteService = async () => {
     try {
-      await Axios.delete(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.delete(`${apiUrl}/services/${uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getService();
       notifySuccess();
     } catch (error) {

@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const AddConferences = ({ getConference }) => {
@@ -59,15 +60,11 @@ const AddConferences = ({ getConference }) => {
   const postConferences = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/`,
-        conferences,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.post(`${apiUrl}/conferences/`, conferences, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getConference();
       notifySuccess();
     } catch (err) {

@@ -5,6 +5,8 @@ import Axios from "axios";
 import BaseCardServices from "./builders/BaseCardServices";
 import AddService from "./builders/AddService";
 
+import apiUrl from "../apiUrl";
+
 const Services = () => {
   const [serviceDatas, setServiceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -12,9 +14,7 @@ const Services = () => {
 
   const getService = async () => {
     try {
-      const res = await Axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services"
-      );
+      const res = await Axios.get(`${apiUrl}/services`);
       setServiceDatas(res.data);
     } catch (err) {
       setError(err);

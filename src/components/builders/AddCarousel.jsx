@@ -17,6 +17,8 @@ import {
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
+import apiUrl from "../apiUrl";
+
 toast.configure();
 
 const AddCarousel = () => {
@@ -57,15 +59,11 @@ const AddCarousel = () => {
   const postCarousel = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/`,
-        carousel,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.post(`${apiUrl}/carousels/`, carousel, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       notifySuccess();
     } catch (err) {
       notifyError();
