@@ -17,7 +17,7 @@ import {
 import Axios from "axios";
 import { useSelector } from "react-redux";
 
-import apiUrl from "../apiUrl";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 

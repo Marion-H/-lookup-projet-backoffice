@@ -62,7 +62,7 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
   const toggle = () => setModal(!modal);
 
   const handleLogo = (e) => {
-    setServices({ ...services, logo: e.target.files[0] });
+    return setServices({ ...services, logo: e.target.files[0] });
   };
 
   const token = useSelector((state) => state.admin.token);

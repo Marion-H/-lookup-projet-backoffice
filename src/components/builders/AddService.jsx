@@ -56,6 +56,7 @@ const AddService = ({ getService }) => {
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
+
   const postService = async (e) => {
     e.preventDefault();
     try {
@@ -75,6 +76,7 @@ const AddService = ({ getService }) => {
 
   const isAuthenticated = () => {
     const token = sessionStorage.getItem("token");
+    console.log(services);
     if (token) {
       try {
         const { exp } = jwt.decode(token);
