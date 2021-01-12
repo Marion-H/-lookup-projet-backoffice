@@ -5,13 +5,13 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import apiUrl from "../../apiUrl";
 
-export default function DeleteService({ uuid, getService }) {
+export default function DeleteCarousel({ uuid, getCarousel }) {
   const [loading, setLoading] = useState(false);
 
   const token = useSelector((state) => state.admin.token);
 
   const notifySuccess = () => {
-    toast.success("Service supprimé!", {
+    toast.success("Carousel supprimé!", {
       position: "bottom-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -34,14 +34,14 @@ export default function DeleteService({ uuid, getService }) {
     });
   };
 
-  const deleteService = async () => {
+  const deleteCarousel = async () => {
     try {
-      await Axios.delete(`${apiUrl}/services/${uuid}`, {
+      await Axios.delete(`${apiUrl}/Carousels/${uuid}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      getService();
+      getCarousel();
       notifySuccess();
     } catch (error) {
       notifyError();
@@ -51,7 +51,7 @@ export default function DeleteService({ uuid, getService }) {
   };
   return (
     <Col>
-      <Button color="danger" onClick={deleteService}>
+      <Button color="danger" onClick={deleteCarousel}>
         {loading ? <Spinner size="sm" /> : "Supprimer"}
       </Button>
     </Col>

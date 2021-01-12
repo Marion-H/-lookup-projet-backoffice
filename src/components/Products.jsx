@@ -3,6 +3,9 @@ import { Row, Container, Spinner, Col } from "reactstrap";
 import axios from "axios";
 import BaseCardProduct from "./builders/BaseCardProduct";
 import AddProduct from "./builders/AddProduct";
+
+import apiUrl from "../apiUrl";
+
 const Products = () => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,9 +13,7 @@ const Products = () => {
 
   const getProduct = async () => {
     try {
-      const res = await axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products"
-      );
+      const res = await axios.get(`${apiUrl}/products`);
       setProductData(res.data);
     } catch (err) {
       setError(err);

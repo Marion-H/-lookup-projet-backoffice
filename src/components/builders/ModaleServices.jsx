@@ -22,6 +22,7 @@ import ReactHtmlParser from "react-html-parser";
 import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 const ModalServices = ({ title, description, logo, uuid, getService }) => {
   const notifySuccess = () => {
@@ -61,7 +62,7 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
   const toggle = () => setModal(!modal);
 
   const handleLogo = (e) => {
-    setServices({ ...services, logo: e.target.files[0] });
+    return setServices({ ...services, logo: e.target.files[0] });
   };
 
   const token = useSelector((state) => state.admin.token);
@@ -76,7 +77,7 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/${uuid}`,
+        `${apiUrl}/services/${uuid}`,
         {
           title: services.title,
           description: services.description,

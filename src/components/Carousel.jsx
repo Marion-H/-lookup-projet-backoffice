@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import BaseCardCarousel from "./builders/BaseCardCarousel";
-import { Container, Row, Spinner, Col } from "reactstrap";
 import axios from "axios";
 
+import { Container, Row, Spinner, Col } from "reactstrap";
+
+import AddCarousel from "./builders/AddCarousel";
+
+import apiUrl from "../apiUrl";
 const Carousel = () => {
   const [carouselDatas, setCarouselDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -12,9 +16,7 @@ const Carousel = () => {
   }, []);
   const getCarousel = async () => {
     try {
-      const res = await axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/"
-      );
+      const res = await axios.get(`${apiUrl}/carousels/`);
       setCarouselDatas(res.data);
     } catch (err) {
       console.log(err);
@@ -46,6 +48,9 @@ const Carousel = () => {
             />
           </Col>
         ))}
+      </Row>
+      <Row>
+        <AddCarousel getPartenaire={getCarousel} />
       </Row>
     </Container>
   );

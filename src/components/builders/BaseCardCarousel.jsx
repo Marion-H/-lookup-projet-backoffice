@@ -7,6 +7,7 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import DeleteCarousel from "./DeleteCarousel";
 import ModalCarousel from "./ModalCarousel";
 
 const BaseCardCarousel = ({
@@ -33,6 +34,7 @@ const BaseCardCarousel = ({
             picture={picture}
             getCarousel={getCarousel}
           />
+          <DeleteCarousel uuid={uuid} getCarousel={getCarousel} />
         </CardBody>
       </Card>
     </div>

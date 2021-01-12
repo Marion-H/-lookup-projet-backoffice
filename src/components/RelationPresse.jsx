@@ -5,6 +5,7 @@ import Axios from "axios";
 
 import BaseCardRelationPresse from "./builders/BaseCardRelationPresse";
 import AddPresse from "./builders/AddPresse";
+import apiUrl from "../apiUrl";
 
 const RelationPresse = () => {
   const [relationPressDatas, setRelationPressDatas] = useState([]);
@@ -13,9 +14,7 @@ const RelationPresse = () => {
 
   const getPress = async () => {
     try {
-      const res = await Axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press"
-      );
+      const res = await Axios.get(`${apiUrl}/press`);
       setRelationPressDatas(res.data);
     } catch (err) {
       setError(err);

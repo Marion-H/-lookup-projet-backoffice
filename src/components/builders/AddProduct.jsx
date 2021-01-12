@@ -21,6 +21,7 @@ import jwt from "jsonwebtoken";
 import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const AddProduct = ({ getProduct }) => {
@@ -73,7 +74,7 @@ const AddProduct = ({ getProduct }) => {
         }
       );
       await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products`,
+        `${apiUrl}/products`,
         {
           name: product.name,
           description: product.description,

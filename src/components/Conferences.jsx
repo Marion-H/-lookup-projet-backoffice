@@ -3,15 +3,15 @@ import { Row, Container, Col } from "reactstrap";
 import Axios from "axios";
 import BaseCardConference from "./builders/BaseCardConference";
 import AddConferences from "./builders/AddConferences";
+import apiUrl from "../apiUrl";
+
 const Conferences = () => {
   const [conferenceDatas, setConferenceDatas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const getConference = async () => {
     try {
-      const res = await Axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences"
-      );
+      const res = await Axios.get(`${apiUrl}/conferences`);
       setConferenceDatas(res.data);
     } catch (err) {
       console.log(err);

@@ -3,6 +3,7 @@ import { Button, Col, Spinner } from "reactstrap";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import apiUrl from "../../apiUrl";
 
 export default function DeleteConference({ uuid, getConference }) {
   const [loading, setLoading] = useState(false);
@@ -34,14 +35,11 @@ export default function DeleteConference({ uuid, getConference }) {
 
   const deleteConference = async () => {
     try {
-      await Axios.delete(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/conferences/${uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.delete(`${apiUrl}/conferences/${uuid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getConference();
       notifySuccess();
     } catch (error) {

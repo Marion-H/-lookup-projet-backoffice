@@ -23,6 +23,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 
@@ -86,7 +87,7 @@ function ModalProductInfo({
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/products_info/${uuid}`,
+        `${apiUrl}/products_info/${uuid}`,
         {
           title: productInfo.title,
           description: productInfo.description,

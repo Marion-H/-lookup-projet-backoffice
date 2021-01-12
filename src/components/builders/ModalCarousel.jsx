@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 const ModalCarousel = ({
   title,
@@ -83,7 +84,7 @@ const ModalCarousel = ({
         }
       );
       await Axios.put(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/carousels/${uuid}`,
+        `${apiUrl}/carousels/${uuid}`,
         {
           title: carousel.title,
           description: carousel.description,

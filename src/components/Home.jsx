@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import BaseCardLookup from "./builders/BaseCardLookUp";
 import { Container, Row, Spinner, Col } from "reactstrap";
 import axios from "axios";
+import apiUrl from "../apiUrl";
 
 const Home = () => {
   const [lookupDatas, setLookupDatas] = useState();
@@ -10,9 +11,7 @@ const Home = () => {
 
   const getLookupDatas = async () => {
     try {
-      const res = await axios.get(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/admin/${uuid}`
-      );
+      const res = await axios.get(`${apiUrl}/admin/${uuid}`);
       setLookupDatas(res.data);
     } catch (err) {
       console.log(err);

@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 toast.configure();
 const AddPresse = ({ getPress }) => {
@@ -59,15 +60,11 @@ const AddPresse = ({ getPress }) => {
   const postPresse = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/press/`,
-        presse,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.post(`${apiUrl}/press/`, presse, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getPress();
       notifySuccess();
     } catch (err) {

@@ -3,6 +3,8 @@ import { Row, Container, Spinner, Col } from "reactstrap";
 import axios from "axios";
 import BaseCardPartenaires from "./builders/BaseCardPartenaires";
 import AddPartner from "./builders/AddPartner";
+import apiUrl from "../apiUrl";
+
 const Partenaires = () => {
   const [partenaireData, setPartenaireData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,9 +17,7 @@ const Partenaires = () => {
 
   const getPartenaire = async () => {
     try {
-      const res = await axios.get(
-        "https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/partenaires"
-      );
+      const res = await axios.get(`${apiUrl}/partenaires`);
       setPartenaireData(res.data);
     } catch (err) {
       setError(err);

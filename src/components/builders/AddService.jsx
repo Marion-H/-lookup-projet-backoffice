@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
 
 import { logout } from "../../store/actionCreators";
+import apiUrl from "../../apiUrl";
 
 const AddService = ({ getService }) => {
   const notifySuccess = () => {
@@ -55,18 +56,15 @@ const AddService = ({ getService }) => {
   const toggle = () => setModal(!modal);
 
   const token = useSelector((state) => state.admin.token);
+
   const postService = async (e) => {
     e.preventDefault();
     try {
-      await Axios.post(
-        `https://btz-js-202003-p3-lookup-back.jsrover.wilders.dev/services/`,
-        services,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await Axios.post(`${apiUrl}/services/`, services, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       getService();
       notifySuccess();
     } catch (err) {
@@ -78,6 +76,7 @@ const AddService = ({ getService }) => {
 
   const isAuthenticated = () => {
     const token = sessionStorage.getItem("token");
+    console.log(services);
     if (token) {
       try {
         const { exp } = jwt.decode(token);
