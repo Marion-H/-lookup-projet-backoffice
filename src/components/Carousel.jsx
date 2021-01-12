@@ -4,6 +4,8 @@ import axios from "axios";
 
 import { Container, Row, Spinner, Col } from "reactstrap";
 
+import AddCarousel from "./builders/AddCarousel";
+
 import apiUrl from "../apiUrl";
 const Carousel = () => {
   const [carouselDatas, setCarouselDatas] = useState([]);
@@ -46,6 +48,9 @@ const Carousel = () => {
             />
           </Col>
         ))}
+      </Row>
+      <Row>
+        <AddCarousel getPartenaire={getCarousel} />
       </Row>
     </Container>
   );

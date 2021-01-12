@@ -23,7 +23,7 @@ import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
 
 toast.configure();
-const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
+const ModalPartenaires = ({ link, description, logo, uuid, getPartenaire }) => {
   const notifySuccess = () => {
     toast.success("Partenaire bien modifié !", {
       position: "bottom-center",
@@ -200,4 +200,4 @@ const ModalCarousel = ({ link, description, logo, uuid, getPartenaire }) => {
   );
 };
 
-export default ModalCarousel;
+export default ModalPartenaires;
