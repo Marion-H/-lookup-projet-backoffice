@@ -8,6 +8,6 @@
 
 // export default apiUrl;
 
-const apiUrl = "http://localhost:8000";
+const apiUrl = "https://back-lookup.herokuapp.com";
 
 export default apiUrl;
