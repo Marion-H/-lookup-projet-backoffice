@@ -31,7 +31,8 @@
     "start": "NODE_ENV=production react-scripts start",
     "dev": "NODE_ENV=development react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
