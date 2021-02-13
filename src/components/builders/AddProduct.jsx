@@ -59,27 +59,27 @@ const AddProduct = ({ getProduct }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  const handleImage = (e) => {
-    setProduct({ ...product, picture: e.target.files[0] });
-  };
+  // const handleImage = (e) => {
+  //   setProduct({ ...product, picture: e.target.files[0] });
+  // };
 
   const postProduct = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        product.picture,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   product.picture,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.post(
         `${apiUrl}/products`,
         {
           name: product.name,
           description: product.description,
           price: product.price,
-          picture: resImgur.data.data.link,
+          picture: product.picture,
         },
         {
           headers: {
@@ -190,11 +190,16 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col>
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={product.picture}
-                  onChange={handleImage}
+                  type="text"
+                  name="picture"
+                  onChange={(e) =>
+                    setProduct({
+                      ...product,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>
