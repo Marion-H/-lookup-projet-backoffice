@@ -59,26 +59,26 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  const handlePicture = (e) => {
-    setPresses({ ...presses, picture: e.target.files[0] });
-  };
+  // const handlePicture = (e) => {
+  //   setPresses({ ...presses, picture: e.target.files[0] });
+  // };
 
   const putPresse = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        presses.picture,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   presses.picture,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/press/${uuid}`,
         {
           title: presses.title,
           description: presses.description,
-          picture: resImgur.data.data.link,
+          picture: presses.picture,
         },
         {
           headers: {
@@ -172,12 +172,16 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={presses.picture}
-                  name="lien"
-                  onChange={handlePicture}
+                  type="text"
+                  name="image"
+                  onChange={(e) =>
+                    setPresses({
+                      ...presses,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>

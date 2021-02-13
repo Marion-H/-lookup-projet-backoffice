@@ -69,19 +69,19 @@ const ModalPartenaires = ({ link, description, logo, uuid, getPartenaire }) => {
   const putPartner = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        partner.logo,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   partner.logo,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/partenaires/${uuid}`,
         {
           link: partner.link,
           description: partner.description,
-          logo: resImgur.data.data.link,
+          logo: partner.logo,
         },
         {
           headers: {
@@ -177,12 +177,15 @@ const ModalPartenaires = ({ link, description, logo, uuid, getPartenaire }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={partner.logo}
+                  type="text"
                   name="image"
-                  onChange={handleLogo}
+                  onChange={(e) =>
+                    setPartner({
+                      ...partner,
+                      picture: e.target.value,
+                    })
+                  }
                 />
-                <img src={partner.logo} alt="preview" width="100%" />
               </Col>
             </Row>
           </ModalBody>
