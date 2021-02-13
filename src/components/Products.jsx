@@ -41,15 +41,15 @@ const Products = () => {
         <h1>Produits</h1>
       </Row>
       <Row>
-        {productData.map((it) => (
+        {productData.map((product) => (
           <Col md="4" sm="6" xs="12" className="pb-4">
             <BaseCardProduct
-              key={it.uuid}
-              uuid={it.uuid}
-              name={it.name}
-              price={it.price}
-              description={it.description}
-              picture={it.picture}
+              key={product.uuid}
+              uuid={product.uuid}
+              name={product.name}
+              price={product.price}
+              description={product.description}
+              picture={product.picture}
               getProduct={getProduct}
             />
           </Col>

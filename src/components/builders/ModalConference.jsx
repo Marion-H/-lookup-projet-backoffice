@@ -69,27 +69,27 @@ const ModalConferences = ({
 
   const token = useSelector((state) => state.admin.token);
 
-  const handlePicture = (e) => {
-    setConferences({ ...conferences, picture: e.target.files[0] });
-  };
+  // const handlePicture = (e) => {
+  //   setConferences({ ...conferences, picture: e.target.files[0] });
+  // };
 
   const putConferences = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        conferences.picture,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   conferences.picture,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/conferences/${uuid}`,
         {
           title: conferences.title,
           subject: conferences.subject,
           date: conferences.date,
-          picture: resImgur.data.data.link,
+          picture: conferences.picture,
         },
         {
           headers: {
@@ -204,12 +204,16 @@ const ModalConferences = ({
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={conferences.picture}
+                  type="text"
                   name="image"
-                  onChange={handlePicture}
+                  onChange={(e) =>
+                    setConferences({
+                      ...conferences,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>
