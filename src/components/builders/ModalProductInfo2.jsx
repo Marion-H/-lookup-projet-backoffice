@@ -65,25 +65,25 @@ function ModalProductInfo({ uuid, description2, picture2, getProductInfo }) {
 
   const token = useSelector((state) => state.admin.token);
 
-  const handlePicture2 = (e) => {
-    setProductInfo2({ ...productInfo2, picture2: e.target.files[0] });
-  };
+  // const handlePicture2 = (e) => {
+  //   setProductInfo2({ ...productInfo2, picture2: e.target.files[0] });
+  // };
 
   const putProductInfo = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        productInfo2.picture2,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   productInfo2.picture2,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/products_info/${uuid}`,
         {
           description2: productInfo2.description2,
-          picture2: resImgur.data.data.link,
+          picture2: productInfo2.picture2,
         },
         {
           headers: {
@@ -158,12 +158,16 @@ function ModalProductInfo({ uuid, description2, picture2, getProductInfo }) {
             <Row>
               <Col lg="6">{picture2}</Col>
               <Col lg="6">
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={productInfo2.picture2}
-                  name="picture2"
-                  onChange={handlePicture2}
+                  type="text"
+                  name="image"
+                  onChange={(e) =>
+                    setProductInfo2({
+                      ...productInfo2,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>

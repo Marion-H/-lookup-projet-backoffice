@@ -207,7 +207,7 @@ const ModalCarousel = ({
               <input
                   ref={register({ required: true })}
                   type="text"
-                  name="picture"
+                  name="image"
                   onChange={(e) =>
                     setCarousel({
                       ...carousel,

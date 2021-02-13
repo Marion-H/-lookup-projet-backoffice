@@ -72,26 +72,26 @@ function ModalProductInfo({
 
   const token = useSelector((state) => state.admin.token);
 
-  const handlePicture1 = (e) => {
-    setProductInfo({ ...productInfo, picture: e.target.files[0] });
-  };
+  // const handlePicture1 = (e) => {
+  //   setProductInfo({ ...productInfo, picture: e.target.files[0] });
+  // };
 
   const putProductInfo = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        productInfo.picture,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   productInfo.picture,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/products_info/${uuid}`,
         {
           title: productInfo.title,
           description: productInfo.description,
-          picture: resImgur.data.data.link,
+          picture: productInfo.picture,
         },
         {
           headers: {
@@ -187,12 +187,16 @@ function ModalProductInfo({
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={productInfo.picture}
-                  name="picture"
-                  onChange={handlePicture1}
+                  type="text"
+                  name="image"
+                  onChange={(e) =>
+                    setProductInfo({
+                      ...productInfo,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>
