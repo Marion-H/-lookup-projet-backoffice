@@ -18,7 +18,6 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
@@ -59,20 +58,9 @@ const AddProduct = ({ getProduct }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  // const handleImage = (e) => {
-  //   setProduct({ ...product, picture: e.target.files[0] });
-  // };
-
   const postProduct = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   product.picture,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.post(
         `${apiUrl}/products`,
         {
@@ -190,7 +178,7 @@ const AddProduct = ({ getProduct }) => {
             </Row>
             <Row>
               <Col>
-              <input
+                <input
                   ref={register({ required: true })}
                   type="text"
                   name="picture"

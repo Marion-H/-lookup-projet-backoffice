@@ -10,10 +10,6 @@ $ npm install
 $ npm start
 ```
 
-## Environement variables
-
-- imgurToken.js exporting token to be used globally in the project. imgurToken = client_id imgur
-
 ## Architecture
 
 ```bash

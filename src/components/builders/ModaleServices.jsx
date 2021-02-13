@@ -19,7 +19,6 @@ import jwt from "jsonwebtoken";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
-import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
@@ -61,21 +60,10 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
 
   const toggle = () => setModal(!modal);
 
-  // const handleLogo = (e) => {
-  //   return setServices({ ...services, logo: e.target.files[0] });
-  // };
-
   const token = useSelector((state) => state.admin.token);
   const putServices = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   services.logo,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/services/${uuid}`,
         {

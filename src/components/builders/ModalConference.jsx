@@ -17,7 +17,6 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
 
@@ -69,20 +68,9 @@ const ModalConferences = ({
 
   const token = useSelector((state) => state.admin.token);
 
-  // const handlePicture = (e) => {
-  //   setConferences({ ...conferences, picture: e.target.files[0] });
-  // };
-
   const putConferences = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   conferences.picture,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/conferences/${uuid}`,
         {
@@ -204,7 +192,7 @@ const ModalConferences = ({
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-              <input
+                <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"

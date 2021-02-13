@@ -17,7 +17,6 @@ import {
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ReactHtmlParser from "react-html-parser";
@@ -65,20 +64,9 @@ function ModalProductInfo({ uuid, description3, picture3, getProductInfo }) {
 
   const token = useSelector((state) => state.admin.token);
 
-  // const handlePicture3 = (e) => {
-  //   setProductInfo3({ ...productInfo3, picture3: e.target.files[0] });
-  // };
-
   const putProductInfo = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   productInfo3.picture3,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/products_info/${uuid}`,
         {
@@ -158,7 +146,7 @@ function ModalProductInfo({ uuid, description3, picture3, getProductInfo }) {
             <Row>
               <Col lg="6">{picture3}</Col>
               <Col lg="6">
-              <input
+                <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"

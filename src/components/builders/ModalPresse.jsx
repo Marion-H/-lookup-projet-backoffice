@@ -16,7 +16,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
+
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
 
@@ -59,20 +59,9 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  // const handlePicture = (e) => {
-  //   setPresses({ ...presses, picture: e.target.files[0] });
-  // };
-
   const putPresse = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   presses.picture,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/press/${uuid}`,
         {
@@ -172,7 +161,7 @@ const ModalPresse = ({ title, description, picture, uuid, getPress }) => {
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-              <input
+                <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"

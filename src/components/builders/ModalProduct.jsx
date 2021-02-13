@@ -21,7 +21,7 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ReactHtmlParser from "react-html-parser";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { logout } from "../../store/actionCreators";
-import { imgurToken } from "../../imgurToken";
+
 import apiUrl from "../../apiUrl";
 
 toast.configure();
@@ -67,20 +67,9 @@ function ModalProduct({ description, picture, name, price, uuid, getProduct }) {
 
   const token = useSelector((state) => state.admin.token);
 
-  // const handlePicture = (e) => {
-  //   setProduct({ ...product, picture: e.target.files[0] });
-  // };
-
   const putProduct = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   product.picture,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/products/${uuid}`,
         {

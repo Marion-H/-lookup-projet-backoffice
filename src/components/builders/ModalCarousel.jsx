@@ -17,7 +17,6 @@ import {
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
 
@@ -67,22 +66,9 @@ const ModalCarousel = ({
 
   const toggle = () => setModal(!modal);
 
-  // const handlePicture = (e) => {
-  //   setCarousel({ ...carousel, picture: e.target.files[0] });
-  // };
-
   const putCarousel = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   carousel.picture,
-      //   {
-      //     headers: {
-      //       Authorization: `Client-ID ${imgurToken}`,
-      //     },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/carousels/${uuid}`,
         {
@@ -204,7 +190,7 @@ const ModalCarousel = ({
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-              <input
+                <input
                   ref={register({ required: true })}
                   type="text"
                   name="image"

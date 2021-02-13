@@ -17,7 +17,6 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import jwt from "jsonwebtoken";
-import { imgurToken } from "../../imgurToken";
 
 import { logout } from "../../store/actionCreators";
 import apiUrl from "../../apiUrl";
@@ -62,20 +61,9 @@ const ModalPartenaires = ({ link, description, logo, uuid, getPartenaire }) => {
 
   const token = useSelector((state) => state.admin.token);
 
-  const handleLogo = (e) => {
-    setPartner({ ...partner, logo: e.target.files[0] });
-  };
-
   const putPartner = async (e) => {
     e.preventDefault();
     try {
-      // const resImgur = await Axios.post(
-      //   "https://api.imgur.com/3/image",
-      //   partner.logo,
-      //   {
-      //     headers: { Authorization: `Client-ID ${imgurToken}` },
-      //   }
-      // );
       await Axios.put(
         `${apiUrl}/partenaires/${uuid}`,
         {
