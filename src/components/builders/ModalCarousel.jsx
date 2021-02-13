@@ -67,29 +67,29 @@ const ModalCarousel = ({
 
   const toggle = () => setModal(!modal);
 
-  const handlePicture = (e) => {
-    setCarousel({ ...carousel, picture: e.target.files[0] });
-  };
+  // const handlePicture = (e) => {
+  //   setCarousel({ ...carousel, picture: e.target.files[0] });
+  // };
 
   const putCarousel = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        carousel.picture,
-        {
-          headers: {
-            Authorization: `Client-ID ${imgurToken}`,
-          },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   carousel.picture,
+      //   {
+      //     headers: {
+      //       Authorization: `Client-ID ${imgurToken}`,
+      //     },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/carousels/${uuid}`,
         {
           title: carousel.title,
           description: carousel.description,
           link: carousel.link,
-          picture: resImgur.data.data.link,
+          picture: carousel.picture,
         },
         {
           headers: {
@@ -204,12 +204,16 @@ const ModalCarousel = ({
             <Row>
               <Col lg="6">{picture}</Col>
               <Col lg="6">
-                <input
+              <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={carousel.picture}
-                  name="image"
-                  onChange={handlePicture}
+                  type="text"
+                  name="picture"
+                  onChange={(e) =>
+                    setCarousel({
+                      ...carousel,
+                      picture: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>
