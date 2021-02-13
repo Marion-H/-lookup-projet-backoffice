@@ -61,27 +61,27 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
 
   const toggle = () => setModal(!modal);
 
-  const handleLogo = (e) => {
-    return setServices({ ...services, logo: e.target.files[0] });
-  };
+  // const handleLogo = (e) => {
+  //   return setServices({ ...services, logo: e.target.files[0] });
+  // };
 
   const token = useSelector((state) => state.admin.token);
   const putServices = async (e) => {
     e.preventDefault();
     try {
-      const resImgur = await Axios.post(
-        "https://api.imgur.com/3/image",
-        services.logo,
-        {
-          headers: { Authorization: `Client-ID ${imgurToken}` },
-        }
-      );
+      // const resImgur = await Axios.post(
+      //   "https://api.imgur.com/3/image",
+      //   services.logo,
+      //   {
+      //     headers: { Authorization: `Client-ID ${imgurToken}` },
+      //   }
+      // );
       await Axios.put(
         `${apiUrl}/services/${uuid}`,
         {
           title: services.title,
           description: services.description,
-          logo: resImgur.data.data.link,
+          logo: services.logo,
         },
         {
           headers: {
@@ -176,10 +176,14 @@ const ModalServices = ({ title, description, logo, uuid, getService }) => {
               <Col lg="6">
                 <input
                   ref={register({ required: true })}
-                  type="file"
-                  files={services.logo}
-                  name="lien"
-                  onChange={handleLogo}
+                  type="text"
+                  name="image"
+                  onChange={(e) =>
+                    setServices({
+                      ...services,
+                      logo: e.target.value,
+                    })
+                  }
                 />
               </Col>
             </Row>

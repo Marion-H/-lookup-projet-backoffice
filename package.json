@@ -10,7 +10,6 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
-    "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -31,7 +30,8 @@
     "start": "NODE_ENV=production react-scripts start",
     "dev": "NODE_ENV=development react-scripts start",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
